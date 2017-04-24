@@ -18,8 +18,8 @@
  Program Description: 
  
  Author: Leong Wei Kong & Nicholas Tan Joo Sin
- Reference: 
- Developer Notes: 
+ Reference: XXX
+ Developer Notes: XXX
  */
 
 PFont font1;
