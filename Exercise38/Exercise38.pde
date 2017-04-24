@@ -101,6 +101,5 @@ void keyReleased() {
   }
   if (char(keyCode) == RIGHT) {
     player2.resetRight();
-    //player1.direction = -1;
   }
 }
