@@ -21,17 +21,22 @@ PImage img1;
 PImage img2;
 int ticksLastUpdate = millis();
 int[][] levelOne = {
-    {0, 0, 0, 0, 0}, 
-    {1, 0, 0, 0, 1}, 
-    {1, 1, 1, 1, 1},
-    {1, 1, 1, 1, 1},
-    {1, 1, 1, 1, 1}
+    {0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, 
+    {1, 0, 0, 0, 0, 0, 0, 0, 0, 1}, 
+    {1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
+    {1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
+    {1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
+    {1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
+    {1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
+    {1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
+    {1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
+    {1, 1, 1, 1, 1, 1, 1, 1, 1, 1}
   };
 
 void setup() {
-  size(500, 500);
-  img1 = loadImage("mario.png");
-  img2 = loadImage("portal.png");
+  size(320, 320);
+  img1 = loadImage("brick_brown5.png");
+  img2 = loadImage("brick_brown6.png");
   //font1 = createFont("tamagotchi.ttf", 35);
   //font2 = createFont("tamagotchi.ttf", 35);
   player1 = new Player("Warrior");
@@ -53,7 +58,7 @@ void draw() {
 }
 
 void drawLevel() {
-  int tileSize = 100;
+  int tileSize = 32;
   for (int i=0; i<levelOne.length; i++) { //y axis
     for (int j=0; j<levelOne[i].length; j++) { //x axis
       switch(levelOne[i][j]) {
