@@ -1,6 +1,8 @@
 class Player {
   String[] playerClassList = {"Warrior", "Wizard", "Ranger", "Thief"}; //might need to change to int array
-  PVector position = new PVector(width/2, width/2);
+  int playerWidth = 32;
+  int playerHeight = 32;
+  PVector position = new PVector(32 + playerWidth/2,32 + playerWidth/2);
   float direction = 0; //set the direction of player
   PVector velocity = new PVector(0, 0);
   float walkSpeed = 200;
@@ -29,27 +31,34 @@ class Player {
 
   void updateMovement(int ticksLastUpdate) {
     rectMode(CENTER);
+    ellipseMode(CENTER);
     velocity.x = walkSpeed * (moveLeft + moveRight) * float(millis() - ticksLastUpdate) * 0.001;
     velocity.y = walkSpeed * (moveUp + moveDown) * float(millis() - ticksLastUpdate) * 0.001;
     PVector nextPosition = new PVector(position.x, position.y);
     nextPosition.add(velocity);
-    float offset = 10;
-    if (nextPosition.x > offset && nextPosition.x < (width - offset)) position.x = nextPosition.x;
-    if (nextPosition.y > offset && nextPosition.y < (height - offset)) position.y = nextPosition.y;
-
+    int[][] currentLayout = level.getCurrentTileLayout();
+    float offset = 32 + playerWidth/2 -1;
+    if(currentLayout[int((nextPosition.y)/32)][int((nextPosition.x-playerWidth/2)/32)] != 49 && currentLayout[int((nextPosition.y)/32)][int((nextPosition.x+playerWidth/2)/32)] != 49 && 
+    currentLayout[int((nextPosition.y-playerWidth/2)/32)][int((nextPosition.x)/32)] != 49 && currentLayout[int((nextPosition.y+playerWidth/2)/32)][int((nextPosition.x)/32)] != 49 && 
+    currentLayout[int((nextPosition.y-playerWidth/2)/32)][int((nextPosition.x-playerWidth/2)/32)] != 49 && currentLayout[int((nextPosition.y-playerWidth/2)/32)][int((nextPosition.x+playerWidth/2)/32)] != 49 && 
+    currentLayout[int((nextPosition.y+playerWidth/2)/32)][int((nextPosition.x-playerWidth/2)/32)] != 49 && currentLayout[int((nextPosition.y+playerWidth/2)/32)][int((nextPosition.x+playerWidth/2)/32)] != 49){
+      if (nextPosition.x > offset && nextPosition.x < (width - offset)) position.x = nextPosition.x;
+      if (nextPosition.y > offset && nextPosition.y < (height - offset)) position.y = nextPosition.y;
+    }
+    
     switch(playerClass) {
     case "Warrior":
-      ellipse(position.x, position.y, 20, 20);
+      ellipse(position.x, position.y, playerWidth, playerHeight);
       break;
     case "Wizard":
-      rect(position.x, position.y, 20, 20);
+      rect(position.x, position.y, playerWidth, playerHeight);
       break;
     case "Ranger":
       break;
     case "Thief":
       break;
     }
-    rectMode(CORNERS);
+
   }
 
   void moveRight() {

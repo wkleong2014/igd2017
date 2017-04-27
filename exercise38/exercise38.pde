@@ -17,32 +17,18 @@ PFont font1;
 PFont font2;
 Player player1;
 Player player2;
-PImage img1;
-PImage img2;
 int ticksLastUpdate = millis();
-int[][] levelOne = {
-    {0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, 
-    {1, 0, 0, 0, 0, 0, 0, 0, 0, 1}, 
-    {1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
-    {1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
-    {1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
-    {1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
-    {1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
-    {1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
-    {1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
-    {1, 1, 1, 1, 1, 1, 1, 1, 1, 1}
-  };
+Level level;
+
 
 void setup() {
-  size(320, 320);
-  img1 = loadImage("brick_brown5.png");
-  img2 = loadImage("brick_brown6.png");
+  size(640, 640);
+  
   //font1 = createFont("tamagotchi.ttf", 35);
   //font2 = createFont("tamagotchi.ttf", 35);
   player1 = new Player("Warrior");
   player2 = new Player("Wizard");
-  //noStroke();
-  //drawLevel();
+  level = new Level();
   
 }
 
@@ -50,32 +36,15 @@ void draw() {
   fill(100);
   rect(0,0,500,500);
   noStroke();
-  drawLevel();
+  level.drawLevel();
   fill(0);
+  
   player1.updateMovement(ticksLastUpdate);
   player2.updateMovement(ticksLastUpdate);
   ticksLastUpdate = millis();
 }
 
-void drawLevel() {
-  int tileSize = 32;
-  for (int i=0; i<levelOne.length; i++) { //y axis
-    for (int j=0; j<levelOne[i].length; j++) { //x axis
-      switch(levelOne[i][j]) {
-      case 0: //white = can move
-        image(img1, j * tileSize, i * tileSize);
-        //fill(255);
-        //rect(j * tileSize, i * tileSize, tileSize, tileSize);
-        break;
-      case 1: //red = obstacle
-        image(img2, j * tileSize, i * tileSize);
-        //fill(255,0, 0);
-        //rect(j * tileSize, i * tileSize, tileSize, tileSize);
-        break;
-      }
-    }
-  }
-}
+
 
 void keyPressed() {
   //Player 1
