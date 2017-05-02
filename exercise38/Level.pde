@@ -3,12 +3,15 @@ class Level {
   final int tileSize = 32;
   HashMap<Integer, int[][]> tilesLayouts = new HashMap<Integer, int[][]>();
   HashMap<Integer, PImage> images = new HashMap<Integer, PImage>();
-
+  int currentXTile = 0;
+  int currentYTile = 0;
+  boolean endGame = false;
+  Exit exit;
 
   Level() {
     tilesLayouts.put(1, new int[][]{
       {49, 49, 49, 49, 49, 49, 49, 49, 49, 49, 49, 49, 49, 49, 49, 49, 49, 49, 49, 49}, 
-      {49, 23, 23, 23, 23, 23, 23, 23, 49, 23, 23, 23, 23, 23, 23, 23, 49, 23, 23, 49}, 
+      {49, 23, 23, 23, 23, 23, 23, 23, 49, 23, 23, 23, 23, 23, 23, 23, 49, 23, 999, 49}, 
       {49, 23, 23, 23, 23, 23, 23, 23, 49, 23, 23, 23, 23, 23, 23, 23, 49, 23, 23, 49}, 
       {49, 23, 23, 23, 23, 23, 23, 23, 49, 23, 23, 23, 23, 23, 23, 23, 49, 23, 23, 49}, 
       {49, 23, 23, 23, 49, 23, 23, 23, 49, 23, 23, 23, 49, 23, 23, 23, 49, 23, 23, 49}, 
@@ -27,7 +30,30 @@ class Level {
       {49, 23, 23, 23, 49, 23, 23, 23, 23, 23, 23, 23, 49, 23, 23, 23, 23, 23, 23, 49}, 
       {49, 23, 23, 23, 49, 23, 23, 23, 23, 23, 23, 23, 49, 23, 23, 23, 23, 23, 23, 49}, 
       {49, 49, 49, 49, 49, 49, 49, 49, 49, 49, 49, 49, 49, 49, 49, 49, 49, 49, 49, 49}
-    });
+      });
+
+    tilesLayouts.put(2, new int[][]{
+      {49, 49, 49, 49, 49, 49, 49, 49, 49, 49, 49, 49, 49, 49, 49, 49, 49, 49, 49, 49}, 
+      {49, 23, 23, 23, 23, 23, 23, 23, 49, 23, 23, 23, 23, 23, 23, 23, 49, 23, 23, 49}, 
+      {49, 23, 23, 23, 23, 23, 23, 23, 49, 23, 23, 23, 23, 23, 23, 23, 49, 23, 23, 49}, 
+      {49, 23, 23, 23, 23, 23, 23, 23, 49, 23, 23, 23, 23, 23, 23, 23, 49, 23, 23, 49}, 
+      {49, 23, 23, 23, 23, 999, 23, 23, 49, 23, 23, 23, 49, 23, 23, 23, 49, 23, 23, 49}, 
+      {49, 23, 23, 23, 23, 23, 23, 23, 49, 23, 23, 23, 49, 23, 23, 23, 49, 23, 23, 49}, 
+      {49, 23, 23, 23, 23, 23, 23, 23, 49, 23, 23, 23, 49, 23, 23, 23, 49, 23, 23, 49}, 
+      {49, 23, 23, 23, 23, 23, 23, 23, 49, 23, 23, 23, 49, 23, 23, 23, 49, 23, 23, 49}, 
+      {49, 23, 23, 23, 23, 23, 23, 23, 49, 23, 23, 23, 49, 23, 23, 23, 49, 23, 23, 49}, 
+      {49, 23, 23, 23, 23, 23, 23, 23, 49, 23, 23, 23, 49, 23, 23, 23, 49, 23, 23, 49}, 
+      {49, 23, 23, 23, 23, 23, 23, 23, 49, 23, 23, 23, 49, 23, 23, 23, 49, 23, 23, 49}, 
+      {49, 23, 23, 23, 23, 23, 23, 23, 49, 23, 23, 23, 49, 23, 23, 23, 49, 23, 23, 49}, 
+      {49, 23, 23, 23, 23, 23, 23, 23, 49, 23, 23, 23, 49, 23, 23, 23, 49, 23, 23, 49}, 
+      {49, 23, 23, 23, 23, 23, 23, 23, 49, 23, 23, 23, 49, 23, 23, 23, 49, 23, 23, 49}, 
+      {49, 23, 23, 23, 23, 23, 23, 23, 49, 23, 23, 23, 49, 23, 23, 23, 49, 23, 23, 49}, 
+      {49, 23, 23, 23, 23, 23, 23, 23, 49, 23, 23, 23, 49, 23, 23, 23, 49, 23, 23, 49}, 
+      {49, 23, 23, 23, 23, 23, 23, 23, 23, 23, 23, 23, 49, 23, 23, 23, 23, 23, 23, 49}, 
+      {49, 23, 23, 23, 23, 23, 23, 23, 23, 23, 23, 23, 49, 23, 23, 23, 23, 23, 23, 49}, 
+      {49, 23, 23, 23, 23, 23, 23, 23, 23, 23, 23, 23, 49, 23, 23, 23, 23, 23, 23, 49}, 
+      {49, 49, 49, 49, 49, 49, 49, 49, 49, 49, 49, 49, 49, 49, 49, 49, 49, 49, 49, 49}
+      });
 
     //load all images
     //for(int i=0;i<2;i++){ //total images - 1
@@ -38,17 +64,50 @@ class Level {
     images.put(49, loadImage("49.png"));
   }
 
+  //void spawnMonster(int level) {
+  //  switch(level) {
+  //  case 1:
+
+  //    break;
+  //  }
+  //}
+  
+  boolean hasEnded(){
+   return endGame;
+  }
+
   void drawLevel() {
     int[][] tileLayout = tilesLayouts.get(currentLevel);
-    for (int i=0; i<tileLayout.length; i++) { //y axis
-      for (int j=0; j<tileLayout[i].length; j++) { //x axis
-        image(images.get(tileLayout[i][j]), j * tileSize, i * tileSize);
+    if (tileLayout == null) {
+      endGame = true;
+    } else {
+      for (int i=0; i<tileLayout.length; i++) { //y axis
+        for (int j=0; j<tileLayout[i].length; j++) { //x axis
+          if (tileLayout[i][j] == 999) exit = new Exit(j, i);
+          else image(images.get(tileLayout[i][j]), j * tileSize, i * tileSize);
+        }
       }
     }
   }
-  
-  int[][] getCurrentTileLayout(){
+
+  void checkCollision() {
+    if (exit != null) {
+      if (player1.position.x >= exit.posX && player1.position.x <= exit.posX + exit.exitWidth && player1.position.y >= exit.posY && player1.position.y <= exit.posY + exit.exitHeight) {
+        nextLevel();
+      }
+      if (player2.position.x >= exit.posX && player2.position.x <= exit.posX + exit.exitWidth && player2.position.y >= exit.posY && player2.position.y <= exit.posY + exit.exitHeight) {
+        nextLevel();
+      }
+    }
+  }
+
+  int[][] getCurrentTileLayout() {
     return tilesLayouts.get(currentLevel);
   }
 
+  void nextLevel() {
+    player1.resetPosition();
+    player2.resetPosition();
+    currentLevel++;
+  }
 }

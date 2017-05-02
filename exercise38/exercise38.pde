@@ -23,30 +23,42 @@ Level level;
 
 void setup() {
   size(640, 640);
-  
+
   //font1 = createFont("tamagotchi.ttf", 35);
   //font2 = createFont("tamagotchi.ttf", 35);
   player1 = new Player("Warrior");
   player2 = new Player("Wizard");
   level = new Level();
-  
 }
 
 void draw() {
   fill(100);
-  rect(0,0,500,500);
+  rect(0, 0, 500, 500);
   noStroke();
   level.drawLevel();
-  fill(0);
-  
-  player1.updateMovement(ticksLastUpdate);
-  player2.updateMovement(ticksLastUpdate);
+  if (!level.hasEnded()) {
+    player1.updateMovement(ticksLastUpdate);
+    player2.updateMovement(ticksLastUpdate);
+    level.checkCollision();
+  } else { //shift to GUI?
+    rectMode(CORNERS);
+    fill(0);
+    rect(0, 0, 640, 640);
+    fill(255);
+    textAlign(CENTER, CENTER);
+    textSize(32);
+    text("GAME OVER", width/2, height/2);
+  }
   ticksLastUpdate = millis();
 }
 
 
 
 void keyPressed() {
+  //nextStage
+  if (char(keyCode) == 'M') {
+    level.currentLevel++;
+  }
   //Player 1
   if (char(keyCode) == 'W') {
     player1.moveUp();
