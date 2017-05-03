@@ -1,5 +1,9 @@
 class Player {
-  String[] playerClassList = {"Warrior", "Wizard", "Ranger", "Thief"}; //might need to change to int array
+  int durationOneFrame = 100; //in milliseconds
+  int frame = 0;
+  int frameMax = 8;
+  int ticksLastUpdate = millis();
+  int[] playerClassList = {0, 1, 2, 3};
   int playerWidth = 32;
   int playerHeight = 32;
   PVector position = new PVector(32 + playerWidth/2, 32 + playerWidth/2);
@@ -10,30 +14,31 @@ class Player {
   int moveRight;
   int moveUp;
   int moveDown;
-  String playerClass;
+  int playerClass;
   int hp;
-  int mana;
+  int mana;  
+  PImage spriteSheet;
 
-  Player(String playerClass) {
+  Player(int playerClass) {
+    spriteSheet = loadImage("sprites.png");
     this.playerClass = playerClass;
     switch(playerClass) { //set hp & mana
-    case "Warrior":
-
+    case 0:
       break;
-    case "Wizard":
+    case 1:
       break;
-    case "Ranger":
+    case 2:
       break;
-    case "Thief":
+    case 3:
       break;
     }
   }
-  
-  void resetPosition(){
+
+  void resetPosition() {
     position = new PVector(32 + playerWidth/2, 32 + playerWidth/2);
   }
 
-  void updateMovement(int ticksLastUpdate) {
+  void updateMovement() {
     rectMode(CENTER);
     ellipseMode(CENTER);
     velocity.x = walkSpeed * (moveLeft + moveRight) * float(millis() - ticksLastUpdate) * 0.001;
@@ -51,20 +56,34 @@ class Player {
         if (nextPosition.y > offset && nextPosition.y < (height - offset)) position.y = nextPosition.y;
       }
     }
+    
     switch(playerClass) {
-    case "Warrior":
-      fill(255, 0, 0);
-      ellipse(position.x, position.y, playerWidth, playerHeight);
+    case 0:
+      //fill(255, 0, 0);
+      //ellipse(position.x, position.y, playerWidth, playerHeight);
+      PImage f = spriteSheet.get(0 + (frame * 32), 0, 32, 23);
+      image(f, position.x, position.y);
       break;
-    case "Wizard":
+    case 1:
       fill(0, 255, 0);
       rect(position.x, position.y, playerWidth, playerHeight);
       break;
-    case "Ranger":
+    case 2:
       break;
-    case "Thief":
+    case 3:
       break;
     }
+    int delta = millis() - ticksLastUpdate;
+    if (delta >= durationOneFrame)
+    {
+      frame++;
+      if (frame >= frameMax) { 
+        frame = 0;
+      }
+      //ticksLast = millis(); //adds up time overshooting error
+      ticksLastUpdate += delta; //avoids adding up error
+    }
+    ticksLastUpdate += millis() - ticksLastUpdate;
   }
 
   void moveRight() {

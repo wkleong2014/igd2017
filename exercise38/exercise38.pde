@@ -26,8 +26,8 @@ void setup() {
 
   //font1 = createFont("tamagotchi.ttf", 35);
   //font2 = createFont("tamagotchi.ttf", 35);
-  player1 = new Player("Warrior");
-  player2 = new Player("Wizard");
+  player1 = new Player(0);
+  player2 = new Player(1);
   level = new Level();
 }
 
@@ -37,8 +37,8 @@ void draw() {
   noStroke();
   level.drawLevel();
   if (!level.hasEnded()) {
-    player1.updateMovement(ticksLastUpdate);
-    player2.updateMovement(ticksLastUpdate);
+    player1.updateMovement();
+    player2.updateMovement();
     level.checkCollision();
   } else { //shift to GUI?
     rectMode(CORNERS);
