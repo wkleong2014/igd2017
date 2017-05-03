@@ -9,9 +9,9 @@ class Player {
   int playerWidth = 32;
   int playerHeight = 32;
   PVector position = new PVector(32 + playerWidth/2, 32 + playerWidth/2);
-  float direction = 0; //set the direction of player
   PVector velocity = new PVector(0, 0);
   float walkSpeed = 200;
+  int direction = 4;
   int moveLeft;
   int moveRight;
   int moveUp;
@@ -41,7 +41,7 @@ class Player {
   }
 
   void updateMovement() {    
-    //println(frame);
+    println(direction);
     rectMode(CENTER);
     ellipseMode(CENTER);
     velocity.x = walkSpeed * (moveLeft + moveRight) * float(millis() - ticksLastUpdate) * 0.001;
@@ -71,10 +71,13 @@ class Player {
     }
     ticksLastUpdate = millis();
   }
+  
+  void setDirection(int direction){
+   this.direction = direction; 
+  }
 
   void moveRight() {
     moveRight = 1;
-    
   }
 
   void moveLeft() {

@@ -19,6 +19,10 @@ Player player1;
 Player player2;
 Level level;
 final int tileSize = 32;
+boolean isWPressed = false;
+boolean isAPressed = false;
+boolean isDPressed = false;
+boolean isSPressed = false;
 
 void setup() {
   size(640, 640);
@@ -51,20 +55,33 @@ void keyPressed() {
   if (char(keyCode) == 'M') {
     level.currentLevel++;
   }
+  
   //Player 1
   if (char(keyCode) == 'W') {
     player1.moveUp();
+    isWPressed = true;
+    player1.setDirection(0);
   }
   if (char(keyCode) == 'S') {
     player1.moveDown();
+    isSPressed = true;
+    player1.setDirection(4);
   }
   if (char(keyCode) == 'A') {
     player1.moveLeft();
+    isAPressed = true;
+    player1.setDirection(6);
   }
   if (char(keyCode) == 'D') {
     player1.moveRight();
-    //player1.direction = -1;
+    isDPressed = true;
+    player1.setDirection(2);
   }
+  if (char(keyCode) == 'A' && isWPressed || char(keyCode) == 'W' && isAPressed) player1.setDirection(7);
+  if (char(keyCode) == 'D' && isWPressed || char(keyCode) == 'W' && isDPressed) player1.setDirection(1);
+  if (char(keyCode) == 'A' && isSPressed || char(keyCode) == 'S' && isAPressed) player1.setDirection(5);
+  if (char(keyCode) == 'D' && isSPressed || char(keyCode) == 'S' && isDPressed) player1.setDirection(3);
+  
   //Player 2
   if (char(keyCode) == UP) {
     player2.moveUp();
@@ -85,15 +102,20 @@ void keyReleased() {
   //Player 1
   if (char(keyCode) == 'W') {
     player1.resetUp();
+    isWPressed = false;
   }
+   
   if (char(keyCode) == 'S') {
     player1.resetDown();
+    isSPressed = false;
   }
   if (char(keyCode) == 'A') {
     player1.resetLeft();
+    isAPressed = false;
   }
   if (char(keyCode) == 'D') {
     player1.resetRight();
+    isDPressed = false;
   }
 
   //Player 2
