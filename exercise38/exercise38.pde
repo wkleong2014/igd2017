@@ -19,7 +19,7 @@ Player player1;
 Player player2;
 int ticksLastUpdate = millis();
 Level level;
-
+final int tileSize = 32;
 
 void setup() {
   size(640, 640);

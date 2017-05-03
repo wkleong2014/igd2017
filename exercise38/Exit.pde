@@ -1,5 +1,4 @@
 class Exit{
- final int tileSize = 32;
  int posX;
  int posY;
  int exitWidth = tileSize;
