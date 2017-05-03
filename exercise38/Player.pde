@@ -1,7 +1,7 @@
 class Player {
   int durationOneFrame = 100; //in milliseconds
   int frame = 0;
-  int frameMax = 8;
+  int frameMax = 2;
   int ticksLastUpdate = millis();
   int[] playerClassList = {0, 1, 2, 3};
   int playerWidth = 32;
@@ -56,7 +56,7 @@ class Player {
         if (nextPosition.y > offset && nextPosition.y < (height - offset)) position.y = nextPosition.y;
       }
     }
-    
+    imageMode(CENTER);
     switch(playerClass) {
     case 0:
       //fill(255, 0, 0);

@@ -17,7 +17,6 @@ PFont font1;
 PFont font2;
 Player player1;
 Player player2;
-int ticksLastUpdate = millis();
 Level level;
 final int tileSize = 32;
 
@@ -35,11 +34,8 @@ void draw() {
   fill(100);
   rect(0, 0, 500, 500);
   noStroke();
-  level.drawLevel();
   if (!level.hasEnded()) {
-    player1.updateMovement();
-    player2.updateMovement();
-    level.checkCollision();
+    level.update();
   } else { //shift to GUI?
     rectMode(CORNERS);
     fill(0);
@@ -49,7 +45,6 @@ void draw() {
     textSize(32);
     text("GAME OVER", width/2, height/2);
   }
-  ticksLastUpdate = millis();
 }
 
 

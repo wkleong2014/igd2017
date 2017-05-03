@@ -2,6 +2,8 @@ class Level {
   int currentLevel = 1;
   HashMap<Integer, int[][]> tilesLayouts = new HashMap<Integer, int[][]>();
   HashMap<Integer, PImage> images = new HashMap<Integer, PImage>();
+  HashMap<Integer, int[]> monsterList = new HashMap<Integer, int[]>();
+  ArrayList<Monster> monsters = new ArrayList<Monster>();
   boolean endGame = false;
   Exit exit;
 
@@ -374,6 +376,21 @@ class Level {
     //  {49, 49, 49, 49, 49, 49, 49, 49, 49, 49, 49, 49, 49, 49, 49, 49, 49, 49, 49, 49}
     //  });
 
+    
+    initialiseImages();
+    initialiseMonsterList();
+    
+  }
+  
+  void update(){
+    drawLevel();
+    moveMonster();
+    player1.updateMovement();
+    player2.updateMovement();
+    checkCollision();
+  }
+  
+  void initialiseImages(){
     //load all images
     //for(int i=0;i<2;i++){ //total images - 1
     //  String str = i + ".png";
@@ -383,19 +400,16 @@ class Level {
     images.put(49, loadImage("49.png"));
   }
 
-  //void spawnMonster(int level) {
-  //  switch(level) {
-  //  case 1:
-
-  //    break;
-  //  }
-  //}
+  void initialiseMonsterList() {
+    monsterList.put(1, new int[]{3,2,3,3});
+  }
 
   boolean hasEnded() {
     return endGame;
   }
 
   void drawLevel() {
+    imageMode(CORNER);
     int[][] tileLayout = tilesLayouts.get(currentLevel);
     if (tileLayout == null) {
       endGame = true;
@@ -407,6 +421,10 @@ class Level {
         }
       }
     }
+  }
+  
+  void moveMonster(){
+    
   }
 
   void checkCollision() {
