@@ -41,7 +41,6 @@ class Player {
   }
 
   void updateMovement() {    
-    println(direction);
     rectMode(CENTER);
     ellipseMode(CENTER);
     velocity.x = walkSpeed * (moveLeft + moveRight) * float(millis() - ticksLastUpdate) * 0.001;
@@ -60,20 +59,21 @@ class Player {
       }
     }
     imageMode(CENTER);   
-    PImage sprite = spriteSheet.get(0 + (frame * 32), 0 + (playerClass * 32), 32, 32);
+    PImage sprite = spriteSheet.get((direction * 32) + (frame * 32), 0 + (playerClass * 32), 32, 32);
     image(sprite, position.x, position.y);
-    if (millis() - ticksLastAnimation >= ANIMATION_DURATION){
-            frame++;
+
+    if (millis() - ticksLastAnimation >= ANIMATION_DURATION && (velocity.x != 0 || velocity.y != 0)) {
+      frame++;
       if (frame >= frameMax) { 
         frame = 0;
-        }     
+      }     
       ticksLastAnimation += millis() - ticksLastAnimation;
     }
     ticksLastUpdate = millis();
   }
-  
-  void setDirection(int direction){
-   this.direction = direction; 
+
+  void setDirection(int direction) {
+    this.direction = direction;
   }
 
   void moveRight() {
