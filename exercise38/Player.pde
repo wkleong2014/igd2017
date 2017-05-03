@@ -1,8 +1,10 @@
 class Player {
-  int durationOneFrame = 100; //in milliseconds
+  final int ANIMATION_DURATION = 300; //in milliseconds
   int frame = 0;
   int frameMax = 2;
   int ticksLastUpdate = millis();
+  int ticksLastAnimation = 0;
+  int delta;
   int[] playerClassList = {0, 1, 2, 3};
   int playerWidth = 32;
   int playerHeight = 32;
@@ -38,7 +40,8 @@ class Player {
     position = new PVector(32 + playerWidth/2, 32 + playerWidth/2);
   }
 
-  void updateMovement() {
+  void updateMovement() {    
+    //println(frame);
     rectMode(CENTER);
     ellipseMode(CENTER);
     velocity.x = walkSpeed * (moveLeft + moveRight) * float(millis() - ticksLastUpdate) * 0.001;
@@ -56,38 +59,22 @@ class Player {
         if (nextPosition.y > offset && nextPosition.y < (height - offset)) position.y = nextPosition.y;
       }
     }
-    imageMode(CENTER);
-    switch(playerClass) {
-    case 0:
-      //fill(255, 0, 0);
-      //ellipse(position.x, position.y, playerWidth, playerHeight);
-      PImage f = spriteSheet.get(0 + (frame * 32), 0, 32, 23);
-      image(f, position.x, position.y);
-      break;
-    case 1:
-      fill(0, 255, 0);
-      rect(position.x, position.y, playerWidth, playerHeight);
-      break;
-    case 2:
-      break;
-    case 3:
-      break;
-    }
-    int delta = millis() - ticksLastUpdate;
-    if (delta >= durationOneFrame)
-    {
-      frame++;
+    imageMode(CENTER);   
+    PImage sprite = spriteSheet.get(0 + (frame * 32), 0 + (playerClass * 32), 32, 32);
+    image(sprite, position.x, position.y);
+    if (millis() - ticksLastAnimation >= ANIMATION_DURATION){
+            frame++;
       if (frame >= frameMax) { 
         frame = 0;
-      }
-      //ticksLast = millis(); //adds up time overshooting error
-      ticksLastUpdate += delta; //avoids adding up error
+        }     
+      ticksLastAnimation += millis() - ticksLastAnimation;
     }
-    ticksLastUpdate += millis() - ticksLastUpdate;
+    ticksLastUpdate = millis();
   }
 
   void moveRight() {
     moveRight = 1;
+    
   }
 
   void moveLeft() {
