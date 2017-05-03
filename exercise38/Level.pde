@@ -376,21 +376,42 @@ class Level {
     //  {49, 49, 49, 49, 49, 49, 49, 49, 49, 49, 49, 49, 49, 49, 49, 49, 49, 49, 49, 49}
     //  });
 
-    
     initialiseImages();
     initialiseMonsterList();
-    
   }
-  
-  void update(){
+
+  void update() {
     drawLevel();
+    if (monsters.size() == 0) generateMonster();
+    else drawMonster();
+    //set condition to move monster (every 1s?)
     moveMonster();
-    player1.updateMovement();
-    player2.updateMovement();
-    checkCollision();
+
+    player1.updateMovement(); //shift to when keypressed?
+    player2.updateMovement(); //shift to when keypressed?
+    level.checkCollision();
   }
-  
-  void initialiseImages(){
+
+  void generateMonster() {
+    int[] coordsOfMonster = monsterList.get(currentLevel);
+    for (int i=0; i<coordsOfMonster.length; i+=2) {
+      monsters.add(new Monster(coordsOfMonster[i] * tileSize, coordsOfMonster[i+1] * tileSize));
+    }
+  }
+
+  void drawMonster() {
+    for (Monster monster : monsters) {
+      monster.drawObj();
+    }
+  }
+
+  void moveMonster() {
+    for (Monster monster : monsters) {
+      //monster.drawObj();
+    }
+  }
+
+  void initialiseImages() {
     //load all images
     //for(int i=0;i<2;i++){ //total images - 1
     //  String str = i + ".png";
@@ -401,7 +422,7 @@ class Level {
   }
 
   void initialiseMonsterList() {
-    monsterList.put(1, new int[]{3,2,3,3});
+    monsterList.put(1, new int[]{3, 2, 3, 3});
   }
 
   boolean hasEnded() {
@@ -421,10 +442,6 @@ class Level {
         }
       }
     }
-  }
-  
-  void moveMonster(){
-    
   }
 
   void checkCollision() {

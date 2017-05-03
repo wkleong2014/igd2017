@@ -34,9 +34,8 @@ void draw() {
   fill(100);
   rect(0, 0, 500, 500);
   noStroke();
-  if (!level.hasEnded()) {
-    level.update();
-  } else { //shift to GUI?
+  level.update();
+  if (level.hasEnded()) {
     rectMode(CORNERS);
     fill(0);
     rect(0, 0, 640, 640);
@@ -46,8 +45,6 @@ void draw() {
     text("GAME OVER", width/2, height/2);
   }
 }
-
-
 
 void keyPressed() {
   //nextStage
