@@ -20,14 +20,17 @@ class Player {
   int hp;
   int mana;  
   PImage spriteSheet;
+  int projectileSpeed;
 
   Player(int playerClass) {
     spriteSheet = loadImage("sprites.png");
     this.playerClass = playerClass;
     switch(playerClass) { //set hp & mana
     case 0:
+      projectileSpeed = 5;
       break;
     case 1:
+      projectileSpeed = 3;
       break;
     case 2:
       break;
@@ -106,5 +109,10 @@ class Player {
 
   void resetDown() {
     moveDown = 0;
+  }
+  
+  void shootAmmo() {
+    Projectile proj = new Projectile(position.x, position.y, direction, projectileSpeed, playerClass);
+    level.projList.add(proj);
   }
 }

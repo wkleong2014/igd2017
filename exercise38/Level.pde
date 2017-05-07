@@ -5,6 +5,7 @@ class Level {
   HashMap<Integer, int[]> monsterList = new HashMap<Integer, int[]>();
   ArrayList<Monster> monsters = new ArrayList<Monster>();
   boolean endGame = false;
+  ArrayList<Projectile> projList = new ArrayList<Projectile>();
   Exit exit;
 
   Level() {
@@ -386,7 +387,7 @@ class Level {
     else drawMonster();
     //set condition to move monster (every 1s?)
     moveMonster();
-
+    moveObjects();
     player1.updateMovement(); //shift to when keypressed?
     player2.updateMovement(); //shift to when keypressed?
     level.checkCollision();
@@ -402,6 +403,48 @@ class Level {
   void drawMonster() {
     for (Monster monster : monsters) {
       monster.drawObj();
+    }
+  }
+
+  void moveObjects() {
+    for (int i=projList.size()-1; i>=0; i--) {
+      Projectile proj = projList.get(i);
+      int projectileSpeed = proj.getProjectileSpeed();
+      if (tilesLayouts.get(currentLevel)[(int)proj.posY/32][(int)proj.posX/32] == 49) {
+        projList.remove(proj);
+      } else {
+        switch(proj.getDirection()) {
+        case 0:
+          proj.decPosY(projectileSpeed);
+          break;
+        case 1:
+          proj.incPosX(projectileSpeed);
+          proj.decPosY(projectileSpeed);
+          break;
+        case 2:
+          proj.incPosX(projectileSpeed);
+          break;
+        case 3:
+          proj.incPosX(projectileSpeed);
+          proj.incPosY(projectileSpeed);
+          break;
+        case 4:
+          proj.incPosY(projectileSpeed);
+          break;
+        case 5:
+          proj.decPosX(projectileSpeed);
+          proj.incPosY(projectileSpeed);
+          break;
+        case 6:
+          proj.decPosX(projectileSpeed);
+          break;
+        case 7:
+          proj.decPosX(projectileSpeed);
+          proj.decPosY(projectileSpeed);
+          break;
+        }
+        proj.updateOb();
+      }
     }
   }
 
