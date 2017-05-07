@@ -407,6 +407,7 @@ class Level {
   }
 
   void moveObjects() {
+    println(projList.size());
     for (int i=projList.size()-1; i>=0; i--) {
       Projectile proj = projList.get(i);
       int projectileSpeed = proj.getProjectileSpeed();

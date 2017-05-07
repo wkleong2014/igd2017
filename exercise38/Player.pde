@@ -111,7 +111,7 @@ class Player {
     moveDown = 0;
   }
   
-  void shootAmmo() {
+  void shootProjectile() {
     Projectile proj = new Projectile(position.x, position.y, direction, projectileSpeed, playerClass);
     level.projList.add(proj);
   }

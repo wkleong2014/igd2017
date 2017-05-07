@@ -43,7 +43,6 @@ void draw() {
   rect(0, 0, 500, 500);
   noStroke();
   level.update();
-  println(player1.direction);
   if (level.hasEnded()) {
     rectMode(CORNERS);
     fill(0);
@@ -112,6 +111,14 @@ void keyPressed() {
   if (char(keyCode) == RIGHT && isUpPressed || char(keyCode) == UP && isRightPressed) player2.setDirection(1);
   if (char(keyCode) == LEFT && isDownPressed || char(keyCode) == DOWN && isLeftPressed) player2.setDirection(5);
   if (char(keyCode) == RIGHT && isDownPressed || char(keyCode) == DOWN && isRightPressed) player2.setDirection(3);
+  
+  if (key == ' ') {
+    player1.shootProjectile();
+  }
+
+  if (key == ENTER) {
+    player2.shootProjectile();
+  }
 }
 
 void keyReleased() {
@@ -166,13 +173,5 @@ void keyReleased() {
     isRightPressed = false;
     if (isUpPressed) player2.setDirection(0);
     if (isDownPressed) player2.setDirection(4);
-  }
-
-  if (key == ' ') {
-    player1.shootAmmo();
-  }
-
-  if (key == ENTER) {
-    player2.shootAmmo();
   }
 }
