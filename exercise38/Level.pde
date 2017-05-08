@@ -467,7 +467,17 @@ class Level {
 
   void moveMonster() {
     for (Monster monster : monsters) {
-      //monster.drawObj();
+      //have to loop through all active players
+      if (player1.position.x > monster.posX && tilesLayouts.get(currentLevel)[(int)monster.posY/32][(int)(monster.posX+16)/tileSize] != 49) {
+        monster.posX += 1;
+      } else if (player1.position.x < monster.posX && tilesLayouts.get(currentLevel)[(int)monster.posY/tileSize][(int)(monster.posX-16)/tileSize] != 49) {
+        monster.posX -= 1;
+      }
+      if (player1.position.y > monster.posY && tilesLayouts.get(currentLevel)[(int)(monster.posY+16)/32][(int)monster.posX/tileSize] != 49) {
+        monster.posY += 1;
+      } else if (player1.position.y < monster.posY && tilesLayouts.get(currentLevel)[(int)(monster.posY-16)/32][(int)monster.posX/tileSize] != 49) {
+        monster.posY -= 1;
+      }
     }
   }
 
@@ -522,6 +532,8 @@ class Level {
   void nextLevel() {
     player1.resetPosition();
     player2.resetPosition();
+    monsters.clear();
+    projList.clear();
     currentLevel++;
   }
 }

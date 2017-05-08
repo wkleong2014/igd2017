@@ -1,16 +1,16 @@
 class Monster {
   int hp = 2;
-  int posX;
-  int posY;
+  float posX;
+  float posY;
   int diameter = tileSize;
   
   Monster(int x, int y) {
-    posX = x;
-    posY = y;
+    posX = x+16;
+    posY = y+16;
   }
   
   void drawObj(){
-    ellipseMode(CORNER);
+    ellipseMode(CENTER);
     fill(0,0,255);
     ellipse(posX,posY,diameter,diameter);
   }
