@@ -172,7 +172,8 @@ void keyReleased() {
       player1.shootProjectile();
     }
   } else {
-    if (char(keyCode) == 'A') {
+    if (char(keyCode) == 'A') 
+    {
       if (classCounter1 == 0) 
       {
         classCounter1 = 3;
@@ -182,15 +183,22 @@ void keyReleased() {
         classCounter1--;
       }
     }
-    if (char(keyCode) == 'D') {
-      classCounter1++;
+    if (char(keyCode) == 'D') 
+    {
+      if (classCounter1 == 3) 
+      {
+        classCounter1 = 0;
+      } 
+      else
+      {
+        classCounter1++;
+      }      
     }
-    if (char(keyCode) == 'X' && !hasPlayer1Joined) {
-      hasPlayer1Joined = true;
-      
+    if (char(keyCode) == 'X' && !hasPlayer1Joined) {      
+      hasPlayer1Joined = true;      
     }
     else if (char(keyCode) == 'X' && hasPlayer1Joined) { 
-      player1 = new Player(0);
+      player1 = new Player(classCounter1);
     }
 
     // OTHER PLAYERS LATER DO
