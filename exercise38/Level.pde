@@ -392,8 +392,8 @@ class Level {
     //set condition to move monster (every 1s?)
     moveMonster();
     moveObjects();
-    player1.updateMovement(); //shift to when keypressed?
-    player2.updateMovement(); //shift to when keypressed?
+    if(player1 != null) player1.updateMovement(); //shift to when keypressed?
+    if(player2 != null) player2.updateMovement(); //shift to when keypressed?
   }
 
   void generateMonster() {
@@ -468,15 +468,17 @@ class Level {
   void moveMonster() {
     for (Monster monster : monsters) {
       //have to loop through all active players
-      if (player1.position.x > monster.posX && tilesLayouts.get(currentLevel)[(int)monster.posY/32][(int)(monster.posX+16)/tileSize] != 49) {
-        monster.posX += 1;
-      } else if (player1.position.x < monster.posX && tilesLayouts.get(currentLevel)[(int)monster.posY/tileSize][(int)(monster.posX-16)/tileSize] != 49) {
-        monster.posX -= 1;
-      }
-      if (player1.position.y > monster.posY && tilesLayouts.get(currentLevel)[(int)(monster.posY+16)/32][(int)monster.posX/tileSize] != 49) {
-        monster.posY += 1;
-      } else if (player1.position.y < monster.posY && tilesLayouts.get(currentLevel)[(int)(monster.posY-16)/32][(int)monster.posX/tileSize] != 49) {
-        monster.posY -= 1;
+      if (player1 != null) {
+        if (player1.position.x > monster.posX && tilesLayouts.get(currentLevel)[(int)monster.posY/32][(int)(monster.posX+16)/tileSize] != 49) {
+          monster.posX += 1;
+        } else if (player1.position.x < monster.posX && tilesLayouts.get(currentLevel)[(int)monster.posY/tileSize][(int)(monster.posX-16)/tileSize] != 49) {
+          monster.posX -= 1;
+        }
+        if (player1.position.y > monster.posY && tilesLayouts.get(currentLevel)[(int)(monster.posY+16)/32][(int)monster.posX/tileSize] != 49) {
+          monster.posY += 1;
+        } else if (player1.position.y < monster.posY && tilesLayouts.get(currentLevel)[(int)(monster.posY-16)/32][(int)monster.posX/tileSize] != 49) {
+          monster.posY -= 1;
+        }
       }
     }
   }
@@ -516,10 +518,10 @@ class Level {
 
   void checkCollision() {
     if (exit != null) {
-      if (player1.position.x >= exit.posX && player1.position.x <= exit.posX + exit.exitWidth && player1.position.y >= exit.posY && player1.position.y <= exit.posY + exit.exitHeight) {
+      if (player1 != null && player1.position.x >= exit.posX && player1.position.x <= exit.posX + exit.exitWidth && player1.position.y >= exit.posY && player1.position.y <= exit.posY + exit.exitHeight) {
         nextLevel();
       }
-      if (player2.position.x >= exit.posX && player2.position.x <= exit.posX + exit.exitWidth && player2.position.y >= exit.posY && player2.position.y <= exit.posY + exit.exitHeight) {
+      if (player2 != null && player2.position.x >= exit.posX && player2.position.x <= exit.posX + exit.exitWidth && player2.position.y >= exit.posY && player2.position.y <= exit.posY + exit.exitHeight) {
         nextLevel();
       }
     }

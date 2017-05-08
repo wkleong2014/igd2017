@@ -2,10 +2,16 @@ class GUI
 { 
   PImage startScreen = loadImage("start_screen.png");
   boolean displayStartScreen;
-
+  HashMap<Integer, String> classes; 
+  
   GUI() 
   {
     displayStartScreen = true;
+    classes = new HashMap<Integer, String>();
+    classes.put(0, "GIANT");
+    classes.put(1, "KNIGHT");
+    classes.put(2, "MAGE");
+    classes.put(3, "ARCHER");
   }
 
   void update()
@@ -33,8 +39,17 @@ class GUI
      
       text("HIGHSCORE: " + highscore,820,200);
       
-      fill(255,0,0);
-      text("PLAYER 1\nPRESS 'X' TO JOIN!", 820, 260);
+      if (!hasPlayer1Joined) {
+        fill(255,0,0);
+        text("PLAYER 1\nPRESS 'X' TO JOIN!", 820, 260);
+      }
+      else
+      {
+        fill(255,0,0);
+        text("PLAYER 1\n< " + classes.get(classCounter1) +" >", 820, 260);
+      }
+      
+      
       
       fill(0,255,0);
       text("PLAYER 2\nPRESS 'SPACE' TO JOIN!", 820, 367);
