@@ -1,5 +1,6 @@
 class Level {
   int currentLevel = 1;
+  boolean generatedMon = false;
   HashMap<Integer, int[][]> tilesLayouts = new HashMap<Integer, int[][]>();
   HashMap<Integer, PImage> images = new HashMap<Integer, PImage>();
   HashMap<Integer, int[]> monsterList = new HashMap<Integer, int[]>();
@@ -383,14 +384,18 @@ class Level {
 
   void update() {
     drawLevel();
-    if (monsters.size() == 0) generateMonster();
+    level.checkCollision();
+    if (!generatedMon && monsters.size()==0){
+      generateMonster();
+      generatedMon = true;
+    }
     else drawMonster();
     //set condition to move monster (every 1s?)
     moveMonster();
     moveObjects();
     player1.updateMovement(); //shift to when keypressed?
     player2.updateMovement(); //shift to when keypressed?
-    level.checkCollision();
+    
   }
 
   void generateMonster() {
@@ -401,13 +406,14 @@ class Level {
   }
 
   void drawMonster() {
-    for (Monster monster : monsters) {
-      monster.drawObj();
+    for (int i=monsters.size()-1; i>=0; i--) {
+      Monster monster = monsters.get(i);
+      if(monster.hp <= 0) monsters.remove(monster);
+      else monster.drawObj();
     }
   }
 
   void moveObjects() {
-    println(projList.size());
     for (int i=projList.size()-1; i>=0; i--) {
       Projectile proj = projList.get(i);
       int projectileSpeed = proj.getProjectileSpeed();
@@ -495,6 +501,18 @@ class Level {
       }
       if (player2.position.x >= exit.posX && player2.position.x <= exit.posX + exit.exitWidth && player2.position.y >= exit.posY && player2.position.y <= exit.posY + exit.exitHeight) {
         nextLevel();
+      }
+    }
+    
+    for (Projectile proj : projList) {
+      if (monsters.size()!=0) {
+        for (int i=monsters.size()-1; i>=0; i--) {
+          Monster monster = monsters.get(i);
+          if (dist(proj.posX, proj.posY, monster.posX, monster.posY) <= (proj.diameter/2 + monster.diameter/2)) { //Circle to Circle Collision
+            println("collide");
+            monster.hp -= 5;
+          }
+        }
       }
     }
   }

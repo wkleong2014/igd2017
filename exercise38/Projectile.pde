@@ -5,7 +5,7 @@ class Projectile {
   float diameter; //if need to increase ammo size
   int projectileSpeed;
   int projectileType;
-  PImage spriteSheet;
+  
   final int ANIMATION_DURATION = 300; //in milliseconds
   int frame = 0;
   int frameMax = 7;  
@@ -18,7 +18,6 @@ class Projectile {
     this.posY = posY;
     this.projectileSpeed = projectileSpeed;
     this.projectileType = projectileType;
-    spriteSheet = loadImage("sprites.png"); 
     updateOb();
   }
 

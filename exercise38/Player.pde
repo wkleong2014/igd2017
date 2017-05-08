@@ -19,18 +19,16 @@ class Player {
   int playerClass;
   int hp;
   int mana;  
-  PImage spriteSheet;
   int projectileSpeed;
 
   Player(int playerClass) {
-    spriteSheet = loadImage("sprites.png");
     this.playerClass = playerClass;
     switch(playerClass) { //set hp & mana
     case 0:
-      projectileSpeed = 5;
+      projectileSpeed = 7;
       break;
     case 1:
-      projectileSpeed = 3;
+      projectileSpeed = 5;
       break;
     case 2:
       break;
@@ -112,7 +110,36 @@ class Player {
   }
   
   void shootProjectile() {
-    Projectile proj = new Projectile(position.x, position.y, direction, projectileSpeed, playerClass);
+    int offset = 20;
+    Projectile proj;
+    switch(direction){
+        default:
+          proj = new Projectile(position.x, position.y, direction, projectileSpeed, playerClass);
+        case 0:
+          proj = new Projectile(position.x, position.y - offset, direction, projectileSpeed, playerClass);
+          break;
+        case 1:
+          proj = new Projectile(position.x + offset, position.y - offset, direction, projectileSpeed, playerClass);
+          break;
+        case 2:
+          proj = new Projectile(position.x + offset, position.y, direction, projectileSpeed, playerClass);
+          break;
+        case 3:
+          proj = new Projectile(position.x + offset, position.y + offset, direction, projectileSpeed, playerClass);
+          break;
+        case 4:
+          proj = new Projectile(position.x, position.y + offset, direction, projectileSpeed, playerClass);
+          break;
+        case 5:
+          proj = new Projectile(position.x - offset, position.y + offset, direction, projectileSpeed, playerClass);
+          break;
+        case 6:
+          proj = new Projectile(position.x - offset, position.y, direction, projectileSpeed, playerClass);
+          break;
+        case 7:
+          proj = new Projectile(position.x - offset, position.y - offset, direction, projectileSpeed, playerClass);
+          break;
+    }
     level.projList.add(proj);
   }
 }

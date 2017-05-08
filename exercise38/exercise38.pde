@@ -27,10 +27,11 @@ boolean isUpPressed = false;
 boolean isDownPressed = false;
 boolean isLeftPressed = false;
 boolean isRightPressed = false;
+PImage spriteSheet;
 
 void setup() {
   size(640, 640);
-
+  spriteSheet = loadImage("sprites.png"); 
   //font1 = createFont("tamagotchi.ttf", 35);
   //font2 = createFont("tamagotchi.ttf", 35);
   player1 = new Player(0);
@@ -112,13 +113,6 @@ void keyPressed() {
   if (char(keyCode) == LEFT && isDownPressed || char(keyCode) == DOWN && isLeftPressed) player2.setDirection(5);
   if (char(keyCode) == RIGHT && isDownPressed || char(keyCode) == DOWN && isRightPressed) player2.setDirection(3);
   
-  if (key == ' ') {
-    player1.shootProjectile();
-  }
-
-  if (key == ENTER) {
-    player2.shootProjectile();
-  }
 }
 
 void keyReleased() {
@@ -173,5 +167,13 @@ void keyReleased() {
     isRightPressed = false;
     if (isUpPressed) player2.setDirection(0);
     if (isDownPressed) player2.setDirection(4);
+  }
+  
+  if (key == ' ') {
+    player1.shootProjectile();
+  }
+
+  if (key == ENTER) {
+    player2.shootProjectile();
   }
 }

@@ -1,15 +1,17 @@
 class Monster {
-  int hp = 0;
+  int hp = 10;
   int posX;
   int posY;
+  int diameter = tileSize;
+  
   Monster(int x, int y) {
     posX = x;
     posY = y;
   }
   
   void drawObj(){
-    rectMode(CORNER);
+    ellipseMode(CORNER);
     fill(0,0,255);
-    rect(posX,posY,tileSize,tileSize);
+    ellipse(posX,posY,diameter,diameter);
   }
 }
