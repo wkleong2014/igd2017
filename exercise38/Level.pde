@@ -392,8 +392,11 @@ class Level {
     //set condition to move monster (every 1s?)
     moveMonster();
     moveObjects();
-    if(player1 != null) player1.updateMovement(); //shift to when keypressed?
-    if(player2 != null) player2.updateMovement(); //shift to when keypressed?
+    if(player1 != null) player1.updateMovement();
+    if(player2 != null) player2.updateMovement();
+    if(player3 != null) player3.updateMovement();
+    if(player4 != null) player4.updateMovement();
+    
   }
 
   void generateMonster() {
@@ -532,8 +535,10 @@ class Level {
   }
 
   void nextLevel() {
-    player1.resetPosition();
-    player2.resetPosition();
+    if(player1 != null) player1.resetPosition();
+    if(player2 != null) player2.resetPosition();
+    if(player3 != null) player3.resetPosition();
+    if(player4 != null) player4.resetPosition();
     monsters.clear();
     projList.clear();
     currentLevel++;

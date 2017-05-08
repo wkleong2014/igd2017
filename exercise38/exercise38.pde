@@ -25,21 +25,34 @@ Player player2;
 Player player3;
 Player player4;
 int classCounter1 = 0;
+int classCounter2 = 0;
+int classCounter3 = 0;
+int classCounter4 = 0;
 Level level;
 GUI gui;
 final int tileSize = 32;
 int highscore = 999999999; // TO BE DEFINED LATER
 boolean isWPressed = false;
+boolean isSPressed = false;
 boolean isAPressed = false;
 boolean isDPressed = false;
-boolean isSPressed = false;
+boolean isGPressed = false;
+boolean isBPressed = false;
+boolean isVPressed = false;
+boolean isNPressed = false;
+boolean isIPressed = false;
+boolean isKPressed = false;
+boolean isJPressed = false;
+boolean isLPressed = false;
 boolean isUpPressed = false;
 boolean isDownPressed = false;
 boolean isLeftPressed = false;
 boolean isRightPressed = false;
-boolean hasStartScreen = true;
 boolean hasPlayer1Joined = false;
-
+boolean hasPlayer2Joined = false;
+boolean hasPlayer3Joined = false;
+boolean hasPlayer4Joined = false;
+boolean hasStartScreen = true;
 void setup() {  
   size(1000, 640);
   spriteSheet = loadImage("sprites.png"); 
@@ -70,7 +83,6 @@ void draw() {
   }
 }
 
-// WASD|X, GVBN|SPACE, IJKL|M, UPLEFTDOWNRIGHT|ENTER
 void keyPressed() {  
   // Skip start screen
   if (hasStartScreen) 
@@ -110,46 +122,101 @@ void keyPressed() {
     if (char(keyCode) == 'A' && isSPressed || char(keyCode) == 'S' && isAPressed) player1.setDirection(5);
     if (char(keyCode) == 'D' && isSPressed || char(keyCode) == 'S' && isDPressed) player1.setDirection(3);
   }
-
+  
+  //Player 2
   if (player2 != null) {
-    //Player 2
-    if (char(keyCode) == UP) {
+    if (char(keyCode) == 'G') {
       player2.moveUp();
-      isUpPressed = true;
+      isGPressed = true;
       player2.setDirection(0);
     }
-    if (char(keyCode) == DOWN) {
+    if (char(keyCode) == 'B') {
       player2.moveDown();
-      isDownPressed = true;
+      isBPressed = true;
       player2.setDirection(4);
     }
-    if (char(keyCode) == LEFT) {
+    if (char(keyCode) == 'V') {
       player2.moveLeft();
-      isLeftPressed = true;
+      isVPressed = true;
       player2.setDirection(6);
     }
-    if (char(keyCode) == RIGHT) {
+    if (char(keyCode) == 'N') {
       player2.moveRight();
-      isRightPressed = true;
+      isNPressed = true;
       player2.setDirection(2);
     }
-    if (char(keyCode) == LEFT && isUpPressed || char(keyCode) == UP && isLeftPressed) player2.setDirection(7);
-    if (char(keyCode) == RIGHT && isUpPressed || char(keyCode) == UP && isRightPressed) player2.setDirection(1);
-    if (char(keyCode) == LEFT && isDownPressed || char(keyCode) == DOWN && isLeftPressed) player2.setDirection(5);
-    if (char(keyCode) == RIGHT && isDownPressed || char(keyCode) == DOWN && isRightPressed) player2.setDirection(3);
+    if (char(keyCode) == 'V' && isGPressed || char(keyCode) == 'G' && isVPressed) player2.setDirection(7);
+    if (char(keyCode) == 'N' && isGPressed || char(keyCode) == 'G' && isNPressed) player2.setDirection(1);
+    if (char(keyCode) == 'V' && isBPressed || char(keyCode) == 'B' && isVPressed) player2.setDirection(5);
+    if (char(keyCode) == 'N' && isBPressed || char(keyCode) == 'B' && isNPressed) player2.setDirection(3);
+  }
+  
+  //Player 3
+  if (player3 != null) {
+    if (char(keyCode) == 'I') {
+      player3.moveUp();
+      isIPressed = true;
+      player3.setDirection(0);
+    }
+    if (char(keyCode) == 'K') {
+      player3.moveDown();
+      isKPressed = true;
+      player3.setDirection(4);
+    }
+    if (char(keyCode) == 'J') {
+      player3.moveLeft();
+      isJPressed = true;
+      player3.setDirection(6);
+    }
+    if (char(keyCode) == 'L') {
+      player3.moveRight();
+      isLPressed = true;
+      player3.setDirection(2);
+    }
+    if (char(keyCode) == 'J' && isIPressed || char(keyCode) == 'I' && isJPressed) player3.setDirection(7);
+    if (char(keyCode) == 'L' && isIPressed || char(keyCode) == 'I' && isLPressed) player3.setDirection(1);
+    if (char(keyCode) == 'J' && isKPressed || char(keyCode) == 'K' && isJPressed) player3.setDirection(5);
+    if (char(keyCode) == 'L' && isKPressed || char(keyCode) == 'K' && isLPressed) player3.setDirection(3);
+  }
+
+  //Player4
+  if (player4 != null) {
+    if (char(keyCode) == UP) {
+      player4.moveUp();
+      isUpPressed = true;
+      player4.setDirection(0);
+    }
+    if (char(keyCode) == DOWN) {
+      player4.moveDown();
+      isDownPressed = true;
+      player4.setDirection(4);
+    }
+    if (char(keyCode) == LEFT) {
+      player4.moveLeft();
+      isLeftPressed = true;
+      player4.setDirection(6);
+    }
+    if (char(keyCode) == RIGHT) {
+      player4.moveRight();
+      isRightPressed = true;
+      player4.setDirection(2);
+    }
+    if (char(keyCode) == LEFT && isUpPressed || char(keyCode) == UP && isLeftPressed) player4.setDirection(7);
+    if (char(keyCode) == RIGHT && isUpPressed || char(keyCode) == UP && isRightPressed) player4.setDirection(1);
+    if (char(keyCode) == LEFT && isDownPressed || char(keyCode) == DOWN && isLeftPressed) player4.setDirection(5);
+    if (char(keyCode) == RIGHT && isDownPressed || char(keyCode) == DOWN && isRightPressed) player4.setDirection(3);
   }
 }
 
 void keyReleased() {
+  //Player 1
   if (player1 != null) {
-    //Player 1
     if (char(keyCode) == 'W') {
       player1.resetUp();
       isWPressed = false;
       if (isAPressed) player1.setDirection(6);
       if (isDPressed) player1.setDirection(2);
     }
-
     if (char(keyCode) == 'S') {
       player1.resetDown();
       isSPressed = false;
@@ -177,8 +244,7 @@ void keyReleased() {
       if (classCounter1 == 0) 
       {
         classCounter1 = 3;
-      } 
-      else
+      } else
       {
         classCounter1--;
       }
@@ -188,69 +254,190 @@ void keyReleased() {
       if (classCounter1 == 3) 
       {
         classCounter1 = 0;
-      } 
-      else
+      } else
       {
         classCounter1++;
-      }      
+      }
     }
     if (char(keyCode) == 'X' && !hasPlayer1Joined) {      
-      hasPlayer1Joined = true;      
-    }
-    else if (char(keyCode) == 'X' && hasPlayer1Joined) { 
+      hasPlayer1Joined = true;
+    } else if (char(keyCode) == 'X' && hasPlayer1Joined) { 
       player1 = new Player(classCounter1);
+    } 
+  }
+    
+  //Player 2
+  if (player2 != null) {
+    if (char(keyCode) == 'G') {
+      player2.resetUp();
+      isGPressed = false;
+      if (isVPressed) player2.setDirection(6);
+      if (isNPressed) player2.setDirection(2);
     }
-
-    // OTHER PLAYERS LATER DO
-    //if (key == ' ')
-    //{
-    //  player2 = new Player(1);
-    //}
-
-    //if (char(keyCode) == 'M') 
-    //{ 
-    //  player3 = new Player(2);
-    //}    
-
-    //if (key == ENTER)
-    //{
-    //  player4 = new Player(3);
-    //}
+    if (char(keyCode) == 'B') {
+      player2.resetDown();
+      isBPressed = false;
+      if (isVPressed) player2.setDirection(6);
+      if (isNPressed) player2.setDirection(2);
+    }
+    if (char(keyCode) == 'V') {
+      player2.resetLeft();
+      isVPressed = false;
+      if (isGPressed) player2.setDirection(0);
+      if (isBPressed) player2.setDirection(4);
+    }
+    if (char(keyCode) == 'N') {
+      player2.resetRight();
+      isNPressed = false;
+      if (isGPressed) player2.setDirection(0);
+      if (isBPressed) player2.setDirection(4);
+    }
+    if (char(keyCode) == ' ') {
+      player2.shootProjectile();
+    }
+  } else {
+    if (char(keyCode) == 'V') 
+    {
+      if (classCounter2 == 0) 
+      {
+        classCounter2 = 3;
+      } else
+      {
+        classCounter2--;
+      }
+    }
+    if (char(keyCode) == 'N') 
+    {
+      if (classCounter2 == 3) 
+      {
+        classCounter2 = 0;
+      } else
+      {
+        classCounter2++;
+      }
+    }
+    if (char(keyCode) == ' ' && !hasPlayer2Joined) {      
+      hasPlayer2Joined = true;
+    } else if (char(keyCode) == ' ' && hasPlayer2Joined) { 
+      player2 = new Player(classCounter2);
+    } 
+  }
+  
+  //Player 3
+  if (player3 != null) {
+    if (char(keyCode) == 'I') {
+      player3.resetUp();
+      isIPressed = false;
+      if (isJPressed) player3.setDirection(6);
+      if (isLPressed) player3.setDirection(2);
+    }
+    if (char(keyCode) == 'K') {
+      player3.resetDown();
+      isKPressed = false;
+      if (isJPressed) player3.setDirection(6);
+      if (isLPressed) player3.setDirection(2);
+    }
+    if (char(keyCode) == 'J') {
+      player3.resetLeft();
+      isJPressed = false;
+      if (isIPressed) player3.setDirection(0);
+      if (isKPressed) player3.setDirection(4);
+    }
+    if (char(keyCode) == 'L') {
+      player3.resetRight();
+      isLPressed = false;
+      if (isIPressed) player3.setDirection(0);
+      if (isKPressed) player3.setDirection(4);
+    }
+    if (char(keyCode) == 'M') {
+      player3.shootProjectile();
+    }
+  } else {
+    if (char(keyCode) == 'J') 
+    {
+      if (classCounter3 == 0) 
+      {
+        classCounter3 = 3;
+      } else
+      {
+        classCounter3--;
+      }
+    }
+    if (char(keyCode) == 'L') 
+    {
+      if (classCounter3 == 3) 
+      {
+        classCounter3 = 0;
+      } else
+      {
+        classCounter3++;
+      }
+    }
+    if (char(keyCode) == 'M' && !hasPlayer3Joined) {      
+      hasPlayer3Joined = true;
+    } else if (char(keyCode) == 'M' && hasPlayer3Joined) { 
+      player3 = new Player(classCounter3);
+    } 
   }
 
-  if (player2 != null) {
-    //Player 2
+  //Player4
+  if (player4 != null) {
     if (char(keyCode) == UP) {
-      player2.resetUp();
+      player4.resetUp();
       isUpPressed = false;
-      if (isLeftPressed) player2.setDirection(6);
-      if (isRightPressed) player2.setDirection(2);
+      if (isLeftPressed) player4.setDirection(6);
+      if (isRightPressed) player4.setDirection(2);
     }
     if (char(keyCode) == DOWN) {
-      player2.resetDown();
+      player4.resetDown();
       isDownPressed = false;
-      if (isLeftPressed) player2.setDirection(6);
-      if (isRightPressed) player2.setDirection(2);
+      if (isLeftPressed) player4.setDirection(6);
+      if (isRightPressed) player4.setDirection(2);
     }
     if (char(keyCode) == LEFT) {
-      player2.resetLeft();
+      player4.resetLeft();
       isLeftPressed = false;
-      if (isUpPressed) player2.setDirection(0);
-      if (isDownPressed) player2.setDirection(4);
+      if (isUpPressed) player4.setDirection(0);
+      if (isDownPressed) player4.setDirection(4);
     }
     if (char(keyCode) == RIGHT) {
-      player2.resetRight();
+      player4.resetRight();
       isRightPressed = false;
-      if (isUpPressed) player2.setDirection(0);
-      if (isDownPressed) player2.setDirection(4);
+      if (isUpPressed) player4.setDirection(0);
+      if (isDownPressed) player4.setDirection(4);
     }
 
     if (key == ENTER) {
-      player2.shootProjectile();
+      player4.shootProjectile();
+    }
+  } else {
+    if (char(keyCode) == LEFT) 
+    {
+      if (classCounter4 == 0) 
+      {
+        classCounter4 = 3;
+      } else
+      {
+        classCounter4--;
+      }
+    }
+    if (char(keyCode) == RIGHT) 
+    {
+      if (classCounter4 == 3) 
+      {
+        classCounter4 = 0;
+      } else
+      {
+        classCounter4++;
+      }
+    }
+    if (key == ENTER && !hasPlayer4Joined) {      
+      hasPlayer4Joined = true;
+    } else if (key == ENTER && hasPlayer4Joined) { 
+      player4 = new Player(classCounter4);
     }
   }
 }
-
 
 void mouseClicked()
 {

@@ -35,31 +35,57 @@ class GUI
      
       text("HIGHSCORE: " + highscore,820,200);
       
+      fill(255,0,0);
       if (!hasPlayer1Joined) {
-        fill(255,0,0);
         text("PLAYER 1\nPRESS 'X' TO JOIN!", 820, 260);
       }
       else if (hasPlayer1Joined && player1 == null)
       {
-        fill(255,0,0);
         text("PLAYER 1\n< " + classes[classCounter1] +" >", 820, 260);
       }      
       else if (hasPlayer1Joined && player1 != null)
       {
-        fill(255,0,0);
-        text(classes[classCounter1] +"\nHP: XXX SCORE: XXX", 820, 260);
+        text("PLAYER 1 (" + classes[classCounter1] +")\nHP: " + player1.getHP() + " SCORE: " + player1.getScore(), 820, 260);
       }
       
-      
-      
       fill(0,255,0);
-      text("PLAYER 2\nPRESS 'SPACE' TO JOIN!", 820, 367);
+      if (!hasPlayer2Joined) {
+        text("PLAYER 2\nPRESS 'SPACE' TO JOIN!", 820, 367);
+      }
+      else if (hasPlayer2Joined && player2 == null)
+      {
+        text("PLAYER 2\n< " + classes[classCounter2] +" >", 820, 367);
+      }      
+      else if (hasPlayer2Joined && player2 != null)
+      {
+        text("PLAYER 2 (" + classes[classCounter2] +")\nHP: " + player2.getHP() + " SCORE: " + player2.getScore(), 820, 367);
+      }
       
       fill(0,0,255);
-      text("PLAYER 3\nPRESS 'M' TO JOIN!", 820, 473);
+      if (!hasPlayer3Joined) {
+        text("PLAYER 3\nPRESS 'M' TO JOIN!", 820, 473);
+      }
+      else if (hasPlayer3Joined && player3 == null)
+      {
+        text("PLAYER 3\n< " + classes[classCounter3] +" >", 820, 473);
+      }      
+      else if (hasPlayer3Joined && player3 != null)
+      {
+        text("PLAYER 3 (" + classes[classCounter3] +")\nHP: " + player3.getHP() + " SCORE: " + player3.getScore(), 820, 473);
+      }
       
       fill(0,255,255);
-      text("PLAYER 4\nPRESS 'ENTER' TO JOIN!", 820, 580);
+      if (!hasPlayer4Joined) {
+        text("PLAYER 4\nPRESS 'ENTER' TO JOIN!", 820, 580);
+      }
+      else if (hasPlayer4Joined && player4 == null)
+      {
+        text("PLAYER 4\n< " + classes[classCounter4] +" >", 820, 580);
+      }      
+      else if (hasPlayer4Joined && player4 != null)
+      {
+        text("PLAYER 4 (" + classes[classCounter4] +")\nHP: " + player4.getHP() + " SCORE: " + player4.getScore(), 820, 580);
+      }
     }
   }
 

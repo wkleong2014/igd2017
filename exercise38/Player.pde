@@ -20,10 +20,12 @@ class Player {
   int hp;
   int mana;  
   int projectileSpeed;
-  int projectileDamage;  
+  int projectileDamage;
+  int score;
 
   Player(int playerClass) {
     this.playerClass = playerClass;
+    score = 0;
     switch(playerClass) { //set hp & mana
     case 0:
       hp = 500;
@@ -156,5 +158,9 @@ class Player {
   int getHP()
   {
     return hp;
+  }
+  
+  int getScore(){
+   return score; 
   }
 }
