@@ -5,19 +5,21 @@ class Projectile {
   float diameter; //if need to increase ammo size
   int projectileSpeed;
   int projectileType;
+  int projectileDamage;
   
   final int ANIMATION_DURATION = 300; //in milliseconds
   int frame = 0;
   int frameMax = 7;  
   int ticksLastAnimation = 0;
 
-  Projectile(float posX, float posY, int direction, int projectileSpeed, int projectileType) {
+  Projectile(float posX, float posY, int direction, int projectileSpeed, int projectileType, int projectileDamage) {
     this.posX = posX;
     this.direction = direction; //determines if the ammo is shot facing right or left
     diameter = 10;
     this.posY = posY;
     this.projectileSpeed = projectileSpeed;
     this.projectileType = projectileType;
+    this.projectileDamage = projectileDamage;
     updateOb();
   }
 
@@ -56,5 +58,9 @@ class Projectile {
 
   int getDirection() {
     return direction;
+  }
+  
+  int getProjectileDamage(){
+    return projectileDamage;
   }
 }

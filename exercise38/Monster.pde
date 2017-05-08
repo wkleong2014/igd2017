@@ -1,5 +1,5 @@
 class Monster {
-  int hp = 10;
+  int hp = 2;
   int posX;
   int posY;
   int diameter = tileSize;
@@ -13,5 +13,9 @@ class Monster {
     ellipseMode(CORNER);
     fill(0,0,255);
     ellipse(posX,posY,diameter,diameter);
+  }
+  
+  void getHit(int damage){
+    hp -= damage;
   }
 }

@@ -385,17 +385,15 @@ class Level {
   void update() {
     drawLevel();
     level.checkCollision();
-    if (!generatedMon && monsters.size()==0){
+    if (!generatedMon && monsters.size()==0) {
       generateMonster();
       generatedMon = true;
-    }
-    else drawMonster();
+    } else drawMonster();
     //set condition to move monster (every 1s?)
     moveMonster();
     moveObjects();
     player1.updateMovement(); //shift to when keypressed?
     player2.updateMovement(); //shift to when keypressed?
-    
   }
 
   void generateMonster() {
@@ -408,7 +406,7 @@ class Level {
   void drawMonster() {
     for (int i=monsters.size()-1; i>=0; i--) {
       Monster monster = monsters.get(i);
-      if(monster.hp <= 0) monsters.remove(monster);
+      if (monster.hp <= 0) monsters.remove(monster);
       else monster.drawObj();
     }
   }
@@ -420,37 +418,49 @@ class Level {
       if (tilesLayouts.get(currentLevel)[(int)proj.posY/32][(int)proj.posX/32] == 49) {
         projList.remove(proj);
       } else {
-        switch(proj.getDirection()) {
+        switch(monsters.size()) {
+        default: 
+          for (int j=monsters.size()-1; j>=0; j--) {
+            Monster monster = monsters.get(j);
+            if (dist(proj.posX, proj.posY, monster.posX, monster.posY) <= (proj.diameter/2 + monster.diameter/2)) { //Circle to Circle Collision
+              monster.getHit(proj.getProjectileDamage());
+              projList.remove(proj);
+            }
+          }
         case 0:
-          proj.decPosY(projectileSpeed);
-          break;
-        case 1:
-          proj.incPosX(projectileSpeed);
-          proj.decPosY(projectileSpeed);
-          break;
-        case 2:
-          proj.incPosX(projectileSpeed);
-          break;
-        case 3:
-          proj.incPosX(projectileSpeed);
-          proj.incPosY(projectileSpeed);
-          break;
-        case 4:
-          proj.incPosY(projectileSpeed);
-          break;
-        case 5:
-          proj.decPosX(projectileSpeed);
-          proj.incPosY(projectileSpeed);
-          break;
-        case 6:
-          proj.decPosX(projectileSpeed);
-          break;
-        case 7:
-          proj.decPosX(projectileSpeed);
-          proj.decPosY(projectileSpeed);
+          switch(proj.getDirection()) {
+          case 0:
+            proj.decPosY(projectileSpeed);
+            break;
+          case 1:
+            proj.incPosX(projectileSpeed);
+            proj.decPosY(projectileSpeed);
+            break;
+          case 2:
+            proj.incPosX(projectileSpeed);
+            break;
+          case 3:
+            proj.incPosX(projectileSpeed);
+            proj.incPosY(projectileSpeed);
+            break;
+          case 4:
+            proj.incPosY(projectileSpeed);
+            break;
+          case 5:
+            proj.decPosX(projectileSpeed);
+            proj.incPosY(projectileSpeed);
+            break;
+          case 6:
+            proj.decPosX(projectileSpeed);
+            break;
+          case 7:
+            proj.decPosX(projectileSpeed);
+            proj.decPosY(projectileSpeed);
+            break;
+          }
+          proj.updateOb();
           break;
         }
-        proj.updateOb();
       }
     }
   }
@@ -501,18 +511,6 @@ class Level {
       }
       if (player2.position.x >= exit.posX && player2.position.x <= exit.posX + exit.exitWidth && player2.position.y >= exit.posY && player2.position.y <= exit.posY + exit.exitHeight) {
         nextLevel();
-      }
-    }
-    
-    for (Projectile proj : projList) {
-      if (monsters.size()!=0) {
-        for (int i=monsters.size()-1; i>=0; i--) {
-          Monster monster = monsters.get(i);
-          if (dist(proj.posX, proj.posY, monster.posX, monster.posY) <= (proj.diameter/2 + monster.diameter/2)) { //Circle to Circle Collision
-            println("collide");
-            monster.hp -= 5;
-          }
-        }
       }
     }
   }
