@@ -11,14 +11,22 @@
  Author: Leong Wei Kong & Nicholas Tan Joo Sin
  Reference: XXX
  Developer Notes: XXX
- */
+ 
+ Credits:
+ Title Font - Louisanne - http://www.dafont.com/louisianne.font
+ GUI Font - Minecraft - http://www.dafont.com/minecraft.font 
+*/
 
-PFont font1;
-PFont font2;
+PImage spriteSheet;
+PFont titleFont;
+PFont guiFont;
+ArrayList<Player> players;
 Player player1;
 Player player2;
 Level level;
+GUI gui;
 final int tileSize = 32;
+int highscore = 999999999; // TO BE DEFINED LATER
 boolean isWPressed = false;
 boolean isAPressed = false;
 boolean isDPressed = false;
@@ -27,23 +35,30 @@ boolean isUpPressed = false;
 boolean isDownPressed = false;
 boolean isLeftPressed = false;
 boolean isRightPressed = false;
-PImage spriteSheet;
+boolean hasStartScreen = true;
 
-void setup() {
-  size(640, 640);
+void setup() {  
+  size(1000, 640);
   spriteSheet = loadImage("sprites.png"); 
-  //font1 = createFont("tamagotchi.ttf", 35);
-  //font2 = createFont("tamagotchi.ttf", 35);
+  titleFont = createFont("Louisianne.ttf", 32); 
+  guiFont = createFont("Minecraft.ttf", 32);
+  players = new ArrayList<Player>();
   player1 = new Player(0);
   player2 = new Player(1);
   level = new Level();
+  gui = new GUI();
 }
 
 void draw() {
   fill(100);
   rect(0, 0, 500, 500);
   noStroke();
-  level.update();
+  gui.update();
+  if (!gui.getHasStartScreen()) {
+    hasStartScreen = false;
+    level.update();
+  }
+
   if (level.hasEnded()) {
     rectMode(CORNERS);
     fill(0);
@@ -55,10 +70,17 @@ void draw() {
   }
 }
 
-void keyPressed() {
+// WASD|X, GVBN|SPACE, IJKL|M, UPLEFTDOWNRIGHT|ENTER
+void keyPressed() {  
+  // Skip start screen
+  if (hasStartScreen) 
+  {
+    gui.removeStartScreen();
+  }
+
   //nextStage
-  if (char(keyCode) == 'M') {
-    level.currentLevel++;
+  if (char(keyCode) == '0') {
+    level.nextLevel();
   }
 
   //Player 1
@@ -112,7 +134,27 @@ void keyPressed() {
   if (char(keyCode) == RIGHT && isUpPressed || char(keyCode) == UP && isRightPressed) player2.setDirection(1);
   if (char(keyCode) == LEFT && isDownPressed || char(keyCode) == DOWN && isLeftPressed) player2.setDirection(5);
   if (char(keyCode) == RIGHT && isDownPressed || char(keyCode) == DOWN && isRightPressed) player2.setDirection(3);
-  
+
+  // Players join by pressing the projectile key
+  if (char(keyCode) == 'X')
+  {
+    
+  }
+
+  if (key == ' ')
+  {
+    
+  }
+
+  if (char(keyCode) == 'M') 
+  { 
+    
+  }    
+
+  if (key == ENTER)
+  {
+   
+  }
 }
 
 void keyReleased() {
@@ -168,12 +210,22 @@ void keyReleased() {
     if (isUpPressed) player2.setDirection(0);
     if (isDownPressed) player2.setDirection(4);
   }
-  
+
   if (key == ' ') {
     player1.shootProjectile();
   }
 
   if (key == ENTER) {
     player2.shootProjectile();
+  }
+}
+
+
+void mouseClicked()
+{
+    // Skip start screen
+  if (hasStartScreen) 
+  {
+    gui.removeStartScreen();
   }
 }
