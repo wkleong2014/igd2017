@@ -3,7 +3,6 @@ class Monster {
   float posX;
   float posY;
   int diameter = tileSize;
-  
   Monster(int x, int y) {
     posX = x+16;
     posY = y+16;

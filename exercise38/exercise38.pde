@@ -214,24 +214,28 @@ void keyReleased() {
     if (char(keyCode) == 'W') {
       player1.resetUp();
       isWPressed = false;
+      if (isSPressed) player1.setDirection(4);
       if (isAPressed) player1.setDirection(6);
       if (isDPressed) player1.setDirection(2);
     }
     if (char(keyCode) == 'S') {
       player1.resetDown();
       isSPressed = false;
+      if (isWPressed) player1.setDirection(0);
       if (isAPressed) player1.setDirection(6);
       if (isDPressed) player1.setDirection(2);
     }
     if (char(keyCode) == 'A') {
       player1.resetLeft();
       isAPressed = false;
+      if (isDPressed) player1.setDirection(2);
       if (isWPressed) player1.setDirection(0);
       if (isSPressed) player1.setDirection(4);
     }
     if (char(keyCode) == 'D') {
       player1.resetRight();
       isDPressed = false;
+      if (isAPressed) player1.setDirection(6);
       if (isWPressed) player1.setDirection(0);
       if (isSPressed) player1.setDirection(4);
     }
@@ -271,24 +275,28 @@ void keyReleased() {
     if (char(keyCode) == 'G') {
       player2.resetUp();
       isGPressed = false;
+      if (isBPressed) player2.setDirection(4);
       if (isVPressed) player2.setDirection(6);
       if (isNPressed) player2.setDirection(2);
     }
     if (char(keyCode) == 'B') {
       player2.resetDown();
       isBPressed = false;
+      if (isGPressed) player2.setDirection(0);
       if (isVPressed) player2.setDirection(6);
       if (isNPressed) player2.setDirection(2);
     }
     if (char(keyCode) == 'V') {
       player2.resetLeft();
       isVPressed = false;
+      if (isNPressed) player2.setDirection(2);
       if (isGPressed) player2.setDirection(0);
       if (isBPressed) player2.setDirection(4);
     }
     if (char(keyCode) == 'N') {
       player2.resetRight();
       isNPressed = false;
+      if (isVPressed) player2.setDirection(6);
       if (isGPressed) player2.setDirection(0);
       if (isBPressed) player2.setDirection(4);
     }
@@ -328,24 +336,28 @@ void keyReleased() {
     if (char(keyCode) == 'I') {
       player3.resetUp();
       isIPressed = false;
+      if (isKPressed) player3.setDirection(4);
       if (isJPressed) player3.setDirection(6);
       if (isLPressed) player3.setDirection(2);
     }
     if (char(keyCode) == 'K') {
       player3.resetDown();
       isKPressed = false;
+      if (isIPressed) player3.setDirection(0);
       if (isJPressed) player3.setDirection(6);
       if (isLPressed) player3.setDirection(2);
     }
     if (char(keyCode) == 'J') {
       player3.resetLeft();
       isJPressed = false;
+      if (isLPressed) player3.setDirection(2);
       if (isIPressed) player3.setDirection(0);
       if (isKPressed) player3.setDirection(4);
     }
     if (char(keyCode) == 'L') {
       player3.resetRight();
       isLPressed = false;
+      if (isJPressed) player3.setDirection(6);
       if (isIPressed) player3.setDirection(0);
       if (isKPressed) player3.setDirection(4);
     }
@@ -385,24 +397,28 @@ void keyReleased() {
     if (char(keyCode) == UP) {
       player4.resetUp();
       isUpPressed = false;
+      if (isDownPressed) player4.setDirection(4);
       if (isLeftPressed) player4.setDirection(6);
       if (isRightPressed) player4.setDirection(2);
     }
     if (char(keyCode) == DOWN) {
       player4.resetDown();
       isDownPressed = false;
+      if (isUpPressed) player4.setDirection(0);
       if (isLeftPressed) player4.setDirection(6);
       if (isRightPressed) player4.setDirection(2);
     }
     if (char(keyCode) == LEFT) {
       player4.resetLeft();
       isLeftPressed = false;
+      if (isRightPressed) player4.setDirection(2);
       if (isUpPressed) player4.setDirection(0);
       if (isDownPressed) player4.setDirection(4);
     }
     if (char(keyCode) == RIGHT) {
       player4.resetRight();
       isRightPressed = false;
+      if (isLeftPressed) player4.setDirection(6);
       if (isUpPressed) player4.setDirection(0);
       if (isDownPressed) player4.setDirection(4);
     }

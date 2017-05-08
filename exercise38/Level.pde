@@ -392,11 +392,10 @@ class Level {
     //set condition to move monster (every 1s?)
     moveMonster();
     moveObjects();
-    if(player1 != null) player1.updateMovement();
-    if(player2 != null) player2.updateMovement();
-    if(player3 != null) player3.updateMovement();
-    if(player4 != null) player4.updateMovement();
-    
+    if (player1 != null) player1.updateMovement();
+    if (player2 != null) player2.updateMovement();
+    if (player3 != null) player3.updateMovement();
+    if (player4 != null) player4.updateMovement();
   }
 
   void generateMonster() {
@@ -469,19 +468,95 @@ class Level {
   }
 
   void moveMonster() {
+    float currentLowest = Float.MAX_VALUE;
+    float p2Dist = Float.MAX_VALUE;
+    float p3Dist = Float.MAX_VALUE;
+    float p4Dist = Float.MAX_VALUE;
+    int currentLowestPlayer = 1;
     for (Monster monster : monsters) {
-      //have to loop through all active players
       if (player1 != null) {
-        if (player1.position.x > monster.posX && tilesLayouts.get(currentLevel)[(int)monster.posY/32][(int)(monster.posX+16)/tileSize] != 49) {
-          monster.posX += 1;
-        } else if (player1.position.x < monster.posX && tilesLayouts.get(currentLevel)[(int)monster.posY/tileSize][(int)(monster.posX-16)/tileSize] != 49) {
-          monster.posX -= 1;
+        currentLowest = dist(player1.position.x, player1.position.y, monster.posX, monster.posY);
+      }
+      if (player2 != null) {
+        p2Dist = dist(player2.position.x, player2.position.y, monster.posX, monster.posY);
+      }
+      if (player3 != null) {
+        p3Dist = dist(player3.position.x, player3.position.y, monster.posX, monster.posY);
+      }
+      if (player4 != null) {
+        p4Dist = dist(player4.position.x, player4.position.y, monster.posX, monster.posY);
+      }
+
+      if (p2Dist < currentLowest) {
+        currentLowest = p2Dist;
+        currentLowestPlayer = 2;
+      }
+      if (p3Dist < currentLowest) {
+        currentLowest = p3Dist;
+        currentLowestPlayer = 3;
+      }
+      if (p4Dist < currentLowest) {
+        currentLowest = p4Dist;
+        currentLowestPlayer = 4;
+      }
+
+      switch(currentLowestPlayer) {
+      case 1:
+        if (player1 != null) {
+          if (player1.position.x > monster.posX && tilesLayouts.get(currentLevel)[(int)monster.posY/32][(int)(monster.posX+16)/tileSize] != 49) {
+            monster.posX += 1;
+          } else if (player1.position.x < monster.posX && tilesLayouts.get(currentLevel)[(int)monster.posY/tileSize][(int)(monster.posX-16)/tileSize] != 49) {
+            monster.posX -= 1;
+          }
+          if (player1.position.y > monster.posY && tilesLayouts.get(currentLevel)[(int)(monster.posY+16)/32][(int)monster.posX/tileSize] != 49) {
+            monster.posY += 1;
+          } else if (player1.position.y < monster.posY && tilesLayouts.get(currentLevel)[(int)(monster.posY-16)/32][(int)monster.posX/tileSize] != 49) {
+            monster.posY -= 1;
+          }
         }
-        if (player1.position.y > monster.posY && tilesLayouts.get(currentLevel)[(int)(monster.posY+16)/32][(int)monster.posX/tileSize] != 49) {
-          monster.posY += 1;
-        } else if (player1.position.y < monster.posY && tilesLayouts.get(currentLevel)[(int)(monster.posY-16)/32][(int)monster.posX/tileSize] != 49) {
-          monster.posY -= 1;
+        break;
+      case 2:
+        if (player2 != null) {
+          if (player2.position.x > monster.posX && tilesLayouts.get(currentLevel)[(int)monster.posY/32][(int)(monster.posX+16)/tileSize] != 49) {
+            monster.posX += 1;
+          } else if (player2.position.x < monster.posX && tilesLayouts.get(currentLevel)[(int)monster.posY/tileSize][(int)(monster.posX-16)/tileSize] != 49) {
+            monster.posX -= 1;
+          }
+          if (player2.position.y > monster.posY && tilesLayouts.get(currentLevel)[(int)(monster.posY+16)/32][(int)monster.posX/tileSize] != 49) {
+            monster.posY += 1;
+          } else if (player2.position.y < monster.posY && tilesLayouts.get(currentLevel)[(int)(monster.posY-16)/32][(int)monster.posX/tileSize] != 49) {
+            monster.posY -= 1;
+          }
         }
+        break;
+      case 3:
+        if (player3 != null) {
+          if (player3.position.x > monster.posX && tilesLayouts.get(currentLevel)[(int)monster.posY/32][(int)(monster.posX+16)/tileSize] != 49) {
+            monster.posX += 1;
+          } else if (player3.position.x < monster.posX && tilesLayouts.get(currentLevel)[(int)monster.posY/tileSize][(int)(monster.posX-16)/tileSize] != 49) {
+            monster.posX -= 1;
+          }
+          if (player3.position.y > monster.posY && tilesLayouts.get(currentLevel)[(int)(monster.posY+16)/32][(int)monster.posX/tileSize] != 49) {
+            monster.posY += 1;
+          } else if (player3.position.y < monster.posY && tilesLayouts.get(currentLevel)[(int)(monster.posY-16)/32][(int)monster.posX/tileSize] != 49) {
+            monster.posY -= 1;
+          }
+        }
+        break;
+      case 4:
+        if (player4 != null) {
+          if (player4.position.x > monster.posX && tilesLayouts.get(currentLevel)[(int)monster.posY/32][(int)(monster.posX+16)/tileSize] != 49) {
+            monster.posX += 1;
+          } else if (player4.position.x < monster.posX && tilesLayouts.get(currentLevel)[(int)monster.posY/tileSize][(int)(monster.posX-16)/tileSize] != 49) {
+            monster.posX -= 1;
+          }
+          if (player4.position.y > monster.posY && tilesLayouts.get(currentLevel)[(int)(monster.posY+16)/32][(int)monster.posX/tileSize] != 49) {
+            monster.posY += 1;
+          } else if (player4.position.y < monster.posY && tilesLayouts.get(currentLevel)[(int)(monster.posY-16)/32][(int)monster.posX/tileSize] != 49) {
+            monster.posY -= 1;
+          }
+        }
+        break;
       }
     }
   }
@@ -527,6 +602,12 @@ class Level {
       if (player2 != null && player2.position.x >= exit.posX && player2.position.x <= exit.posX + exit.exitWidth && player2.position.y >= exit.posY && player2.position.y <= exit.posY + exit.exitHeight) {
         nextLevel();
       }
+      if (player3 != null && player3.position.x >= exit.posX && player3.position.x <= exit.posX + exit.exitWidth && player3.position.y >= exit.posY && player3.position.y <= exit.posY + exit.exitHeight) {
+        nextLevel();
+      }
+      if (player4 != null && player4.position.x >= exit.posX && player4.position.x <= exit.posX + exit.exitWidth && player4.position.y >= exit.posY && player4.position.y <= exit.posY + exit.exitHeight) {
+        nextLevel();
+      }
     }
   }
 
@@ -535,10 +616,10 @@ class Level {
   }
 
   void nextLevel() {
-    if(player1 != null) player1.resetPosition();
-    if(player2 != null) player2.resetPosition();
-    if(player3 != null) player3.resetPosition();
-    if(player4 != null) player4.resetPosition();
+    if (player1 != null) player1.resetPosition();
+    if (player2 != null) player2.resetPosition();
+    if (player3 != null) player3.resetPosition();
+    if (player4 != null) player4.resetPosition();
     monsters.clear();
     projList.clear();
     currentLevel++;
