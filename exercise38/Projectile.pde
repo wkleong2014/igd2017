@@ -5,6 +5,11 @@ class Projectile {
   float diameter; //if need to increase ammo size
   int projectileSpeed;
   int projectileType;
+  PImage spriteSheet;
+  final int ANIMATION_DURATION = 300; //in milliseconds
+  int frame = 0;
+  int frameMax = 7;  
+  int ticksLastAnimation = 0;
 
   Projectile(float posX, float posY, int direction, int projectileSpeed, int projectileType) {
     this.posX = posX;
@@ -13,48 +18,44 @@ class Projectile {
     this.posY = posY;
     this.projectileSpeed = projectileSpeed;
     this.projectileType = projectileType;
+    spriteSheet = loadImage("sprites.png"); 
     updateOb();
   }
-  
-  int getProjectileSpeed(){
-   return projectileSpeed; 
+
+  int getProjectileSpeed() {
+    return projectileSpeed;
   }
 
   void updateOb() {
-    switch(projectileType){
-      case 0:
-        fill(139, 69, 19);
-        ellipse(posX, posY, diameter, diameter);
-        break;
-      case 1:
-        fill(139, 0, 19);
-        ellipse(posX, posY, diameter, diameter);
-        break;
-      case 2:
-        break;
-      case 3:
-        break;
-    }
-    
+    imageMode(CENTER);
+    PImage sprite = spriteSheet.get(800 + (frame * 32), 0 + (projectileType * 32), 32, 32);
+    image(sprite, posX, posY);
+    if (millis() - ticksLastAnimation >= ANIMATION_DURATION) {
+      frame++;
+      if (frame >= frameMax) { 
+        frame = 0;
+      }     
+      ticksLastAnimation += millis() - ticksLastAnimation;
+    }    
   }
-  
-  void incPosX(int projectileSpeed){
+
+  void incPosX(int projectileSpeed) {
     posX += projectileSpeed;
   }
-  
-  void decPosX(int projectileSpeed){
+
+  void decPosX(int projectileSpeed) {
     posX -= projectileSpeed;
   }
-  
-  void incPosY(int projectileSpeed){
+
+  void incPosY(int projectileSpeed) {
     posY += projectileSpeed;
   }
-  
-  void decPosY(int projectileSpeed){
+
+  void decPosY(int projectileSpeed) {
     posY -= projectileSpeed;
   }
-  
-  int getDirection(){
+
+  int getDirection() {
     return direction;
   }
 }
