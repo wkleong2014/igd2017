@@ -78,8 +78,9 @@ void draw() {
     rect(0, 0, 640, 640);
     fill(255);
     textAlign(CENTER, CENTER);
-    textSize(32);
-    text("GAME OVER", width/2, height/2);
+    textFont(guiFont);
+    textSize(50);
+    text("GAME OVER", 320, 320);
   }
 }
 

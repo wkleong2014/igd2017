@@ -4,6 +4,7 @@ class Level {
   HashMap<Integer, int[][]> tilesLayouts = new HashMap<Integer, int[][]>();
   HashMap<Integer, PImage> images = new HashMap<Integer, PImage>();
   HashMap<Integer, int[]> monsterList = new HashMap<Integer, int[]>();
+  HashMap<Integer, int[]> playerSpawnList = new HashMap<Integer, int[]>();
   ArrayList<Monster> monsters = new ArrayList<Monster>();
   boolean endGame = false;
   ArrayList<Projectile> projList = new ArrayList<Projectile>();
@@ -11,96 +12,98 @@ class Level {
 
   Level() {
     tilesLayouts.put(1, new int[][]{
-      {49, 49, 49, 49, 49, 49, 49, 49, 49, 49, 49, 49, 49, 49, 49, 49, 49, 49, 49, 49}, 
-      {49, 23, 23, 23, 23, 23, 23, 23, 49, 23, 23, 23, 23, 23, 23, 23, 49, 23, 999, 49}, 
-      {49, 23, 23, 23, 23, 23, 23, 23, 49, 23, 23, 23, 23, 23, 23, 23, 49, 23, 23, 49}, 
-      {49, 23, 23, 23, 23, 23, 23, 23, 49, 23, 23, 23, 23, 23, 23, 23, 49, 23, 23, 49}, 
-      {49, 23, 23, 23, 49, 23, 23, 23, 49, 23, 23, 23, 49, 23, 23, 23, 49, 23, 23, 49}, 
-      {49, 23, 23, 23, 49, 23, 23, 23, 49, 23, 23, 23, 49, 23, 23, 23, 49, 23, 23, 49}, 
-      {49, 23, 23, 23, 49, 23, 23, 23, 49, 23, 23, 23, 49, 23, 23, 23, 49, 23, 23, 49}, 
-      {49, 23, 23, 23, 49, 23, 23, 23, 49, 23, 23, 23, 49, 23, 23, 23, 49, 23, 23, 49}, 
-      {49, 23, 23, 23, 49, 23, 23, 23, 49, 23, 23, 23, 49, 23, 23, 23, 49, 23, 23, 49}, 
-      {49, 23, 23, 23, 49, 23, 23, 23, 49, 23, 23, 23, 49, 23, 23, 23, 49, 23, 23, 49}, 
-      {49, 23, 23, 23, 49, 23, 23, 23, 49, 23, 23, 23, 49, 23, 23, 23, 49, 23, 23, 49}, 
-      {49, 23, 23, 23, 49, 23, 23, 23, 49, 23, 23, 23, 49, 23, 23, 23, 49, 23, 23, 49}, 
-      {49, 23, 23, 23, 49, 23, 23, 23, 49, 23, 23, 23, 49, 23, 23, 23, 49, 23, 23, 49}, 
-      {49, 23, 23, 23, 49, 23, 23, 23, 49, 23, 23, 23, 49, 23, 23, 23, 49, 23, 23, 49}, 
-      {49, 23, 23, 23, 49, 23, 23, 23, 49, 23, 23, 23, 49, 23, 23, 23, 49, 23, 23, 49}, 
-      {49, 23, 23, 23, 49, 23, 23, 23, 49, 23, 23, 23, 49, 23, 23, 23, 49, 23, 23, 49}, 
-      {49, 23, 23, 23, 49, 23, 23, 23, 23, 23, 23, 23, 49, 23, 23, 23, 23, 23, 23, 49}, 
-      {49, 23, 23, 23, 49, 23, 23, 23, 23, 23, 23, 23, 49, 23, 23, 23, 23, 23, 23, 49}, 
-      {49, 23, 23, 23, 49, 23, 23, 23, 23, 23, 23, 23, 49, 23, 23, 23, 23, 23, 23, 49}, 
-      {49, 49, 49, 49, 49, 49, 49, 49, 49, 49, 49, 49, 49, 49, 49, 49, 49, 49, 49, 49}
+      {32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32}, 
+      {32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32}, 
+      {32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32}, 
+      {32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32}, 
+      {32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32}, 
+      {32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32}, 
+      {32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32}, 
+      {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, 
+      {0, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 30, 0}, 
+      {0, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 0}, 
+      {0, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 0}, 
+      {0, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 0}, 
+      {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, 
+      {32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32}, 
+      {32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32}, 
+      {32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32}, 
+      {32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32}, 
+      {32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32}, 
+      {32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32}, 
+      {32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32}
       });
 
     tilesLayouts.put(2, new int[][]{
-      {49, 49, 49, 49, 49, 49, 49, 49, 49, 49, 49, 49, 49, 49, 49, 49, 49, 49, 49, 49}, 
-      {49, 23, 23, 23, 23, 23, 23, 23, 49, 23, 23, 23, 23, 23, 23, 23, 49, 23, 23, 49}, 
-      {49, 23, 23, 23, 23, 23, 23, 23, 49, 23, 23, 23, 23, 23, 23, 23, 49, 23, 23, 49}, 
-      {49, 23, 23, 23, 23, 23, 23, 23, 49, 23, 23, 23, 23, 23, 23, 23, 49, 23, 23, 49}, 
-      {49, 23, 23, 23, 23, 999, 23, 23, 49, 23, 23, 23, 49, 23, 23, 23, 49, 23, 23, 49}, 
-      {49, 23, 23, 23, 23, 23, 23, 23, 49, 23, 23, 23, 49, 23, 23, 23, 49, 23, 23, 49}, 
-      {49, 23, 23, 23, 23, 23, 23, 23, 49, 23, 23, 23, 49, 23, 23, 23, 49, 23, 23, 49}, 
-      {49, 23, 23, 23, 23, 23, 23, 23, 49, 23, 23, 23, 49, 23, 23, 23, 49, 23, 23, 49}, 
-      {49, 23, 23, 23, 23, 23, 23, 23, 49, 23, 23, 23, 49, 23, 23, 23, 49, 23, 23, 49}, 
-      {49, 23, 23, 23, 23, 23, 23, 23, 49, 23, 23, 23, 49, 23, 23, 23, 49, 23, 23, 49}, 
-      {49, 23, 23, 23, 23, 23, 23, 23, 49, 23, 23, 23, 49, 23, 23, 23, 49, 23, 23, 49}, 
-      {49, 23, 23, 23, 23, 23, 23, 23, 49, 23, 23, 23, 49, 23, 23, 23, 49, 23, 23, 49}, 
-      {49, 23, 23, 23, 23, 23, 23, 23, 49, 23, 23, 23, 49, 23, 23, 23, 49, 23, 23, 49}, 
-      {49, 23, 23, 23, 23, 23, 23, 23, 49, 23, 23, 23, 49, 23, 23, 23, 49, 23, 23, 49}, 
-      {49, 23, 23, 23, 23, 23, 23, 23, 49, 23, 23, 23, 49, 23, 23, 23, 49, 23, 23, 49}, 
-      {49, 23, 23, 23, 23, 23, 23, 23, 49, 23, 23, 23, 49, 23, 23, 23, 49, 23, 23, 49}, 
-      {49, 23, 23, 23, 23, 23, 23, 23, 23, 23, 23, 23, 49, 23, 23, 23, 23, 23, 23, 49}, 
-      {49, 23, 23, 23, 23, 23, 23, 23, 23, 23, 23, 23, 49, 23, 23, 23, 23, 23, 23, 49}, 
-      {49, 23, 23, 23, 23, 23, 23, 23, 23, 23, 23, 23, 49, 23, 23, 23, 23, 23, 23, 49}, 
-      {49, 49, 49, 49, 49, 49, 49, 49, 49, 49, 49, 49, 49, 49, 49, 49, 49, 49, 49, 49}
+      {32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32}, 
+      {32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32}, 
+      {32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32}, 
+      {32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32}, 
+      {32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32}, 
+      {32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32}, 
+      {32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32}, 
+      {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1}, 
+      {1, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 30, 1}, 
+      {1, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 1}, 
+      {1, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 1}, 
+      {1, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 1}, 
+      {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1}, 
+      {32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32}, 
+      {32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32}, 
+      {32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32}, 
+      {32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32}, 
+      {32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32}, 
+      {32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32}, 
+      {32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32}
+
       });
 
-    //tilesLayouts.put(3, new int[][]{
-    //  {49, 49, 49, 49, 49, 49, 49, 49, 49, 49, 49, 49, 49, 49, 49, 49, 49, 49, 49, 49}, 
-    //  {49, 23, 23, 23, 23, 23, 23, 23, 49, 23, 23, 23, 23, 23, 23, 23, 49, 23, 23, 49}, 
-    //  {49, 23, 23, 23, 23, 23, 23, 23, 49, 23, 23, 23, 23, 23, 23, 23, 49, 23, 23, 49}, 
-    //  {49, 23, 23, 23, 23, 23, 23, 23, 49, 23, 23, 23, 23, 23, 23, 23, 49, 23, 23, 49}, 
-    //  {49, 23, 23, 23, 23, 999, 23, 23, 49, 23, 23, 23, 49, 23, 23, 23, 49, 23, 23, 49}, 
-    //  {49, 23, 23, 23, 23, 23, 23, 23, 49, 23, 23, 23, 49, 23, 23, 23, 49, 23, 23, 49}, 
-    //  {49, 23, 23, 23, 23, 23, 23, 23, 49, 23, 23, 23, 49, 23, 23, 23, 49, 23, 23, 49}, 
-    //  {49, 23, 23, 23, 23, 23, 23, 23, 49, 23, 23, 23, 49, 23, 23, 23, 49, 23, 23, 49}, 
-    //  {49, 23, 23, 23, 23, 23, 23, 23, 49, 23, 23, 23, 49, 23, 23, 23, 49, 23, 23, 49}, 
-    //  {49, 23, 23, 23, 23, 23, 23, 23, 49, 23, 23, 23, 49, 23, 23, 23, 49, 23, 23, 49}, 
-    //  {49, 23, 23, 23, 23, 23, 23, 23, 49, 23, 23, 23, 49, 23, 23, 23, 49, 23, 23, 49}, 
-    //  {49, 23, 23, 23, 23, 23, 23, 23, 49, 23, 23, 23, 49, 23, 23, 23, 49, 23, 23, 49}, 
-    //  {49, 23, 23, 23, 23, 23, 23, 23, 49, 23, 23, 23, 49, 23, 23, 23, 49, 23, 23, 49}, 
-    //  {49, 23, 23, 23, 23, 23, 23, 23, 49, 23, 23, 23, 49, 23, 23, 23, 49, 23, 23, 49}, 
-    //  {49, 23, 23, 23, 23, 23, 23, 23, 49, 23, 23, 23, 49, 23, 23, 23, 49, 23, 23, 49}, 
-    //  {49, 23, 23, 23, 23, 23, 23, 23, 49, 23, 23, 23, 49, 23, 23, 23, 49, 23, 23, 49}, 
-    //  {49, 23, 23, 23, 23, 23, 23, 23, 23, 23, 23, 23, 49, 23, 23, 23, 23, 23, 23, 49}, 
-    //  {49, 23, 23, 23, 23, 23, 23, 23, 23, 23, 23, 23, 49, 23, 23, 23, 23, 23, 23, 49}, 
-    //  {49, 23, 23, 23, 23, 23, 23, 23, 23, 23, 23, 23, 49, 23, 23, 23, 23, 23, 23, 49}, 
-    //  {49, 49, 49, 49, 49, 49, 49, 49, 49, 49, 49, 49, 49, 49, 49, 49, 49, 49, 49, 49}
-    //  });
+    tilesLayouts.put(3, new int[][]{
+      {32, 32, 32, 32, 32, 32, 32, 2, 2, 2, 2, 2, 2, 32, 32, 32, 32, 32, 32, 32}, 
+      {32, 32, 32, 32, 32, 32, 32, 2, 16, 16, 16, 16, 2, 32, 32, 32, 32, 32, 32, 32}, 
+      {32, 32, 32, 32, 32, 32, 32, 2, 16, 16, 16, 16, 2, 32, 32, 32, 32, 32, 32, 32}, 
+      {32, 32, 32, 32, 32, 32, 32, 2, 16, 16, 16, 16, 2, 32, 32, 32, 32, 32, 32, 32}, 
+      {32, 32, 32, 32, 32, 32, 32, 2, 16, 16, 16, 16, 2, 32, 32, 32, 32, 32, 32, 32}, 
+      {32, 32, 32, 32, 32, 32, 32, 2, 16, 16, 16, 16, 2, 32, 32, 32, 32, 32, 32, 32}, 
+      {32, 32, 32, 32, 32, 32, 32, 2, 16, 16, 16, 16, 2, 32, 32, 32, 32, 32, 32, 32}, 
+      {2, 2, 2, 2, 2, 2, 2, 2, 16, 16, 16, 16, 2, 2, 2, 2, 2, 2, 2, 2}, 
+      {2, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 30, 2}, 
+      {2, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 2}, 
+      {2, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 2}, 
+      {2, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 2}, 
+      {2, 2, 2, 2, 2, 2, 2, 2, 16, 16, 16, 16, 2, 2, 2, 2, 2, 2, 2, 2}, 
+      {32, 32, 32, 32, 32, 32, 32, 2, 16, 16, 16, 16, 2, 32, 32, 32, 32, 32, 32, 32}, 
+      {32, 32, 32, 32, 32, 32, 32, 2, 16, 16, 16, 16, 2, 32, 32, 32, 32, 32, 32, 32}, 
+      {32, 32, 32, 32, 32, 32, 32, 2, 16, 16, 16, 16, 2, 32, 32, 32, 32, 32, 32, 32}, 
+      {32, 32, 32, 32, 32, 32, 32, 2, 16, 16, 16, 16, 2, 32, 32, 32, 32, 32, 32, 32}, 
+      {32, 32, 32, 32, 32, 32, 32, 2, 16, 16, 16, 16, 2, 32, 32, 32, 32, 32, 32, 32}, 
+      {32, 32, 32, 32, 32, 32, 32, 2, 16, 16, 16, 16, 2, 32, 32, 32, 32, 32, 32, 32}, 
+      {32, 32, 32, 32, 32, 32, 32, 2, 2, 2, 2, 2, 2, 32, 32, 32, 32, 32, 32, 32}
 
-    //tilesLayouts.put(4, new int[][]{
-    //  {49, 49, 49, 49, 49, 49, 49, 49, 49, 49, 49, 49, 49, 49, 49, 49, 49, 49, 49, 49}, 
-    //  {49, 23, 23, 23, 23, 23, 23, 23, 49, 23, 23, 23, 23, 23, 23, 23, 49, 23, 23, 49}, 
-    //  {49, 23, 23, 23, 23, 23, 23, 23, 49, 23, 23, 23, 23, 23, 23, 23, 49, 23, 23, 49}, 
-    //  {49, 23, 23, 23, 23, 23, 23, 23, 49, 23, 23, 23, 23, 23, 23, 23, 49, 23, 23, 49}, 
-    //  {49, 23, 23, 23, 23, 999, 23, 23, 49, 23, 23, 23, 49, 23, 23, 23, 49, 23, 23, 49}, 
-    //  {49, 23, 23, 23, 23, 23, 23, 23, 49, 23, 23, 23, 49, 23, 23, 23, 49, 23, 23, 49}, 
-    //  {49, 23, 23, 23, 23, 23, 23, 23, 49, 23, 23, 23, 49, 23, 23, 23, 49, 23, 23, 49}, 
-    //  {49, 23, 23, 23, 23, 23, 23, 23, 49, 23, 23, 23, 49, 23, 23, 23, 49, 23, 23, 49}, 
-    //  {49, 23, 23, 23, 23, 23, 23, 23, 49, 23, 23, 23, 49, 23, 23, 23, 49, 23, 23, 49}, 
-    //  {49, 23, 23, 23, 23, 23, 23, 23, 49, 23, 23, 23, 49, 23, 23, 23, 49, 23, 23, 49}, 
-    //  {49, 23, 23, 23, 23, 23, 23, 23, 49, 23, 23, 23, 49, 23, 23, 23, 49, 23, 23, 49}, 
-    //  {49, 23, 23, 23, 23, 23, 23, 23, 49, 23, 23, 23, 49, 23, 23, 23, 49, 23, 23, 49}, 
-    //  {49, 23, 23, 23, 23, 23, 23, 23, 49, 23, 23, 23, 49, 23, 23, 23, 49, 23, 23, 49}, 
-    //  {49, 23, 23, 23, 23, 23, 23, 23, 49, 23, 23, 23, 49, 23, 23, 23, 49, 23, 23, 49}, 
-    //  {49, 23, 23, 23, 23, 23, 23, 23, 49, 23, 23, 23, 49, 23, 23, 23, 49, 23, 23, 49}, 
-    //  {49, 23, 23, 23, 23, 23, 23, 23, 49, 23, 23, 23, 49, 23, 23, 23, 49, 23, 23, 49}, 
-    //  {49, 23, 23, 23, 23, 23, 23, 23, 23, 23, 23, 23, 49, 23, 23, 23, 23, 23, 23, 49}, 
-    //  {49, 23, 23, 23, 23, 23, 23, 23, 23, 23, 23, 23, 49, 23, 23, 23, 23, 23, 23, 49}, 
-    //  {49, 23, 23, 23, 23, 23, 23, 23, 23, 23, 23, 23, 49, 23, 23, 23, 23, 23, 23, 49}, 
-    //  {49, 49, 49, 49, 49, 49, 49, 49, 49, 49, 49, 49, 49, 49, 49, 49, 49, 49, 49, 49}
-    //  });
+      });
+
+    tilesLayouts.put(4, new int[][]{
+      {32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32}, 
+      {3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 32}, 
+      {3, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 3, 17, 17, 17, 17, 30, 3, 32}, 
+      {3, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 3, 17, 17, 17, 17, 17, 3, 32}, 
+      {3, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 3, 17, 17, 17, 17, 17, 3, 32}, 
+      {3, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 3, 17, 17, 17, 17, 17, 3, 32}, 
+      {3, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 3, 17, 17, 17, 17, 17, 3, 32}, 
+      {3, 17, 17, 17, 17, 17, 3, 17, 17, 17, 17, 17, 3, 17, 17, 17, 17, 17, 3, 32}, 
+      {3, 17, 17, 17, 17, 17, 3, 17, 17, 17, 17, 17, 3, 17, 17, 17, 17, 17, 3, 32}, 
+      {3, 17, 17, 17, 17, 17, 3, 17, 17, 17, 17, 17, 3, 17, 17, 17, 17, 17, 3, 32}, 
+      {3, 17, 17, 17, 17, 17, 3, 17, 17, 17, 17, 17, 3, 17, 17, 17, 17, 17, 3, 32}, 
+      {3, 17, 17, 17, 17, 17, 3, 17, 17, 17, 17, 17, 3, 17, 17, 17, 17, 17, 3, 32}, 
+      {3, 17, 17, 17, 17, 17, 3, 17, 17, 17, 17, 17, 3, 17, 17, 17, 17, 17, 3, 32}, 
+      {3, 17, 17, 17, 17, 17, 3, 17, 17, 17, 17, 17, 3, 17, 17, 17, 17, 17, 3, 32}, 
+      {3, 17, 17, 17, 17, 17, 3, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 3, 32}, 
+      {3, 17, 17, 17, 17, 17, 3, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 3, 32}, 
+      {3, 17, 17, 17, 17, 17, 3, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 3, 32}, 
+      {3, 17, 17, 17, 17, 17, 3, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 3, 32}, 
+      {3, 17, 17, 17, 17, 17, 3, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 3, 32}, 
+      {3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 32}
+      });
 
     //tilesLayouts.put(5, new int[][]{
     //  {49, 49, 49, 49, 49, 49, 49, 49, 49, 49, 49, 49, 49, 49, 49, 49, 49, 49, 49, 49}, 
@@ -379,12 +382,13 @@ class Level {
     //  });
 
     initialiseImages();
+    initialisePlayerSpawnList();
     initialiseMonsterList();
   }
 
   void update() {
     drawLevel();
-    level.checkCollision();
+
     if (!generatedMon && monsters.size()==0) {
       generateMonster();
       generatedMon = true;
@@ -392,10 +396,12 @@ class Level {
     //set condition to move monster (every 1s?)
     moveMonster();
     moveObjects();
+
     if (player1 != null) player1.updateMovement();
     if (player2 != null) player2.updateMovement();
     if (player3 != null) player3.updateMovement();
     if (player4 != null) player4.updateMovement();
+    level.checkCollision();
   }
 
   void generateMonster() {
@@ -417,7 +423,7 @@ class Level {
     for (int i=projList.size()-1; i>=0; i--) {
       Projectile proj = projList.get(i);
       int projectileSpeed = proj.getProjectileSpeed();
-      if (tilesLayouts.get(currentLevel)[(int)proj.posY/32][(int)proj.posX/32] == 49) {
+      if (tilesLayouts.get(currentLevel)[(int)proj.posY/32][(int)proj.posX/32] <= 15) {
         projList.remove(proj);
       } else {
         switch(monsters.size()) {
@@ -503,56 +509,56 @@ class Level {
       switch(currentLowestPlayer) {
       case 1:
         if (player1 != null) {
-          if (player1.position.x > monster.posX && tilesLayouts.get(currentLevel)[(int)monster.posY/32][(int)(monster.posX+16)/tileSize] != 49) {
+          if (player1.position.x > monster.posX && !(tilesLayouts.get(currentLevel)[(int)monster.posY/32][(int)(monster.posX+16)/tileSize] <= 15)) {
             monster.posX += 1;
-          } else if (player1.position.x < monster.posX && tilesLayouts.get(currentLevel)[(int)monster.posY/tileSize][(int)(monster.posX-16)/tileSize] != 49) {
+          } else if (player1.position.x < monster.posX && !(tilesLayouts.get(currentLevel)[(int)monster.posY/tileSize][(int)(monster.posX-16)/tileSize] <= 15)) {
             monster.posX -= 1;
           }
-          if (player1.position.y > monster.posY && tilesLayouts.get(currentLevel)[(int)(monster.posY+16)/32][(int)monster.posX/tileSize] != 49) {
+          if (player1.position.y > monster.posY && !(tilesLayouts.get(currentLevel)[(int)(monster.posY+16)/32][(int)monster.posX/tileSize] <= 15)) {
             monster.posY += 1;
-          } else if (player1.position.y < monster.posY && tilesLayouts.get(currentLevel)[(int)(monster.posY-16)/32][(int)monster.posX/tileSize] != 49) {
+          } else if (player1.position.y < monster.posY && !(tilesLayouts.get(currentLevel)[(int)(monster.posY-16)/32][(int)monster.posX/tileSize] <= 15)) {
             monster.posY -= 1;
           }
         }
         break;
       case 2:
         if (player2 != null) {
-          if (player2.position.x > monster.posX && tilesLayouts.get(currentLevel)[(int)monster.posY/32][(int)(monster.posX+16)/tileSize] != 49) {
+          if (player2.position.x > monster.posX && !(tilesLayouts.get(currentLevel)[(int)monster.posY/32][(int)(monster.posX+16)/tileSize] <= 15)) {
             monster.posX += 1;
-          } else if (player2.position.x < monster.posX && tilesLayouts.get(currentLevel)[(int)monster.posY/tileSize][(int)(monster.posX-16)/tileSize] != 49) {
+          } else if (player2.position.x < monster.posX && !(tilesLayouts.get(currentLevel)[(int)monster.posY/tileSize][(int)(monster.posX-16)/tileSize] <= 15)) {
             monster.posX -= 1;
           }
-          if (player2.position.y > monster.posY && tilesLayouts.get(currentLevel)[(int)(monster.posY+16)/32][(int)monster.posX/tileSize] != 49) {
+          if (player2.position.y > monster.posY && !(tilesLayouts.get(currentLevel)[(int)(monster.posY+16)/32][(int)monster.posX/tileSize] <= 15)) {
             monster.posY += 1;
-          } else if (player2.position.y < monster.posY && tilesLayouts.get(currentLevel)[(int)(monster.posY-16)/32][(int)monster.posX/tileSize] != 49) {
+          } else if (player2.position.y < monster.posY && !(tilesLayouts.get(currentLevel)[(int)(monster.posY-16)/32][(int)monster.posX/tileSize] <= 15)) {
             monster.posY -= 1;
           }
         }
         break;
       case 3:
         if (player3 != null) {
-          if (player3.position.x > monster.posX && tilesLayouts.get(currentLevel)[(int)monster.posY/32][(int)(monster.posX+16)/tileSize] != 49) {
+          if (player3.position.x > monster.posX && !(tilesLayouts.get(currentLevel)[(int)monster.posY/32][(int)(monster.posX+16)/tileSize] <= 15)) {
             monster.posX += 1;
-          } else if (player3.position.x < monster.posX && tilesLayouts.get(currentLevel)[(int)monster.posY/tileSize][(int)(monster.posX-16)/tileSize] != 49) {
+          } else if (player3.position.x < monster.posX && !(tilesLayouts.get(currentLevel)[(int)monster.posY/tileSize][(int)(monster.posX-16)/tileSize] <= 15)) {
             monster.posX -= 1;
           }
-          if (player3.position.y > monster.posY && tilesLayouts.get(currentLevel)[(int)(monster.posY+16)/32][(int)monster.posX/tileSize] != 49) {
+          if (player3.position.y > monster.posY && !(tilesLayouts.get(currentLevel)[(int)(monster.posY+16)/32][(int)monster.posX/tileSize] <= 15)) {
             monster.posY += 1;
-          } else if (player3.position.y < monster.posY && tilesLayouts.get(currentLevel)[(int)(monster.posY-16)/32][(int)monster.posX/tileSize] != 49) {
+          } else if (player3.position.y < monster.posY && !(tilesLayouts.get(currentLevel)[(int)(monster.posY-16)/32][(int)monster.posX/tileSize] <= 15)) {
             monster.posY -= 1;
           }
         }
         break;
       case 4:
         if (player4 != null) {
-          if (player4.position.x > monster.posX && tilesLayouts.get(currentLevel)[(int)monster.posY/32][(int)(monster.posX+16)/tileSize] != 49) {
+          if (player4.position.x > monster.posX && !(tilesLayouts.get(currentLevel)[(int)monster.posY/32][(int)(monster.posX+16)/tileSize] <= 15)) {
             monster.posX += 1;
-          } else if (player4.position.x < monster.posX && tilesLayouts.get(currentLevel)[(int)monster.posY/tileSize][(int)(monster.posX-16)/tileSize] != 49) {
+          } else if (player4.position.x < monster.posX && !(tilesLayouts.get(currentLevel)[(int)monster.posY/tileSize][(int)(monster.posX-16)/tileSize] <= 15)) {
             monster.posX -= 1;
           }
-          if (player4.position.y > monster.posY && tilesLayouts.get(currentLevel)[(int)(monster.posY+16)/32][(int)monster.posX/tileSize] != 49) {
+          if (player4.position.y > monster.posY && !(tilesLayouts.get(currentLevel)[(int)(monster.posY+16)/32][(int)monster.posX/tileSize] <= 15)) {
             monster.posY += 1;
-          } else if (player4.position.y < monster.posY && tilesLayouts.get(currentLevel)[(int)(monster.posY-16)/32][(int)monster.posX/tileSize] != 49) {
+          } else if (player4.position.y < monster.posY && !(tilesLayouts.get(currentLevel)[(int)(monster.posY-16)/32][(int)monster.posX/tileSize] <= 15)) {
             monster.posY -= 1;
           }
         }
@@ -563,16 +569,34 @@ class Level {
 
   void initialiseImages() {
     //load all images
-    //for(int i=0;i<2;i++){ //total images - 1
-    //  String str = i + ".png";
-    //  images.put(i, loadImage(str));
-    //}
-    images.put(23, loadImage("23.png"));
-    images.put(49, loadImage("49.png"));
+    for (int i=0; i<=32; i++) { //total images - 1
+      String str = i + ".png";
+      images.put(i, loadImage(str));
+    }
+  }
+
+  void initialisePlayerSpawnList() {
+    playerSpawnList.put(1, new int[]{1, 8});
+    playerSpawnList.put(2, new int[]{1, 8});
+    playerSpawnList.put(3, new int[]{1, 8});
+    playerSpawnList.put(4, new int[]{1, 2});
+    playerSpawnList.put(5, new int[]{1, 8});
+    playerSpawnList.put(6, new int[]{1, 8});
+    playerSpawnList.put(7, new int[]{1, 8});
+    playerSpawnList.put(8, new int[]{1, 8});
+    playerSpawnList.put(9, new int[]{1, 8});
+    playerSpawnList.put(10, new int[]{1, 8});
+    playerSpawnList.put(11, new int[]{1, 8});
+    playerSpawnList.put(12, new int[]{1, 8});
+    playerSpawnList.put(13, new int[]{1, 8});
+    playerSpawnList.put(14, new int[]{1, 8});
+    playerSpawnList.put(15, new int[]{1, 8});
+    playerSpawnList.put(16, new int[]{1, 8});
+    playerSpawnList.put(17, new int[]{1, 1}); //gameover screen to prevent bug
   }
 
   void initialiseMonsterList() {
-    monsterList.put(1, new int[]{3, 2, 3, 3});
+    monsterList.put(1, new int[]{17, 8, 17, 9, 17, 10, 17, 11});
   }
 
   boolean hasEnded() {
@@ -587,7 +611,7 @@ class Level {
     } else {
       for (int i=0; i<tileLayout.length; i++) { //y axis
         for (int j=0; j<tileLayout[i].length; j++) { //x axis
-          if (tileLayout[i][j] == 999) exit = new Exit(j, i);
+          if (tileLayout[i][j] == 30) exit = new Exit(j, i);
           else image(images.get(tileLayout[i][j]), j * tileSize, i * tileSize);
         }
       }
@@ -616,12 +640,16 @@ class Level {
   }
 
   void nextLevel() {
+    monsters.clear();
+    projList.clear();
+    currentLevel++;
     if (player1 != null) player1.resetPosition();
     if (player2 != null) player2.resetPosition();
     if (player3 != null) player3.resetPosition();
     if (player4 != null) player4.resetPosition();
-    monsters.clear();
-    projList.clear();
-    currentLevel++;
+  }
+
+  PVector getSpawnLocation() {
+    return new PVector(level.playerSpawnList.get(level.currentLevel)[0] * tileSize + tileSize/2, level.playerSpawnList.get(level.currentLevel)[1]*tileSize + tileSize/2);
   }
 }

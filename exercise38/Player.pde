@@ -8,7 +8,7 @@ class Player {
   int[] playerClassList = {0, 1, 2, 3};
   int playerWidth = 32;
   int playerHeight = 32;
-  PVector position = new PVector(32 + playerWidth/2, 32 + playerWidth/2);
+  PVector position;
   PVector velocity = new PVector(0, 0);
   float walkSpeed = 200;
   int direction = 4;
@@ -26,6 +26,7 @@ class Player {
   Player(int playerClass) {
     this.playerClass = playerClass;
     score = 0;
+    position = level.getSpawnLocation();
     switch(playerClass) { //set hp & mana
     case 0:
       hp = 500;
@@ -51,10 +52,10 @@ class Player {
   }
 
   void resetPosition() {
-    position = new PVector(32 + playerWidth/2, 32 + playerWidth/2);
+    position = level.getSpawnLocation();
   }
 
-  void updateMovement() {    
+  void updateMovement() {
     rectMode(CENTER);
     ellipseMode(CENTER);
     velocity.x = walkSpeed * (moveLeft + moveRight) * float(millis() - ticksLastUpdate) * 0.001;
@@ -64,10 +65,10 @@ class Player {
     int[][] currentLayout = level.getCurrentTileLayout();
     float offset = 32 + playerWidth/2 -1;
     if (currentLayout != null) {
-      if (currentLayout[int((nextPosition.y)/32)][int((nextPosition.x-playerWidth/2)/32)] != 49 && currentLayout[int((nextPosition.y)/32)][int((nextPosition.x+playerWidth/2)/32)] != 49 && 
-        currentLayout[int((nextPosition.y-playerWidth/2)/32)][int((nextPosition.x)/32)] != 49 && currentLayout[int((nextPosition.y+playerWidth/2)/32)][int((nextPosition.x)/32)] != 49 && 
-        currentLayout[int((nextPosition.y-playerWidth/2)/32)][int((nextPosition.x-playerWidth/2)/32)] != 49 && currentLayout[int((nextPosition.y-playerWidth/2)/32)][int((nextPosition.x+playerWidth/2)/32)] != 49 && 
-        currentLayout[int((nextPosition.y+playerWidth/2)/32)][int((nextPosition.x-playerWidth/2)/32)] != 49 && currentLayout[int((nextPosition.y+playerWidth/2)/32)][int((nextPosition.x+playerWidth/2)/32)] != 49) {
+      if (!(currentLayout[int((nextPosition.y)/32)][int((nextPosition.x-playerWidth/2)/32)] <= 15) && !(currentLayout[int((nextPosition.y)/32)][int((nextPosition.x+playerWidth/2)/32)] <= 15) && 
+        !(currentLayout[int((nextPosition.y-playerWidth/2)/32)][int((nextPosition.x)/32)] <= 15) && !(currentLayout[int((nextPosition.y+playerWidth/2)/32)][int((nextPosition.x)/32)] <= 15) && 
+        !(currentLayout[int((nextPosition.y-playerWidth/2)/32)][int((nextPosition.x-playerWidth/2)/32)] <= 15) && !(currentLayout[int((nextPosition.y-playerWidth/2)/32)][int((nextPosition.x+playerWidth/2)/32)] <= 15) && 
+        !(currentLayout[int((nextPosition.y+playerWidth/2)/32)][int((nextPosition.x-playerWidth/2)/32)] <= 15) && !(currentLayout[int((nextPosition.y+playerWidth/2)/32)][int((nextPosition.x+playerWidth/2)/32)] <= 15)) {
         if (nextPosition.x > offset && nextPosition.x < (width - offset)) position.x = nextPosition.x;
         if (nextPosition.y > offset && nextPosition.y < (height - offset)) position.y = nextPosition.y;
       }
