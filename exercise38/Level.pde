@@ -105,74 +105,74 @@ class Level {
       {3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 32}
       });
 
-    //tilesLayouts.put(5, new int[][]{
-    //  {49, 49, 49, 49, 49, 49, 49, 49, 49, 49, 49, 49, 49, 49, 49, 49, 49, 49, 49, 49}, 
-    //  {49, 23, 23, 23, 23, 23, 23, 23, 49, 23, 23, 23, 23, 23, 23, 23, 49, 23, 23, 49}, 
-    //  {49, 23, 23, 23, 23, 23, 23, 23, 49, 23, 23, 23, 23, 23, 23, 23, 49, 23, 23, 49}, 
-    //  {49, 23, 23, 23, 23, 23, 23, 23, 49, 23, 23, 23, 23, 23, 23, 23, 49, 23, 23, 49}, 
-    //  {49, 23, 23, 23, 23, 999, 23, 23, 49, 23, 23, 23, 49, 23, 23, 23, 49, 23, 23, 49}, 
-    //  {49, 23, 23, 23, 23, 23, 23, 23, 49, 23, 23, 23, 49, 23, 23, 23, 49, 23, 23, 49}, 
-    //  {49, 23, 23, 23, 23, 23, 23, 23, 49, 23, 23, 23, 49, 23, 23, 23, 49, 23, 23, 49}, 
-    //  {49, 23, 23, 23, 23, 23, 23, 23, 49, 23, 23, 23, 49, 23, 23, 23, 49, 23, 23, 49}, 
-    //  {49, 23, 23, 23, 23, 23, 23, 23, 49, 23, 23, 23, 49, 23, 23, 23, 49, 23, 23, 49}, 
-    //  {49, 23, 23, 23, 23, 23, 23, 23, 49, 23, 23, 23, 49, 23, 23, 23, 49, 23, 23, 49}, 
-    //  {49, 23, 23, 23, 23, 23, 23, 23, 49, 23, 23, 23, 49, 23, 23, 23, 49, 23, 23, 49}, 
-    //  {49, 23, 23, 23, 23, 23, 23, 23, 49, 23, 23, 23, 49, 23, 23, 23, 49, 23, 23, 49}, 
-    //  {49, 23, 23, 23, 23, 23, 23, 23, 49, 23, 23, 23, 49, 23, 23, 23, 49, 23, 23, 49}, 
-    //  {49, 23, 23, 23, 23, 23, 23, 23, 49, 23, 23, 23, 49, 23, 23, 23, 49, 23, 23, 49}, 
-    //  {49, 23, 23, 23, 23, 23, 23, 23, 49, 23, 23, 23, 49, 23, 23, 23, 49, 23, 23, 49}, 
-    //  {49, 23, 23, 23, 23, 23, 23, 23, 49, 23, 23, 23, 49, 23, 23, 23, 49, 23, 23, 49}, 
-    //  {49, 23, 23, 23, 23, 23, 23, 23, 23, 23, 23, 23, 49, 23, 23, 23, 23, 23, 23, 49}, 
-    //  {49, 23, 23, 23, 23, 23, 23, 23, 23, 23, 23, 23, 49, 23, 23, 23, 23, 23, 23, 49}, 
-    //  {49, 23, 23, 23, 23, 23, 23, 23, 23, 23, 23, 23, 49, 23, 23, 23, 23, 23, 23, 49}, 
-    //  {49, 49, 49, 49, 49, 49, 49, 49, 49, 49, 49, 49, 49, 49, 49, 49, 49, 49, 49, 49}
-    //  });
+    tilesLayouts.put(5, new int[][]{
+      {4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4}, 
+      {4, 30, 18, 4, 18, 18, 18, 4, 18, 18, 18, 4, 18, 18, 18, 4, 18, 18, 18, 4}, 
+      {4, 18, 18, 4, 18, 18, 18, 4, 18, 18, 18, 4, 18, 18, 18, 4, 18, 18, 18, 4}, 
+      {4, 18, 18, 4, 18, 18, 18, 4, 18, 18, 18, 4, 18, 18, 18, 4, 18, 18, 18, 4}, 
+      {4, 18, 18, 18, 18, 18, 18, 18, 18, 18, 18, 18, 18, 18, 18, 18, 18, 18, 18, 4}, 
+      {4, 18, 18, 18, 18, 18, 18, 18, 18, 18, 18, 18, 18, 18, 18, 18, 18, 18, 18, 4}, 
+      {4, 18, 18, 18, 18, 18, 18, 4, 4, 4, 18, 18, 18, 18, 18, 18, 18, 18, 18, 4}, 
+      {4, 18, 18, 18, 4, 4, 4, 18, 18, 18, 18, 18, 18, 18, 18, 18, 4, 4, 4, 4}, 
+      {4, 4, 4, 4, 18, 18, 18, 18, 18, 18, 18, 18, 18, 4, 4, 4, 18, 18, 18, 4}, 
+      {4, 18, 18, 18, 18, 18, 18, 18, 18, 18, 4, 4, 4, 18, 18, 18, 18, 18, 18, 4}, 
+      {4, 18, 18, 18, 18, 18, 18, 4, 4, 4, 18, 18, 18, 18, 18, 18, 18, 18, 18, 4}, 
+      {4, 18, 18, 18, 4, 4, 4, 18, 18, 18, 18, 18, 18, 18, 18, 18, 18, 18, 18, 4}, 
+      {4, 18, 18, 18, 18, 18, 18, 18, 18, 18, 18, 18, 18, 4, 4, 4, 18, 18, 18, 4}, 
+      {4, 18, 18, 18, 18, 18, 18, 18, 18, 18, 4, 4, 4, 18, 18, 18, 18, 18, 18, 4}, 
+      {4, 18, 18, 18, 18, 18, 18, 4, 4, 4, 18, 18, 18, 18, 18, 18, 18, 18, 18, 4}, 
+      {4, 18, 18, 18, 4, 4, 4, 18, 18, 18, 18, 18, 18, 18, 18, 18, 18, 18, 18, 4}, 
+      {4, 4, 4, 4, 18, 18, 18, 18, 18, 18, 18, 18, 18, 18, 18, 18, 18, 18, 18, 4}, 
+      {4, 18, 18, 18, 18, 18, 18, 18, 18, 18, 18, 18, 18, 18, 18, 18, 18, 18, 18, 4}, 
+      {4, 18, 18, 18, 18, 18, 18, 18, 18, 18, 18, 18, 18, 18, 18, 18, 18, 18, 18, 4}, 
+      {4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4}
+      });
 
-    //tilesLayouts.put(6, new int[][]{
-    //  {49, 49, 49, 49, 49, 49, 49, 49, 49, 49, 49, 49, 49, 49, 49, 49, 49, 49, 49, 49}, 
-    //  {49, 23, 23, 23, 23, 23, 23, 23, 49, 23, 23, 23, 23, 23, 23, 23, 49, 23, 23, 49}, 
-    //  {49, 23, 23, 23, 23, 23, 23, 23, 49, 23, 23, 23, 23, 23, 23, 23, 49, 23, 23, 49}, 
-    //  {49, 23, 23, 23, 23, 23, 23, 23, 49, 23, 23, 23, 23, 23, 23, 23, 49, 23, 23, 49}, 
-    //  {49, 23, 23, 23, 23, 999, 23, 23, 49, 23, 23, 23, 49, 23, 23, 23, 49, 23, 23, 49}, 
-    //  {49, 23, 23, 23, 23, 23, 23, 23, 49, 23, 23, 23, 49, 23, 23, 23, 49, 23, 23, 49}, 
-    //  {49, 23, 23, 23, 23, 23, 23, 23, 49, 23, 23, 23, 49, 23, 23, 23, 49, 23, 23, 49}, 
-    //  {49, 23, 23, 23, 23, 23, 23, 23, 49, 23, 23, 23, 49, 23, 23, 23, 49, 23, 23, 49}, 
-    //  {49, 23, 23, 23, 23, 23, 23, 23, 49, 23, 23, 23, 49, 23, 23, 23, 49, 23, 23, 49}, 
-    //  {49, 23, 23, 23, 23, 23, 23, 23, 49, 23, 23, 23, 49, 23, 23, 23, 49, 23, 23, 49}, 
-    //  {49, 23, 23, 23, 23, 23, 23, 23, 49, 23, 23, 23, 49, 23, 23, 23, 49, 23, 23, 49}, 
-    //  {49, 23, 23, 23, 23, 23, 23, 23, 49, 23, 23, 23, 49, 23, 23, 23, 49, 23, 23, 49}, 
-    //  {49, 23, 23, 23, 23, 23, 23, 23, 49, 23, 23, 23, 49, 23, 23, 23, 49, 23, 23, 49}, 
-    //  {49, 23, 23, 23, 23, 23, 23, 23, 49, 23, 23, 23, 49, 23, 23, 23, 49, 23, 23, 49}, 
-    //  {49, 23, 23, 23, 23, 23, 23, 23, 49, 23, 23, 23, 49, 23, 23, 23, 49, 23, 23, 49}, 
-    //  {49, 23, 23, 23, 23, 23, 23, 23, 49, 23, 23, 23, 49, 23, 23, 23, 49, 23, 23, 49}, 
-    //  {49, 23, 23, 23, 23, 23, 23, 23, 23, 23, 23, 23, 49, 23, 23, 23, 23, 23, 23, 49}, 
-    //  {49, 23, 23, 23, 23, 23, 23, 23, 23, 23, 23, 23, 49, 23, 23, 23, 23, 23, 23, 49}, 
-    //  {49, 23, 23, 23, 23, 23, 23, 23, 23, 23, 23, 23, 49, 23, 23, 23, 23, 23, 23, 49}, 
-    //  {49, 49, 49, 49, 49, 49, 49, 49, 49, 49, 49, 49, 49, 49, 49, 49, 49, 49, 49, 49}
-    //  });
+    tilesLayouts.put(6, new int[][]{
+      {32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32}, 
+      {5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5}, 
+      {5, 30, 19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 5}, 
+      {5, 19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 5}, 
+      {5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 19, 19, 5}, 
+      {5, 19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 5}, 
+      {5, 19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 5}, 
+      {5, 19, 19, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5}, 
+      {5, 19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 5}, 
+      {5, 19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 5}, 
+      {5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 19, 19, 5}, 
+      {5, 19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 5}, 
+      {5, 19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 5}, 
+      {5, 19, 19, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5}, 
+      {5, 19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 5}, 
+      {5, 19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 5}, 
+      {5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 19, 19, 5}, 
+      {5, 19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 5}, 
+      {5, 19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 5}, 
+      {5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5}
+      });
 
-    //tilesLayouts.put(7, new int[][]{
-    //  {49, 49, 49, 49, 49, 49, 49, 49, 49, 49, 49, 49, 49, 49, 49, 49, 49, 49, 49, 49}, 
-    //  {49, 23, 23, 23, 23, 23, 23, 23, 49, 23, 23, 23, 23, 23, 23, 23, 49, 23, 23, 49}, 
-    //  {49, 23, 23, 23, 23, 23, 23, 23, 49, 23, 23, 23, 23, 23, 23, 23, 49, 23, 23, 49}, 
-    //  {49, 23, 23, 23, 23, 23, 23, 23, 49, 23, 23, 23, 23, 23, 23, 23, 49, 23, 23, 49}, 
-    //  {49, 23, 23, 23, 23, 999, 23, 23, 49, 23, 23, 23, 49, 23, 23, 23, 49, 23, 23, 49}, 
-    //  {49, 23, 23, 23, 23, 23, 23, 23, 49, 23, 23, 23, 49, 23, 23, 23, 49, 23, 23, 49}, 
-    //  {49, 23, 23, 23, 23, 23, 23, 23, 49, 23, 23, 23, 49, 23, 23, 23, 49, 23, 23, 49}, 
-    //  {49, 23, 23, 23, 23, 23, 23, 23, 49, 23, 23, 23, 49, 23, 23, 23, 49, 23, 23, 49}, 
-    //  {49, 23, 23, 23, 23, 23, 23, 23, 49, 23, 23, 23, 49, 23, 23, 23, 49, 23, 23, 49}, 
-    //  {49, 23, 23, 23, 23, 23, 23, 23, 49, 23, 23, 23, 49, 23, 23, 23, 49, 23, 23, 49}, 
-    //  {49, 23, 23, 23, 23, 23, 23, 23, 49, 23, 23, 23, 49, 23, 23, 23, 49, 23, 23, 49}, 
-    //  {49, 23, 23, 23, 23, 23, 23, 23, 49, 23, 23, 23, 49, 23, 23, 23, 49, 23, 23, 49}, 
-    //  {49, 23, 23, 23, 23, 23, 23, 23, 49, 23, 23, 23, 49, 23, 23, 23, 49, 23, 23, 49}, 
-    //  {49, 23, 23, 23, 23, 23, 23, 23, 49, 23, 23, 23, 49, 23, 23, 23, 49, 23, 23, 49}, 
-    //  {49, 23, 23, 23, 23, 23, 23, 23, 49, 23, 23, 23, 49, 23, 23, 23, 49, 23, 23, 49}, 
-    //  {49, 23, 23, 23, 23, 23, 23, 23, 49, 23, 23, 23, 49, 23, 23, 23, 49, 23, 23, 49}, 
-    //  {49, 23, 23, 23, 23, 23, 23, 23, 23, 23, 23, 23, 49, 23, 23, 23, 23, 23, 23, 49}, 
-    //  {49, 23, 23, 23, 23, 23, 23, 23, 23, 23, 23, 23, 49, 23, 23, 23, 23, 23, 23, 49}, 
-    //  {49, 23, 23, 23, 23, 23, 23, 23, 23, 23, 23, 23, 49, 23, 23, 23, 23, 23, 23, 49}, 
-    //  {49, 49, 49, 49, 49, 49, 49, 49, 49, 49, 49, 49, 49, 49, 49, 49, 49, 49, 49, 49}
-    //  });
+    tilesLayouts.put(7, new int[][]{
+      {6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6}, 
+      {6, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 30, 6}, 
+      {6, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 6}, 
+      {6, 20, 20, 20, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6}, 
+      {6, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 6}, 
+      {6, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 6}, 
+      {6, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 6}, 
+      {6, 6, 6, 6, 6, 6, 6, 6, 20, 20, 20, 6, 20, 20, 20, 20, 20, 20, 20, 6}, 
+      {6, 20, 20, 20, 20, 20, 20, 6, 20, 20, 20, 6, 20, 20, 20, 20, 20, 20, 20, 6}, 
+      {6, 20, 20, 20, 20, 20, 20, 6, 20, 20, 20, 6, 20, 20, 20, 20, 20, 20, 20, 6}, 
+      {6, 20, 20, 20, 20, 20, 20, 6, 20, 20, 20, 6, 20, 20, 20, 20, 20, 20, 20, 6}, 
+      {6, 20, 20, 6, 20, 20, 20, 6, 20, 20, 20, 6, 6, 6, 6, 6, 20, 20, 20, 6}, 
+      {6, 20, 20, 6, 20, 20, 20, 6, 20, 20, 20, 20, 20, 20, 20, 6, 20, 20, 20, 6}, 
+      {6, 20, 20, 6, 20, 20, 20, 6, 20, 20, 20, 20, 20, 20, 20, 6, 20, 20, 20, 6}, 
+      {6, 20, 20, 6, 20, 20, 20, 6, 20, 20, 20, 20, 20, 20, 20, 6, 20, 20, 20, 6}, 
+      {6, 20, 20, 6, 20, 20, 20, 6, 6, 6, 6, 6, 20, 20, 20, 6, 20, 20, 20, 6}, 
+      {6, 20, 20, 6, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 6}, 
+      {6, 20, 20, 6, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 6}, 
+      {6, 20, 20, 6, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 6}, 
+      {6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6}
+      });
 
     //tilesLayouts.put(8, new int[][]{
     //  {49, 49, 49, 49, 49, 49, 49, 49, 49, 49, 49, 49, 49, 49, 49, 49, 49, 49, 49, 49}, 
@@ -515,7 +515,7 @@ class Level {
             //if monsters can move top right
             monster.position.x += 1;
             monster.position.y -= 1;
-            monster.direction = 1; 
+            monster.direction = 1;
           } else if (((int)player1.position.x > monster.position.x && !(tilesLayouts.get(currentLevel)[(int)monster.position.y/32][(int)(monster.position.x+16)/tileSize] <= 15)) && ((int)player1.position.y > monster.position.y && !(tilesLayouts.get(currentLevel)[(int)(monster.position.y+16)/32][(int)monster.position.x/tileSize] <= 15))) {
             //if monsters can move bottom right
             monster.position.x += 1;
@@ -534,15 +534,15 @@ class Level {
           } else if ((int)player1.position.x > monster.position.x && !(tilesLayouts.get(currentLevel)[(int)monster.position.y/32][(int)(monster.position.x+16)/tileSize] <= 15)) {
             //if monsters can move right
             monster.position.x += 1;
-            monster.direction = 2; 
+            monster.direction = 2;
           } else if ((int)player1.position.x < monster.position.x && !(tilesLayouts.get(currentLevel)[(int)monster.position.y/tileSize][(int)(monster.position.x-16)/tileSize] <= 15)) {
             //if monsters can move left
             monster.position.x -= 1;
-            monster.direction = 6; 
+            monster.direction = 6;
           } else if ((int)player1.position.y > monster.position.y && !(tilesLayouts.get(currentLevel)[(int)(monster.position.y+16)/32][(int)monster.position.x/tileSize] <= 15)) {
             //if monsters can move up
             monster.position.y += 1;
-            monster.direction = 0; 
+            monster.direction = 0;
           } else if ((int)player1.position.y < monster.position.y && !(tilesLayouts.get(currentLevel)[(int)(monster.position.y-16)/32][(int)monster.position.x/tileSize] <= 15)) {
             //if monsters can move down
             monster.position.y -= 1;
@@ -558,7 +558,7 @@ class Level {
             //if monsters can move top right
             monster.position.x += 1;
             monster.position.y -= 1;
-            monster.direction = 1; 
+            monster.direction = 1;
           } else if (((int)player2.position.x > monster.position.x && !(tilesLayouts.get(currentLevel)[(int)monster.position.y/32][(int)(monster.position.x+16)/tileSize] <= 15)) && ((int)player2.position.y > monster.position.y && !(tilesLayouts.get(currentLevel)[(int)(monster.position.y+16)/32][(int)monster.position.x/tileSize] <= 15))) {
             //if monsters can move bottom right
             monster.position.x += 1;
@@ -577,15 +577,15 @@ class Level {
           } else if ((int)player2.position.x > monster.position.x && !(tilesLayouts.get(currentLevel)[(int)monster.position.y/32][(int)(monster.position.x+16)/tileSize] <= 15)) {
             //if monsters can move right
             monster.position.x += 1;
-            monster.direction = 2; 
+            monster.direction = 2;
           } else if ((int)player2.position.x < monster.position.x && !(tilesLayouts.get(currentLevel)[(int)monster.position.y/tileSize][(int)(monster.position.x-16)/tileSize] <= 15)) {
             //if monsters can move left
             monster.position.x -= 1;
-            monster.direction = 6; 
+            monster.direction = 6;
           } else if ((int)player2.position.y > monster.position.y && !(tilesLayouts.get(currentLevel)[(int)(monster.position.y+16)/32][(int)monster.position.x/tileSize] <= 15)) {
             //if monsters can move up
             monster.position.y += 1;
-            monster.direction = 0; 
+            monster.direction = 0;
           } else if ((int)player2.position.y < monster.position.y && !(tilesLayouts.get(currentLevel)[(int)(monster.position.y-16)/32][(int)monster.position.x/tileSize] <= 15)) {
             //if monsters can move down
             monster.position.y -= 1;
@@ -601,7 +601,7 @@ class Level {
             //if monsters can move top right
             monster.position.x += 1;
             monster.position.y -= 1;
-            monster.direction = 1; 
+            monster.direction = 1;
           } else if (((int)player3.position.x > monster.position.x && !(tilesLayouts.get(currentLevel)[(int)monster.position.y/32][(int)(monster.position.x+16)/tileSize] <= 15)) && ((int)player3.position.y > monster.position.y && !(tilesLayouts.get(currentLevel)[(int)(monster.position.y+16)/32][(int)monster.position.x/tileSize] <= 15))) {
             //if monsters can move bottom right
             monster.position.x += 1;
@@ -620,15 +620,15 @@ class Level {
           } else if ((int)player3.position.x > monster.position.x && !(tilesLayouts.get(currentLevel)[(int)monster.position.y/32][(int)(monster.position.x+16)/tileSize] <= 15)) {
             //if monsters can move right
             monster.position.x += 1;
-            monster.direction = 2; 
+            monster.direction = 2;
           } else if ((int)player3.position.x < monster.position.x && !(tilesLayouts.get(currentLevel)[(int)monster.position.y/tileSize][(int)(monster.position.x-16)/tileSize] <= 15)) {
             //if monsters can move left
             monster.position.x -= 1;
-            monster.direction = 6; 
+            monster.direction = 6;
           } else if ((int)player3.position.y > monster.position.y && !(tilesLayouts.get(currentLevel)[(int)(monster.position.y+16)/32][(int)monster.position.x/tileSize] <= 15)) {
             //if monsters can move up
             monster.position.y += 1;
-            monster.direction = 0; 
+            monster.direction = 0;
           } else if ((int)player3.position.y < monster.position.y && !(tilesLayouts.get(currentLevel)[(int)(monster.position.y-16)/32][(int)monster.position.x/tileSize] <= 15)) {
             //if monsters can move down
             monster.position.y -= 1;
@@ -644,7 +644,7 @@ class Level {
             //if monsters can move top right
             monster.position.x += 1;
             monster.position.y -= 1;
-            monster.direction = 1; 
+            monster.direction = 1;
           } else if (((int)player4.position.x > monster.position.x && !(tilesLayouts.get(currentLevel)[(int)monster.position.y/32][(int)(monster.position.x+16)/tileSize] <= 15)) && ((int)player4.position.y > monster.position.y && !(tilesLayouts.get(currentLevel)[(int)(monster.position.y+16)/32][(int)monster.position.x/tileSize] <= 15))) {
             //if monsters can move bottom right
             monster.position.x += 1;
@@ -663,15 +663,15 @@ class Level {
           } else if ((int)player4.position.x > monster.position.x && !(tilesLayouts.get(currentLevel)[(int)monster.position.y/32][(int)(monster.position.x+16)/tileSize] <= 15)) {
             //if monsters can move right
             monster.position.x += 1;
-            monster.direction = 2; 
+            monster.direction = 2;
           } else if ((int)player4.position.x < monster.position.x && !(tilesLayouts.get(currentLevel)[(int)monster.position.y/tileSize][(int)(monster.position.x-16)/tileSize] <= 15)) {
             //if monsters can move left
             monster.position.x -= 1;
-            monster.direction = 6; 
+            monster.direction = 6;
           } else if ((int)player4.position.y > monster.position.y && !(tilesLayouts.get(currentLevel)[(int)(monster.position.y+16)/32][(int)monster.position.x/tileSize] <= 15)) {
             //if monsters can move up
             monster.position.y += 1;
-            monster.direction = 0; 
+            monster.direction = 0;
           } else if ((int)player4.position.y < monster.position.y && !(tilesLayouts.get(currentLevel)[(int)(monster.position.y-16)/32][(int)monster.position.x/tileSize] <= 15)) {
             //if monsters can move down
             monster.position.y -= 1;
@@ -696,9 +696,9 @@ class Level {
     playerSpawnList.put(2, new int[]{1, 11}); 
     playerSpawnList.put(3, new int[]{1, 11}); 
     playerSpawnList.put(4, new int[]{1, 18}); 
-    playerSpawnList.put(5, new int[]{1, 8});
-    playerSpawnList.put(6, new int[]{1, 8});
-    playerSpawnList.put(7, new int[]{1, 8});
+    playerSpawnList.put(5, new int[]{1, 18});
+    playerSpawnList.put(6, new int[]{1, 18});
+    playerSpawnList.put(7, new int[]{1, 18});
     playerSpawnList.put(8, new int[]{1, 8});
     playerSpawnList.put(9, new int[]{1, 8});
     playerSpawnList.put(10, new int[]{1, 8});
@@ -767,5 +767,10 @@ class Level {
 
   PVector getSpawnLocation() {
     return new PVector(level.playerSpawnList.get(level.currentLevel)[0] * tileSize + tileSize/2, level.playerSpawnList.get(level.currentLevel)[1]*tileSize + tileSize/2 - 1);
+  }
+
+  int getLevelNo()
+  {
+    return currentLevel;
   }
 }

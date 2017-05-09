@@ -29,6 +29,7 @@ int classCounter2 = 0;
 int classCounter3 = 0;
 int classCounter4 = 0;
 Level level;
+int levelNo;
 GUI gui;
 final int tileSize = 32;
 int highscore = 999999999; // TO BE DEFINED LATER
@@ -53,6 +54,8 @@ boolean hasPlayer2Joined = false;
 boolean hasPlayer3Joined = false;
 boolean hasPlayer4Joined = false;
 boolean hasStartScreen = true;
+boolean gameOver = false;
+
 void setup() {  
   size(1000, 640);
   spriteSheet = loadImage("sprites.png"); 
@@ -80,6 +83,7 @@ void draw() {
     textAlign(CENTER, CENTER);
     textFont(guiFont);
     textSize(50);
+    gameOver = true;
     text("GAME OVER", 320, 320);
   }
 }
