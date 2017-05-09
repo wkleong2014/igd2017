@@ -7,6 +7,6 @@ class Exit{
  Exit(int x, int y){
    posX = x * tileSize;
    posY = y * tileSize;
-   image(spriteSheet.get(384, 288, tileSize, tileSize), posX, posY);
+   image(loadImage("30.png"), posX, posY);
  }
 }

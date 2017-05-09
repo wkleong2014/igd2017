@@ -3,8 +3,7 @@ class Player {
   int frame = 0;
   int frameMax = 2;
   int ticksLastUpdate = millis();
-  int ticksLastAnimation = 0;
-  int delta;
+  int ticksLastAnimation = 0;  
   int[] playerClassList = {0, 1, 2, 3};
   int playerWidth = 32;
   int playerHeight = 32;

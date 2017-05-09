@@ -406,8 +406,8 @@ class Level {
 
   void generateMonster() {
     int[] coordsOfMonster = monsterList.get(currentLevel);
-    for (int i=0; i<coordsOfMonster.length; i+=2) {
-      monsters.add(new Monster(new PVector(coordsOfMonster[i] * tileSize + tileSize/2, coordsOfMonster[i+1] * tileSize + tileSize/2)));
+    for (int i=0; i<coordsOfMonster.length; i+=3) {
+      monsters.add(new Monster(coordsOfMonster[i], new PVector(coordsOfMonster[i+1] * tileSize + tileSize/2, coordsOfMonster[i+2] * tileSize + tileSize/2)));
     }
   }
 
@@ -712,7 +712,7 @@ class Level {
   }
 
   void initialiseMonsterList() {
-    monsterList.put(1, new int[]{ 17, 11}); //17, 8, 17, 9, 17, 10,
+    monsterList.put(1, new int[]{4, 17, 8, 4, 17, 9, 4, 17, 10, 4, 17, 11});
   }
 
   boolean hasEnded() {
