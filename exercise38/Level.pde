@@ -576,10 +576,10 @@ class Level {
   }
 
   void initialisePlayerSpawnList() {
-    playerSpawnList.put(1, new int[]{1, 8});
-    playerSpawnList.put(2, new int[]{1, 8});
-    playerSpawnList.put(3, new int[]{1, 8});
-    playerSpawnList.put(4, new int[]{1, 2});
+    playerSpawnList.put(1, new int[]{1, 10}); 
+    playerSpawnList.put(2, new int[]{1, 10}); 
+    playerSpawnList.put(3, new int[]{1, 11}); 
+    playerSpawnList.put(4, new int[]{1, 18}); 
     playerSpawnList.put(5, new int[]{1, 8});
     playerSpawnList.put(6, new int[]{1, 8});
     playerSpawnList.put(7, new int[]{1, 8});
