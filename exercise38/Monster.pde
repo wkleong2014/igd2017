@@ -1,17 +1,16 @@
 class Monster {
   int hp = 2;
-  float posX;
-  float posY;
+  PVector position;
   int diameter = tileSize;
-  Monster(int x, int y) {
-    posX = x+16;
-    posY = y+16;
+  int direction = 0;
+  Monster(PVector position) {
+    this.position = position;
   }
   
   void drawObj(){
     ellipseMode(CENTER);
     fill(0,0,255);
-    ellipse(posX,posY,diameter,diameter);
+    ellipse(position.x,position.y,diameter,diameter);
   }
   
   void getHit(int damage){

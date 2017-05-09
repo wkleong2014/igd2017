@@ -407,7 +407,7 @@ class Level {
   void generateMonster() {
     int[] coordsOfMonster = monsterList.get(currentLevel);
     for (int i=0; i<coordsOfMonster.length; i+=2) {
-      monsters.add(new Monster(coordsOfMonster[i] * tileSize, coordsOfMonster[i+1] * tileSize));
+      monsters.add(new Monster(new PVector(coordsOfMonster[i] * tileSize + tileSize/2, coordsOfMonster[i+1] * tileSize + tileSize/2)));
     }
   }
 
@@ -430,7 +430,7 @@ class Level {
         default: 
           for (int j=monsters.size()-1; j>=0; j--) {
             Monster monster = monsters.get(j);
-            if (dist(proj.posX, proj.posY, monster.posX, monster.posY) <= (proj.diameter/2 + monster.diameter/2)) { //Circle to Circle Collision
+            if (dist(proj.posX, proj.posY, monster.position.x, monster.position.y) <= (proj.diameter/2 + monster.diameter/2)) { //Circle to Circle Collision
               monster.getHit(proj.getProjectileDamage());
               projList.remove(proj);
             }
@@ -481,16 +481,16 @@ class Level {
     int currentLowestPlayer = 1;
     for (Monster monster : monsters) {
       if (player1 != null) {
-        currentLowest = dist(player1.position.x, player1.position.y, monster.posX, monster.posY);
+        currentLowest = dist(player1.position.x, player1.position.y, monster.position.x, monster.position.y);
       }
       if (player2 != null) {
-        p2Dist = dist(player2.position.x, player2.position.y, monster.posX, monster.posY);
+        p2Dist = dist(player2.position.x, player2.position.y, monster.position.x, monster.position.y);
       }
       if (player3 != null) {
-        p3Dist = dist(player3.position.x, player3.position.y, monster.posX, monster.posY);
+        p3Dist = dist(player3.position.x, player3.position.y, monster.position.x, monster.position.y);
       }
       if (player4 != null) {
-        p4Dist = dist(player4.position.x, player4.position.y, monster.posX, monster.posY);
+        p4Dist = dist(player4.position.x, player4.position.y, monster.position.x, monster.position.y);
       }
 
       if (p2Dist < currentLowest) {
@@ -509,57 +509,173 @@ class Level {
       switch(currentLowestPlayer) {
       case 1:
         if (player1 != null) {
-          if (player1.position.x > monster.posX && !(tilesLayouts.get(currentLevel)[(int)monster.posY/32][(int)(monster.posX+16)/tileSize] <= 15)) {
-            monster.posX += 1;
-          } else if (player1.position.x < monster.posX && !(tilesLayouts.get(currentLevel)[(int)monster.posY/tileSize][(int)(monster.posX-16)/tileSize] <= 15)) {
-            monster.posX -= 1;
-          }
-          if (player1.position.y > monster.posY && !(tilesLayouts.get(currentLevel)[(int)(monster.posY+16)/32][(int)monster.posX/tileSize] <= 15)) {
-            monster.posY += 1;
-          } else if (player1.position.y < monster.posY && !(tilesLayouts.get(currentLevel)[(int)(monster.posY-16)/32][(int)monster.posX/tileSize] <= 15)) {
-            monster.posY -= 1;
+          //Check player's position and monster's position and determine which direction the monster has to go, will always choose to go diagonal direction before attempt to move
+          //in linear direction and another condition is that it must not have an unwalkable terrain (walls)
+          if (((int)player1.position.x > monster.position.x && !(tilesLayouts.get(currentLevel)[(int)monster.position.y/32][(int)(monster.position.x+16)/tileSize] <= 15)) && ((int)player1.position.y < monster.position.y && !(tilesLayouts.get(currentLevel)[(int)(monster.position.y-16)/32][(int)monster.position.x/tileSize] <= 15))) {
+            //if monsters can move top right
+            monster.position.x += 1;
+            monster.position.y -= 1;
+            monster.direction = 1; 
+          } else if (((int)player1.position.x > monster.position.x && !(tilesLayouts.get(currentLevel)[(int)monster.position.y/32][(int)(monster.position.x+16)/tileSize] <= 15)) && ((int)player1.position.y > monster.position.y && !(tilesLayouts.get(currentLevel)[(int)(monster.position.y+16)/32][(int)monster.position.x/tileSize] <= 15))) {
+            //if monsters can move bottom right
+            monster.position.x += 1;
+            monster.position.y += 1;
+            monster.direction = 3;
+          } else if (((int)player1.position.x < monster.position.x && !(tilesLayouts.get(currentLevel)[(int)monster.position.y/tileSize][(int)(monster.position.x-16)/tileSize] <= 15)) && ((int)player1.position.y > monster.position.y && !(tilesLayouts.get(currentLevel)[(int)(monster.position.y+16)/32][(int)monster.position.x/tileSize] <= 15))) {
+            //if monsters can move bottom left
+            monster.direction = 5;
+            monster.position.x -= 1;
+            monster.position.y += 1;
+          } else if (((int)player1.position.x < monster.position.x && !(tilesLayouts.get(currentLevel)[(int)monster.position.y/tileSize][(int)(monster.position.x-16)/tileSize] <= 15)) && ((int)player1.position.y < monster.position.y && !(tilesLayouts.get(currentLevel)[(int)(monster.position.y-16)/32][(int)monster.position.x/tileSize] <= 15))) {
+            //if monsters can move top left
+            monster.direction = 7;
+            monster.position.x -= 1;
+            monster.position.y -= 1;
+          } else if ((int)player1.position.x > monster.position.x && !(tilesLayouts.get(currentLevel)[(int)monster.position.y/32][(int)(monster.position.x+16)/tileSize] <= 15)) {
+            //if monsters can move right
+            monster.position.x += 1;
+            monster.direction = 2; 
+          } else if ((int)player1.position.x < monster.position.x && !(tilesLayouts.get(currentLevel)[(int)monster.position.y/tileSize][(int)(monster.position.x-16)/tileSize] <= 15)) {
+            //if monsters can move left
+            monster.position.x -= 1;
+            monster.direction = 6; 
+          } else if ((int)player1.position.y > monster.position.y && !(tilesLayouts.get(currentLevel)[(int)(monster.position.y+16)/32][(int)monster.position.x/tileSize] <= 15)) {
+            //if monsters can move up
+            monster.position.y += 1;
+            monster.direction = 0; 
+          } else if ((int)player1.position.y < monster.position.y && !(tilesLayouts.get(currentLevel)[(int)(monster.position.y-16)/32][(int)monster.position.x/tileSize] <= 15)) {
+            //if monsters can move down
+            monster.position.y -= 1;
+            monster.direction = 4;
           }
         }
         break;
       case 2:
         if (player2 != null) {
-          if (player2.position.x > monster.posX && !(tilesLayouts.get(currentLevel)[(int)monster.posY/32][(int)(monster.posX+16)/tileSize] <= 15)) {
-            monster.posX += 1;
-          } else if (player2.position.x < monster.posX && !(tilesLayouts.get(currentLevel)[(int)monster.posY/tileSize][(int)(monster.posX-16)/tileSize] <= 15)) {
-            monster.posX -= 1;
-          }
-          if (player2.position.y > monster.posY && !(tilesLayouts.get(currentLevel)[(int)(monster.posY+16)/32][(int)monster.posX/tileSize] <= 15)) {
-            monster.posY += 1;
-          } else if (player2.position.y < monster.posY && !(tilesLayouts.get(currentLevel)[(int)(monster.posY-16)/32][(int)monster.posX/tileSize] <= 15)) {
-            monster.posY -= 1;
+          //Check player's position and monster's position and determine which direction the monster has to go, will always choose to go diagonal direction before attempt to move
+          //in linear direction and another condition is that it must not have an unwalkable terrain (walls)
+          if (((int)player2.position.x > monster.position.x && !(tilesLayouts.get(currentLevel)[(int)monster.position.y/32][(int)(monster.position.x+16)/tileSize] <= 15)) && ((int)player2.position.y < monster.position.y && !(tilesLayouts.get(currentLevel)[(int)(monster.position.y-16)/32][(int)monster.position.x/tileSize] <= 15))) {
+            //if monsters can move top right
+            monster.position.x += 1;
+            monster.position.y -= 1;
+            monster.direction = 1; 
+          } else if (((int)player2.position.x > monster.position.x && !(tilesLayouts.get(currentLevel)[(int)monster.position.y/32][(int)(monster.position.x+16)/tileSize] <= 15)) && ((int)player2.position.y > monster.position.y && !(tilesLayouts.get(currentLevel)[(int)(monster.position.y+16)/32][(int)monster.position.x/tileSize] <= 15))) {
+            //if monsters can move bottom right
+            monster.position.x += 1;
+            monster.position.y += 1;
+            monster.direction = 3;
+          } else if (((int)player2.position.x < monster.position.x && !(tilesLayouts.get(currentLevel)[(int)monster.position.y/tileSize][(int)(monster.position.x-16)/tileSize] <= 15)) && ((int)player2.position.y > monster.position.y && !(tilesLayouts.get(currentLevel)[(int)(monster.position.y+16)/32][(int)monster.position.x/tileSize] <= 15))) {
+            //if monsters can move bottom left
+            monster.direction = 5;
+            monster.position.x -= 1;
+            monster.position.y += 1;
+          } else if (((int)player2.position.x < monster.position.x && !(tilesLayouts.get(currentLevel)[(int)monster.position.y/tileSize][(int)(monster.position.x-16)/tileSize] <= 15)) && ((int)player2.position.y < monster.position.y && !(tilesLayouts.get(currentLevel)[(int)(monster.position.y-16)/32][(int)monster.position.x/tileSize] <= 15))) {
+            //if monsters can move top left
+            monster.direction = 7;
+            monster.position.x -= 1;
+            monster.position.y -= 1;
+          } else if ((int)player2.position.x > monster.position.x && !(tilesLayouts.get(currentLevel)[(int)monster.position.y/32][(int)(monster.position.x+16)/tileSize] <= 15)) {
+            //if monsters can move right
+            monster.position.x += 1;
+            monster.direction = 2; 
+          } else if ((int)player2.position.x < monster.position.x && !(tilesLayouts.get(currentLevel)[(int)monster.position.y/tileSize][(int)(monster.position.x-16)/tileSize] <= 15)) {
+            //if monsters can move left
+            monster.position.x -= 1;
+            monster.direction = 6; 
+          } else if ((int)player2.position.y > monster.position.y && !(tilesLayouts.get(currentLevel)[(int)(monster.position.y+16)/32][(int)monster.position.x/tileSize] <= 15)) {
+            //if monsters can move up
+            monster.position.y += 1;
+            monster.direction = 0; 
+          } else if ((int)player2.position.y < monster.position.y && !(tilesLayouts.get(currentLevel)[(int)(monster.position.y-16)/32][(int)monster.position.x/tileSize] <= 15)) {
+            //if monsters can move down
+            monster.position.y -= 1;
+            monster.direction = 4;
           }
         }
         break;
       case 3:
         if (player3 != null) {
-          if (player3.position.x > monster.posX && !(tilesLayouts.get(currentLevel)[(int)monster.posY/32][(int)(monster.posX+16)/tileSize] <= 15)) {
-            monster.posX += 1;
-          } else if (player3.position.x < monster.posX && !(tilesLayouts.get(currentLevel)[(int)monster.posY/tileSize][(int)(monster.posX-16)/tileSize] <= 15)) {
-            monster.posX -= 1;
-          }
-          if (player3.position.y > monster.posY && !(tilesLayouts.get(currentLevel)[(int)(monster.posY+16)/32][(int)monster.posX/tileSize] <= 15)) {
-            monster.posY += 1;
-          } else if (player3.position.y < monster.posY && !(tilesLayouts.get(currentLevel)[(int)(monster.posY-16)/32][(int)monster.posX/tileSize] <= 15)) {
-            monster.posY -= 1;
+          //Check player's position and monster's position and determine which direction the monster has to go, will always choose to go diagonal direction before attempt to move
+          //in linear direction and another condition is that it must not have an unwalkable terrain (walls)
+          if (((int)player3.position.x > monster.position.x && !(tilesLayouts.get(currentLevel)[(int)monster.position.y/32][(int)(monster.position.x+16)/tileSize] <= 15)) && ((int)player3.position.y < monster.position.y && !(tilesLayouts.get(currentLevel)[(int)(monster.position.y-16)/32][(int)monster.position.x/tileSize] <= 15))) {
+            //if monsters can move top right
+            monster.position.x += 1;
+            monster.position.y -= 1;
+            monster.direction = 1; 
+          } else if (((int)player3.position.x > monster.position.x && !(tilesLayouts.get(currentLevel)[(int)monster.position.y/32][(int)(monster.position.x+16)/tileSize] <= 15)) && ((int)player3.position.y > monster.position.y && !(tilesLayouts.get(currentLevel)[(int)(monster.position.y+16)/32][(int)monster.position.x/tileSize] <= 15))) {
+            //if monsters can move bottom right
+            monster.position.x += 1;
+            monster.position.y += 1;
+            monster.direction = 3;
+          } else if (((int)player3.position.x < monster.position.x && !(tilesLayouts.get(currentLevel)[(int)monster.position.y/tileSize][(int)(monster.position.x-16)/tileSize] <= 15)) && ((int)player3.position.y > monster.position.y && !(tilesLayouts.get(currentLevel)[(int)(monster.position.y+16)/32][(int)monster.position.x/tileSize] <= 15))) {
+            //if monsters can move bottom left
+            monster.direction = 5;
+            monster.position.x -= 1;
+            monster.position.y += 1;
+          } else if (((int)player3.position.x < monster.position.x && !(tilesLayouts.get(currentLevel)[(int)monster.position.y/tileSize][(int)(monster.position.x-16)/tileSize] <= 15)) && ((int)player3.position.y < monster.position.y && !(tilesLayouts.get(currentLevel)[(int)(monster.position.y-16)/32][(int)monster.position.x/tileSize] <= 15))) {
+            //if monsters can move top left
+            monster.direction = 7;
+            monster.position.x -= 1;
+            monster.position.y -= 1;
+          } else if ((int)player3.position.x > monster.position.x && !(tilesLayouts.get(currentLevel)[(int)monster.position.y/32][(int)(monster.position.x+16)/tileSize] <= 15)) {
+            //if monsters can move right
+            monster.position.x += 1;
+            monster.direction = 2; 
+          } else if ((int)player3.position.x < monster.position.x && !(tilesLayouts.get(currentLevel)[(int)monster.position.y/tileSize][(int)(monster.position.x-16)/tileSize] <= 15)) {
+            //if monsters can move left
+            monster.position.x -= 1;
+            monster.direction = 6; 
+          } else if ((int)player3.position.y > monster.position.y && !(tilesLayouts.get(currentLevel)[(int)(monster.position.y+16)/32][(int)monster.position.x/tileSize] <= 15)) {
+            //if monsters can move up
+            monster.position.y += 1;
+            monster.direction = 0; 
+          } else if ((int)player3.position.y < monster.position.y && !(tilesLayouts.get(currentLevel)[(int)(monster.position.y-16)/32][(int)monster.position.x/tileSize] <= 15)) {
+            //if monsters can move down
+            monster.position.y -= 1;
+            monster.direction = 4;
           }
         }
         break;
       case 4:
         if (player4 != null) {
-          if (player4.position.x > monster.posX && !(tilesLayouts.get(currentLevel)[(int)monster.posY/32][(int)(monster.posX+16)/tileSize] <= 15)) {
-            monster.posX += 1;
-          } else if (player4.position.x < monster.posX && !(tilesLayouts.get(currentLevel)[(int)monster.posY/tileSize][(int)(monster.posX-16)/tileSize] <= 15)) {
-            monster.posX -= 1;
-          }
-          if (player4.position.y > monster.posY && !(tilesLayouts.get(currentLevel)[(int)(monster.posY+16)/32][(int)monster.posX/tileSize] <= 15)) {
-            monster.posY += 1;
-          } else if (player4.position.y < monster.posY && !(tilesLayouts.get(currentLevel)[(int)(monster.posY-16)/32][(int)monster.posX/tileSize] <= 15)) {
-            monster.posY -= 1;
+          //Check player's position and monster's position and determine which direction the monster has to go, will always choose to go diagonal direction before attempt to move
+          //in linear direction and another condition is that it must not have an unwalkable terrain (walls)
+          if (((int)player4.position.x > monster.position.x && !(tilesLayouts.get(currentLevel)[(int)monster.position.y/32][(int)(monster.position.x+16)/tileSize] <= 15)) && ((int)player4.position.y < monster.position.y && !(tilesLayouts.get(currentLevel)[(int)(monster.position.y-16)/32][(int)monster.position.x/tileSize] <= 15))) {
+            //if monsters can move top right
+            monster.position.x += 1;
+            monster.position.y -= 1;
+            monster.direction = 1; 
+          } else if (((int)player4.position.x > monster.position.x && !(tilesLayouts.get(currentLevel)[(int)monster.position.y/32][(int)(monster.position.x+16)/tileSize] <= 15)) && ((int)player4.position.y > monster.position.y && !(tilesLayouts.get(currentLevel)[(int)(monster.position.y+16)/32][(int)monster.position.x/tileSize] <= 15))) {
+            //if monsters can move bottom right
+            monster.position.x += 1;
+            monster.position.y += 1;
+            monster.direction = 3;
+          } else if (((int)player4.position.x < monster.position.x && !(tilesLayouts.get(currentLevel)[(int)monster.position.y/tileSize][(int)(monster.position.x-16)/tileSize] <= 15)) && ((int)player4.position.y > monster.position.y && !(tilesLayouts.get(currentLevel)[(int)(monster.position.y+16)/32][(int)monster.position.x/tileSize] <= 15))) {
+            //if monsters can move bottom left
+            monster.direction = 5;
+            monster.position.x -= 1;
+            monster.position.y += 1;
+          } else if (((int)player4.position.x < monster.position.x && !(tilesLayouts.get(currentLevel)[(int)monster.position.y/tileSize][(int)(monster.position.x-16)/tileSize] <= 15)) && ((int)player4.position.y < monster.position.y && !(tilesLayouts.get(currentLevel)[(int)(monster.position.y-16)/32][(int)monster.position.x/tileSize] <= 15))) {
+            //if monsters can move top left
+            monster.direction = 7;
+            monster.position.x -= 1;
+            monster.position.y -= 1;
+          } else if ((int)player4.position.x > monster.position.x && !(tilesLayouts.get(currentLevel)[(int)monster.position.y/32][(int)(monster.position.x+16)/tileSize] <= 15)) {
+            //if monsters can move right
+            monster.position.x += 1;
+            monster.direction = 2; 
+          } else if ((int)player4.position.x < monster.position.x && !(tilesLayouts.get(currentLevel)[(int)monster.position.y/tileSize][(int)(monster.position.x-16)/tileSize] <= 15)) {
+            //if monsters can move left
+            monster.position.x -= 1;
+            monster.direction = 6; 
+          } else if ((int)player4.position.y > monster.position.y && !(tilesLayouts.get(currentLevel)[(int)(monster.position.y+16)/32][(int)monster.position.x/tileSize] <= 15)) {
+            //if monsters can move up
+            monster.position.y += 1;
+            monster.direction = 0; 
+          } else if ((int)player4.position.y < monster.position.y && !(tilesLayouts.get(currentLevel)[(int)(monster.position.y-16)/32][(int)monster.position.x/tileSize] <= 15)) {
+            //if monsters can move down
+            monster.position.y -= 1;
+            monster.direction = 4;
           }
         }
         break;
@@ -576,8 +692,8 @@ class Level {
   }
 
   void initialisePlayerSpawnList() {
-    playerSpawnList.put(1, new int[]{1, 10}); 
-    playerSpawnList.put(2, new int[]{1, 10}); 
+    playerSpawnList.put(1, new int[]{1, 11}); 
+    playerSpawnList.put(2, new int[]{1, 11}); 
     playerSpawnList.put(3, new int[]{1, 11}); 
     playerSpawnList.put(4, new int[]{1, 18}); 
     playerSpawnList.put(5, new int[]{1, 8});
@@ -596,7 +712,7 @@ class Level {
   }
 
   void initialiseMonsterList() {
-    monsterList.put(1, new int[]{17, 8, 17, 9, 17, 10, 17, 11});
+    monsterList.put(1, new int[]{ 17, 11}); //17, 8, 17, 9, 17, 10,
   }
 
   boolean hasEnded() {
@@ -650,6 +766,6 @@ class Level {
   }
 
   PVector getSpawnLocation() {
-    return new PVector(level.playerSpawnList.get(level.currentLevel)[0] * tileSize + tileSize/2, level.playerSpawnList.get(level.currentLevel)[1]*tileSize + tileSize/2);
+    return new PVector(level.playerSpawnList.get(level.currentLevel)[0] * tileSize + tileSize/2, level.playerSpawnList.get(level.currentLevel)[1]*tileSize + tileSize/2 - 1);
   }
 }
