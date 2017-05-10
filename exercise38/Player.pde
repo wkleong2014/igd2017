@@ -62,12 +62,12 @@ class Player {
     PVector nextPosition = new PVector(position.x, position.y);
     nextPosition.add(velocity);
     int[][] currentLayout = level.getCurrentTileLayout();
-    float offset = 32 + playerWidth/2 -1;
+    float offset = 32 + playerWidth/2;
     if (currentLayout != null) {
-      if (!(currentLayout[int((nextPosition.y)/32)][int((nextPosition.x-playerWidth/2)/32)] <= 15) && !(currentLayout[int((nextPosition.y)/32)][int((nextPosition.x+playerWidth/2)/32)] <= 15) && 
-        !(currentLayout[int((nextPosition.y-playerWidth/2)/32)][int((nextPosition.x)/32)] <= 15) && !(currentLayout[int((nextPosition.y+playerWidth/2)/32)][int((nextPosition.x)/32)] <= 15) && 
-        !(currentLayout[int((nextPosition.y-playerWidth/2)/32)][int((nextPosition.x-playerWidth/2)/32)] <= 15) && !(currentLayout[int((nextPosition.y-playerWidth/2)/32)][int((nextPosition.x+playerWidth/2)/32)] <= 15) && 
-        !(currentLayout[int((nextPosition.y+playerWidth/2)/32)][int((nextPosition.x-playerWidth/2)/32)] <= 15) && !(currentLayout[int((nextPosition.y+playerWidth/2)/32)][int((nextPosition.x+playerWidth/2)/32)] <= 15)) {
+      if (!(currentLayout[int((nextPosition.y)/32)][int((nextPosition.x+1-playerWidth/2)/32)] <= 15) && !(currentLayout[int((nextPosition.y)/32)][int((nextPosition.x-1+playerWidth/2)/32)] <= 15) && 
+        !(currentLayout[int((nextPosition.y+1-playerWidth/2)/32)][int((nextPosition.x)/32)] <= 15) && !(currentLayout[int((nextPosition.y-1+playerWidth/2)/32)][int((nextPosition.x)/32)] <= 15) && 
+        !(currentLayout[int((nextPosition.y+1-playerWidth/2)/32)][int((nextPosition.x+1-playerWidth/2)/32)] <= 15) && !(currentLayout[int((nextPosition.y+1-playerWidth/2)/32)][int((nextPosition.x-1+playerWidth/2)/32)] <= 15) && 
+        !(currentLayout[int((nextPosition.y-1+playerWidth/2)/32)][int((nextPosition.x+1-playerWidth/2)/32)] <= 15) && !(currentLayout[int((nextPosition.y-1+playerWidth/2)/32)][int((nextPosition.x-1+playerWidth/2)/32)] <= 15)) {
         if (nextPosition.x > offset && nextPosition.x < (width - offset)) position.x = nextPosition.x;
         if (nextPosition.y > offset && nextPosition.y < (height - offset)) position.y = nextPosition.y;
       }

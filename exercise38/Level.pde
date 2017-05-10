@@ -868,7 +868,7 @@ class Level {
   }
 
   PVector getSpawnLocation() {
-    return new PVector(level.playerSpawnList.get(level.currentLevel)[0] * tileSize + tileSize/2, level.playerSpawnList.get(level.currentLevel)[1]*tileSize + tileSize/2 - 1);
+    return new PVector(level.playerSpawnList.get(level.currentLevel)[0] * tileSize + tileSize/2, level.playerSpawnList.get(level.currentLevel)[1]*tileSize + tileSize/2);
   }
 
   int getLevelNo()
