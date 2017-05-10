@@ -32,7 +32,11 @@ class GUI
       text("Fungeon", 820, 110);
       textFont(guiFont);
       textSize(30);      
+      if (gameOver) {
+        text("GAME OVER", 820, 180);
+      } else {
       text("LEVEL " + level.getLevelNo(), 820, 180);
+      }
       textSize(20);      
       text("HIGHSCORE: " + highscore, 820, 220);           
 
