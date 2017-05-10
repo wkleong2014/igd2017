@@ -2,7 +2,7 @@ class Projectile {
   float posX;
   float posY;
   int direction;
-  float diameter;
+  int diameter;
   int projectileSpeed;
   int projectileType;
   int projectileDamage;
@@ -31,6 +31,18 @@ class Projectile {
 
   int getProjectileSpeed() {
     return projectileSpeed;
+  }
+  
+  int getProjectileDiameter(){
+   return diameter; 
+  }
+  
+  float getPosX(){
+   return posX; 
+  }
+  
+  float getPosY(){
+   return posY; 
   }
 
   void updateOb() {

@@ -15,5 +15,20 @@ class Item {
     imageMode(CORNER);
     image(loadImage("switch.png"), posX, posY);
   }
-  
+
+  int getPosX() {
+    return posX;
+  }
+
+  int getPosY() {
+    return posY;
+  }
+
+  int getItemWidth() {
+    return itemWidth;
+  }
+
+  int getItemHeight() {
+    return itemHeight;
+  }
 }

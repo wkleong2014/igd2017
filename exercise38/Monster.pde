@@ -2,7 +2,7 @@ class Monster {
   int hp = 2;
   PVector position;
   int diameter = tileSize;
-  int direction = 0;
+  int direction = 4;
   int type;
   final int ANIMATION_DURATION = 300; //in milliseconds
   int frame = 0;
@@ -12,6 +12,7 @@ class Monster {
   int projectileSpeed = 100;
   int projectileDamage = 10;
   int collisionDamage = 10;
+  int ticksLastMovement = millis();
 
   Monster(int type, PVector position) {
     this.type = type;
@@ -21,9 +22,21 @@ class Monster {
   int getCollisionDamage(){
     return collisionDamage;
   }
+  
+  int getDiameter(){
+   return diameter; 
+  }
+  
+  float getPosX(){
+   return position.x; 
+  }
+  
+  float getPosY(){
+   return position.y; 
+  }
 
   void drawObj() {
-    if (type == 7 && millis() - ticksLastShot >= 1500) {
+    if (type == 7 && millis() - ticksLastShot >= 1000) {
       shootProjectile();
       ticksLastShot += millis() - ticksLastShot;
     }
@@ -68,5 +81,29 @@ class Monster {
       break;
     }
     level.projList.add(proj);
+  }
+  
+  void incPosX(int moveSpeed) {
+    position.x += moveSpeed * float(millis() - ticksLastMovement) * 0.001;
+  }
+
+  void decPosX(int moveSpeed) {
+    position.x -= moveSpeed * float(millis() - ticksLastMovement) * 0.001;
+  }
+
+  void incPosY(int moveSpeed) {
+    position.y += moveSpeed * float(millis() - ticksLastMovement) * 0.001;
+  }
+
+  void decPosY(int moveSpeed) {
+    position.y -= moveSpeed * float(millis() - ticksLastMovement) * 0.001;
+  }
+  
+  void setLastMovementTicks(){
+   ticksLastMovement = millis(); 
+  }
+  
+  void setDirection(int direction){
+    this.direction = direction;
   }
 }

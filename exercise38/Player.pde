@@ -153,7 +153,7 @@ class Player {
       proj = new Projectile(position.x - offset, position.y - offset, direction, projectileSpeed, playerClass, projectileDamage);
       break;
     }
-    level.projList.add(proj);
+    level.addProjectile(proj);
   }
   
   int getHP()
@@ -176,5 +176,13 @@ class Player {
   void getHit(int projectileDamage){
     hp -= projectileDamage;
     if (hp < 0 ) hp = 0;
+  }
+  
+  float getPosX(){
+   return position.x; 
+  }
+  
+  float getPosY(){
+   return position.y; 
   }
 }
