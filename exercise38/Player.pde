@@ -172,4 +172,9 @@ class Player {
        break;
     }
   }
+  
+  void getHit(int projectileDamage){
+    hp -= projectileDamage;
+    if (hp < 0 ) hp = 0;
+  }
 }

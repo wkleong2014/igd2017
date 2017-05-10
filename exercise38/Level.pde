@@ -426,15 +426,13 @@ class Level {
         generateLevel = true;
       }
       drawObjects();
-      //set condition to move monster (every 1s?)
+      level.checkCollision();
       moveMonster();
       moveObjects();
-
       if (player1 != null) player1.updateMovement();
       if (player2 != null) player2.updateMovement();
       if (player3 != null) player3.updateMovement();
       if (player4 != null) player4.updateMovement();
-      level.checkCollision();
     }
   }
 
@@ -534,51 +532,64 @@ class Level {
       int projectileSpeed = proj.getProjectileSpeed();
       if (tilesLayouts.get(currentLevel)[(int)proj.posY/32][(int)proj.posX/32] <= 15) {
         projList.remove(proj);
-      } else {
-        switch(monsters.size()) {
-        default: 
-          for (int j=monsters.size()-1; j>=0; j--) {
-            Monster monster = monsters.get(j);
-            if (dist(proj.posX, proj.posY, monster.position.x, monster.position.y) <= (proj.diameter/2 + monster.diameter/2)) {
-              monster.getHit(proj.getProjectileDamage());
-              projList.remove(proj);
-            }
-          }
-        case 0:
-          switch(proj.getDirection()) {
-          case 0:
-            proj.decPosY(projectileSpeed);
-            break;
-          case 1:
-            proj.incPosX(projectileSpeed);
-            proj.decPosY(projectileSpeed);
-            break;
-          case 2:
-            proj.incPosX(projectileSpeed);
-            break;
-          case 3:
-            proj.incPosX(projectileSpeed);
-            proj.incPosY(projectileSpeed);
-            break;
-          case 4:
-            proj.incPosY(projectileSpeed);
-            break;
-          case 5:
-            proj.decPosX(projectileSpeed);
-            proj.incPosY(projectileSpeed);
-            break;
-          case 6:
-            proj.decPosX(projectileSpeed);
-            break;
-          case 7:
-            proj.decPosX(projectileSpeed);
-            proj.decPosY(projectileSpeed);
-            break;
-          }
-          proj.updateOb();
-          break;
+      } else if (proj.getProjectileType() == 7) {
+        if (player1 != null && (proj.posX + proj.diameter) >= (player1.position.x) && (proj.posX) <= (player1.position.x + tileSize) && (proj.posY + proj.diameter) >= (player1.position.y) && (proj.posY) <= (player1.position.y + tileSize)) {
+          player1.getHit(proj.getProjectileDamage());
+          projList.remove(proj);
         }
+        if (player2 != null &&(proj.posX + proj.diameter) >= (player2.position.x) && (proj.posX) <= (player2.position.x + tileSize) && (proj.posY + proj.diameter) >= (player2.position.y) && (proj.posY) <= (player2.position.y + tileSize)) {
+          player2.getHit(proj.getProjectileDamage());
+          projList.remove(proj);
+        }
+        if (player3 != null &&(proj.posX + proj.diameter) >= (player3.position.x) && (proj.posX) <= (player3.position.x + tileSize) && (proj.posY + proj.diameter) >= (player3.position.y) && (proj.posY) <= (player3.position.y + tileSize)) {
+          player3.getHit(proj.getProjectileDamage());
+          projList.remove(proj);
+        }
+        if (player4 != null &&(proj.posX + proj.diameter) >= (player4.position.x) && (proj.posX) <= (player4.position.x + tileSize) && (proj.posY + proj.diameter) >= (player4.position.y) && (proj.posY) <= (player4.position.y + tileSize)) {
+          player4.getHit(proj.getProjectileDamage());
+          projList.remove(proj);
+        }
+      } else if (monsters.size() != 0) { 
+        for (int j=monsters.size()-1; j>=0; j--) {
+          Monster monster = monsters.get(j);
+          if ((proj.posX + tileSize) >= (monster.position.x) && (proj.posX) <= (monster.position.x + tileSize) && (proj.posY + tileSize) >= (monster.position.y) && (proj.posY) <= (monster.position.y + tileSize)) {
+            projList.remove(proj);
+            monster.getHit(proj.getProjectileDamage());
+            break;
+          }
+        }
+      } 
+      switch(proj.getDirection()) {
+      case 0:
+        proj.decPosY(projectileSpeed);
+        break;
+      case 1:
+        proj.incPosX(projectileSpeed);
+        proj.decPosY(projectileSpeed);
+        break;
+      case 2:
+        proj.incPosX(projectileSpeed);
+        break;
+      case 3:
+        proj.incPosX(projectileSpeed);
+        proj.incPosY(projectileSpeed);
+        break;
+      case 4:
+        proj.incPosY(projectileSpeed);
+        break;
+      case 5:
+        proj.decPosX(projectileSpeed);
+        proj.incPosY(projectileSpeed);
+        break;
+      case 6:
+        proj.decPosX(projectileSpeed);
+        break;
+      case 7:
+        proj.decPosX(projectileSpeed);
+        proj.decPosY(projectileSpeed);
+        break;
       }
+      proj.updateOb();
     }
   }
 
@@ -589,6 +600,27 @@ class Level {
     float p4Dist = Float.MAX_VALUE;
     int currentLowestPlayer = 1;
     for (Monster monster : monsters) {
+      if (player1 != null && (monster.position.x + monster.diameter) >= (player1.position.x) && (monster.position.x) <= (player1.position.x + tileSize) && (monster.position.y + monster.diameter) >= (player1.position.y) && (monster.position.y) <= (player1.position.y + tileSize)) {
+        player1.getHit(monster.getCollisionDamage());
+        monsters.remove(monster);
+        break;
+      }
+      if (player2 != null && (monster.position.x + monster.diameter) >= (player2.position.x) && (monster.position.x) <= (player2.position.x + tileSize) && (monster.position.y + monster.diameter) >= (player2.position.y) && (monster.position.y) <= (player2.position.y + tileSize)) {
+        player2.getHit(monster.getCollisionDamage());
+        monsters.remove(monster);
+        break;
+      }
+      if (player3 != null && (monster.position.x + monster.diameter) >= (player3.position.x) && (monster.position.x) <= (player3.position.x + tileSize) && (monster.position.y + monster.diameter) >= (player3.position.y) && (monster.position.y) <= (player3.position.y + tileSize)) {
+        player3.getHit(monster.getCollisionDamage());
+        monsters.remove(monster);
+        break;
+      }
+      if (player4 != null && (monster.position.x + monster.diameter) >= (player4.position.x) && (monster.position.x) <= (player4.position.x + tileSize) && (monster.position.y + monster.diameter) >= (player4.position.y) && (monster.position.y) <= (player4.position.y + tileSize)) {
+        player4.getHit(monster.getCollisionDamage());
+        monsters.remove(monster);
+        break;
+      }
+
       if (player1 != null) {
         currentLowest = dist(player1.position.x, player1.position.y, monster.position.x, monster.position.y);
       }
@@ -805,7 +837,7 @@ class Level {
       for (int i=0; i<tileLayout.length; i++) { //y axis
         for (int j=0; j<tileLayout[i].length; j++) { //x axis
           if (tileLayout[i][j] == 30 ) exit = new Exit(j, i, 30);
-          else if(tileLayout[i][j] == 31) exit = new Exit(j, i, 31);
+          else if (tileLayout[i][j] == 31) exit = new Exit(j, i, 31);
           else image(images.get(tileLayout[i][j]), j * tileSize, i * tileSize);
         }
       }
