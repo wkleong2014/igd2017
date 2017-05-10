@@ -98,7 +98,7 @@ void keyPressed() {
   }
 
   //nextStage
-  if (char(keyCode) == '0') {
+  if (char(keyCode) == '0' && !gameOver) {
     level.nextLevel();
   }
 

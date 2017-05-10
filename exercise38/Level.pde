@@ -373,7 +373,7 @@ class Level {
       {15, 29, 29, 15, 29, 29, 15, 29, 29, 29, 29, 29, 29, 29, 29, 29, 15, 29, 29, 15}, 
       {15, 29, 29, 15, 29, 29, 15, 29, 29, 15, 15, 15, 15, 15, 29, 29, 15, 29, 29, 15}, 
       {15, 29, 29, 15, 29, 29, 15, 29, 29, 15, 29, 29, 29, 15, 29, 29, 15, 29, 29, 15}, 
-      {15, 29, 29, 15, 29, 29, 15, 29, 29, 15, 30, 29, 29, 15, 29, 29, 15, 29, 29, 15}, 
+      {15, 29, 29, 15, 29, 29, 15, 29, 29, 15, 31, 29, 29, 15, 29, 29, 15, 29, 29, 15}, 
       {15, 29, 29, 15, 29, 29, 15, 29, 29, 15, 15, 29, 29, 15, 29, 29, 15, 29, 29, 15}, 
       {15, 29, 29, 15, 29, 29, 15, 29, 29, 29, 29, 29, 29, 15, 29, 29, 15, 29, 29, 15}, 
       {15, 29, 29, 15, 29, 29, 15, 29, 29, 29, 29, 29, 29, 15, 29, 29, 15, 29, 29, 15}, 
@@ -417,23 +417,25 @@ class Level {
   }
 
   void update() {
-    drawLevel();
-    if (!generateLevel) {
-      generateMonster();
-      generateGate();
-      generateItem();
-      generateLevel = true;
-    }
-    drawObjects();
-    //set condition to move monster (every 1s?)
-    moveMonster();
-    moveObjects();
+    if (!gameOver) {
+      drawLevel();
+      if (!generateLevel) {
+        generateMonster();
+        generateGate();
+        generateItem();
+        generateLevel = true;
+      }
+      drawObjects();
+      //set condition to move monster (every 1s?)
+      moveMonster();
+      moveObjects();
 
-    if (player1 != null) player1.updateMovement();
-    if (player2 != null) player2.updateMovement();
-    if (player3 != null) player3.updateMovement();
-    if (player4 != null) player4.updateMovement();
-    level.checkCollision();
+      if (player1 != null) player1.updateMovement();
+      if (player2 != null) player2.updateMovement();
+      if (player3 != null) player3.updateMovement();
+      if (player4 != null) player4.updateMovement();
+      level.checkCollision();
+    }
   }
 
   void initialiseImages() {
@@ -802,7 +804,8 @@ class Level {
     } else {
       for (int i=0; i<tileLayout.length; i++) { //y axis
         for (int j=0; j<tileLayout[i].length; j++) { //x axis
-          if (tileLayout[i][j] == 30) exit = new Exit(j, i);
+          if (tileLayout[i][j] == 30 ) exit = new Exit(j, i, 30);
+          else if(tileLayout[i][j] == 31) exit = new Exit(j, i, 31);
           else image(images.get(tileLayout[i][j]), j * tileSize, i * tileSize);
         }
       }
@@ -882,6 +885,7 @@ class Level {
     monsters.clear();
     projList.clear();
     items.clear();
+    gates.clear();
     currentLevel++;
     generateLevel = false;
     if (player1 != null) player1.resetPosition();
