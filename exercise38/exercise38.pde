@@ -55,10 +55,12 @@ boolean hasPlayer3Joined = false;
 boolean hasPlayer4Joined = false;
 boolean hasStartScreen = true;
 boolean gameOver = false;
+PImage gateSprite;
 
 void setup() {  
   size(1000, 640);
   spriteSheet = loadImage("sprites.png"); 
+  gateSprite = loadImage("gate.png");
   titleFont = createFont("Louisianne.ttf", 32); 
   guiFont = createFont("Minecraft.ttf", 32);  
   level = new Level();

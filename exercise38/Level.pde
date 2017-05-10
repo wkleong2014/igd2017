@@ -1,13 +1,18 @@
 class Level {
   int currentLevel = 1;
-  boolean generatedMon = false;
+  boolean generateLevel = false;
   HashMap<Integer, int[][]> tilesLayouts = new HashMap<Integer, int[][]>();
   HashMap<Integer, PImage> images = new HashMap<Integer, PImage>();
   HashMap<Integer, int[]> monsterList = new HashMap<Integer, int[]>();
+  HashMap<Integer, int[]> gateList = new HashMap<Integer, int[]>();
+  HashMap<Integer, int[]> itemList = new HashMap<Integer, int[]>();
   HashMap<Integer, int[]> playerSpawnList = new HashMap<Integer, int[]>();
   ArrayList<Monster> monsters = new ArrayList<Monster>();
-  boolean endGame = false;
+  ArrayList<Item> items = new ArrayList<Item>();
+  ArrayList<Gate> gates = new ArrayList<Gate>();
   ArrayList<Projectile> projList = new ArrayList<Projectile>();
+  boolean endGame = false;
+  int clearTiles;
   Exit exit;
 
   Level() {
@@ -384,15 +389,19 @@ class Level {
     initialiseImages();
     initialisePlayerSpawnList();
     initialiseMonsterList();
+    initialiseGateList();
+    initialiseItemList();
   }
 
   void update() {
     drawLevel();
-
-    if (!generatedMon && monsters.size()==0) {
+    if (!generateLevel) {
       generateMonster();
-      generatedMon = true;
-    } else drawMonster();
+      generateGate();
+      generateItem();
+      generateLevel = true;
+    }
+    drawObjects();
     //set condition to move monster (every 1s?)
     moveMonster();
     moveObjects();
@@ -404,18 +413,93 @@ class Level {
     level.checkCollision();
   }
 
-  void generateMonster() {
-    int[] coordsOfMonster = monsterList.get(currentLevel);
-    for (int i=0; i<coordsOfMonster.length; i+=3) {
-      monsters.add(new Monster(coordsOfMonster[i], new PVector(coordsOfMonster[i+1] * tileSize + tileSize/2, coordsOfMonster[i+2] * tileSize + tileSize/2)));
+  void initialiseImages() {
+    //load all images
+    for (int i=0; i<=32; i++) { //total images - 1
+      String str = i + ".png";
+      images.put(i, loadImage(str));
     }
   }
 
-  void drawMonster() {
+  void initialisePlayerSpawnList() {
+    playerSpawnList.put(1, new int[]{1, 11}); 
+    playerSpawnList.put(2, new int[]{1, 11}); 
+    playerSpawnList.put(3, new int[]{1, 11}); 
+    playerSpawnList.put(4, new int[]{1, 18}); 
+    playerSpawnList.put(5, new int[]{1, 18});
+    playerSpawnList.put(6, new int[]{1, 18});
+    playerSpawnList.put(7, new int[]{1, 18});
+    playerSpawnList.put(8, new int[]{1, 8});
+    playerSpawnList.put(9, new int[]{1, 8});
+    playerSpawnList.put(10, new int[]{1, 8});
+    playerSpawnList.put(11, new int[]{1, 8});
+    playerSpawnList.put(12, new int[]{1, 8});
+    playerSpawnList.put(13, new int[]{1, 8});
+    playerSpawnList.put(14, new int[]{1, 8});
+    playerSpawnList.put(15, new int[]{1, 8});
+    playerSpawnList.put(16, new int[]{1, 8});
+    playerSpawnList.put(17, new int[]{1, 1}); //gameover screen to prevent bug
+  }
+
+  void initialiseMonsterList() {
+    monsterList.put(1, new int[]{7, 17, 8});
+    monsterList.put(2, new int[]{4, 17, 8, 4, 17, 9, 4, 17, 10, 4, 17, 11});
+  }
+
+  void initialiseGateList() {
+    gateList.put(2, new int[]{14, 8, 14, 9, 14, 10, 14, 11});
+  }
+
+  void initialiseItemList() {
+    itemList.put(2, new int[]{0, 11, 9});
+  }
+
+  void generateItem() {
+    int[] coordsOfItem = itemList.get(currentLevel);
+    if (coordsOfItem != null) {
+      for (int i=0; i<coordsOfItem.length; i+=3) {
+        items.add(new Item(coordsOfItem[i], coordsOfItem[i+1] * tileSize, coordsOfItem[i+2] * tileSize));
+      }
+    }
+  }
+
+  void generateGate() {
+    int[] coordsOfGate = gateList.get(currentLevel);
+    if (coordsOfGate != null) {
+      int[][] tiles = tilesLayouts.get(currentLevel);
+      for (int i=0; i<coordsOfGate.length; i+=2) {
+        gates.add(new Gate(coordsOfGate[i] * tileSize, coordsOfGate[i+1] * tileSize));
+        clearTiles = tiles[coordsOfGate[i+1]][coordsOfGate[i]];
+        tiles[coordsOfGate[i+1]][coordsOfGate[i]] = currentLevel-1;
+      }
+      tilesLayouts.put(currentLevel, tiles);
+    }
+  }
+
+  void generateMonster() {
+    int[] coordsOfMonster = monsterList.get(currentLevel);
+    if (coordsOfMonster != null) {
+      for (int i=0; i<coordsOfMonster.length; i+=3) {
+        monsters.add(new Monster(coordsOfMonster[i], new PVector(coordsOfMonster[i+1] * tileSize + tileSize/2, coordsOfMonster[i+2] * tileSize + tileSize/2)));
+      }
+    }
+  }
+
+  void drawObjects() {
     for (int i=monsters.size()-1; i>=0; i--) {
       Monster monster = monsters.get(i);
       if (monster.hp <= 0) monsters.remove(monster);
       else monster.drawObj();
+    }
+
+    for (int i=items.size()-1; i>=0; i--) {
+      Item item = items.get(i);
+      item.drawObj();
+    }
+
+    for (int i=gates.size()-1; i>=0; i--) {
+      Gate gate = gates.get(i);
+      gate.drawObj();
     }
   }
 
@@ -430,7 +514,7 @@ class Level {
         default: 
           for (int j=monsters.size()-1; j>=0; j--) {
             Monster monster = monsters.get(j);
-            if (dist(proj.posX, proj.posY, monster.position.x, monster.position.y) <= (proj.diameter/2 + monster.diameter/2)) { //Circle to Circle Collision
+            if (dist(proj.posX, proj.posY, monster.position.x, monster.position.y) <= (proj.diameter/2 + monster.diameter/2)) {
               monster.getHit(proj.getProjectileDamage());
               projList.remove(proj);
             }
@@ -683,38 +767,6 @@ class Level {
     }
   }
 
-  void initialiseImages() {
-    //load all images
-    for (int i=0; i<=32; i++) { //total images - 1
-      String str = i + ".png";
-      images.put(i, loadImage(str));
-    }
-  }
-
-  void initialisePlayerSpawnList() {
-    playerSpawnList.put(1, new int[]{1, 11}); 
-    playerSpawnList.put(2, new int[]{1, 11}); 
-    playerSpawnList.put(3, new int[]{1, 11}); 
-    playerSpawnList.put(4, new int[]{1, 18}); 
-    playerSpawnList.put(5, new int[]{1, 18});
-    playerSpawnList.put(6, new int[]{1, 18});
-    playerSpawnList.put(7, new int[]{1, 18});
-    playerSpawnList.put(8, new int[]{1, 8});
-    playerSpawnList.put(9, new int[]{1, 8});
-    playerSpawnList.put(10, new int[]{1, 8});
-    playerSpawnList.put(11, new int[]{1, 8});
-    playerSpawnList.put(12, new int[]{1, 8});
-    playerSpawnList.put(13, new int[]{1, 8});
-    playerSpawnList.put(14, new int[]{1, 8});
-    playerSpawnList.put(15, new int[]{1, 8});
-    playerSpawnList.put(16, new int[]{1, 8});
-    playerSpawnList.put(17, new int[]{1, 1}); //gameover screen to prevent bug
-  }
-
-  void initialiseMonsterList() {
-    monsterList.put(1, new int[]{4, 17, 8, 4, 17, 9, 4, 17, 10, 4, 17, 11});
-  }
-
   boolean hasEnded() {
     return endGame;
   }
@@ -749,16 +801,66 @@ class Level {
         nextLevel();
       }
     }
+
+    for (int i=items.size()-1; i>=0; i--) {
+      Item item = items.get(i);
+      if (player1 != null && player1.position.x >= item.posX && player1.position.x <= item.posX + item.itemWidth && player1.position.y >= item.posY && player1.position.y <= item.posY + item.itemHeight) {
+        if (item.type == 0) {
+          unlockGate();
+        } else {
+          player1.pickUpItem(item.type);
+          items.remove(item);
+        }
+      }
+      if (player2 != null && player2.position.x >= item.posX && player2.position.x <= item.posX + item.itemWidth && player2.position.y >= item.posY && player2.position.y <= item.posY + item.itemHeight) {
+        if (item.type == 0) {
+          unlockGate();
+        } else {
+          player2.pickUpItem(item.type);
+          items.remove(item);
+        }
+      }
+      if (player3 != null && player3.position.x >= item.posX && player3.position.x <= item.posX + item.itemWidth && player3.position.y >= item.posY && player3.position.y <= item.posY + item.itemHeight) {
+        if (item.type == 0) {
+          unlockGate();
+        } else {
+          player3.pickUpItem(item.type);
+          items.remove(item);
+        }
+      }
+      if (player4 != null && player4.position.x >= item.posX && player4.position.x <= item.posX + item.itemWidth && player4.position.y >= item.posY && player4.position.y <= item.posY + item.itemHeight) {
+        if (item.type == 0) {
+          unlockGate();
+        } else {
+          player4.pickUpItem(item.type);
+          items.remove(item);
+        }
+      }
+    }
   }
 
   int[][] getCurrentTileLayout() {
     return tilesLayouts.get(currentLevel);
   }
 
+  void unlockGate() {
+    int[] coordsOfGate = gateList.get(currentLevel);
+    if (coordsOfGate != null) {
+      int[][] tiles = tilesLayouts.get(currentLevel);
+      for (int i=0; i<coordsOfGate.length; i+=2) {
+        tiles[coordsOfGate[i+1]][coordsOfGate[i]] = clearTiles;
+      }
+      tilesLayouts.put(currentLevel, tiles);
+    }
+    gates.clear();   
+  }
+
   void nextLevel() {
     monsters.clear();
     projList.clear();
+    items.clear();
     currentLevel++;
+    generateLevel = false;
     if (player1 != null) player1.resetPosition();
     if (player2 != null) player2.resetPosition();
     if (player3 != null) player3.resetPosition();

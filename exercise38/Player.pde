@@ -164,4 +164,12 @@ class Player {
   int getScore(){
    return score; 
   }
+  
+  void pickUpItem(int itemType){
+    switch(itemType){
+     case 1:
+       println("PICK UP POTION WOO");
+       break;
+    }
+  }
 }
