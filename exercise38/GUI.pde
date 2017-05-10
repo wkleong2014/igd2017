@@ -87,6 +87,7 @@ class GUI
       stroke(0,255,255);
       noFill();
       rect(820,540,175,25);
+      noStroke();
       if (!hasPlayer4Joined) {
         text("PLAYER 4\nPRESS 'ENTER' TO JOIN!", 820, 580);
       } else if (hasPlayer4Joined && player4 == null)
