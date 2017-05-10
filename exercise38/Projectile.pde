@@ -6,6 +6,7 @@ class Projectile {
   int projectileSpeed;
   int projectileType;
   int projectileDamage;
+  int ticksLastMovement;
   
   final int ANIMATION_DURATION = 300; //in milliseconds
   int frame = 0;
@@ -20,6 +21,7 @@ class Projectile {
     this.projectileSpeed = projectileSpeed;
     this.projectileType = projectileType;
     this.projectileDamage = projectileDamage;
+    ticksLastMovement = millis();
     updateOb();
   }
 
@@ -41,19 +43,23 @@ class Projectile {
   }
 
   void incPosX(int projectileSpeed) {
-    posX += projectileSpeed;
+    posX += projectileSpeed * float(millis() - ticksLastMovement) * 0.001;
+    ticksLastMovement = millis();
   }
 
   void decPosX(int projectileSpeed) {
-    posX -= projectileSpeed;
+    posX -= projectileSpeed * float(millis() - ticksLastMovement) * 0.001;
+    ticksLastMovement = millis();
   }
 
   void incPosY(int projectileSpeed) {
-    posY += projectileSpeed;
+    posY += projectileSpeed * float(millis() - ticksLastMovement) * 0.001;
+    ticksLastMovement = millis();
   }
 
   void decPosY(int projectileSpeed) {
-    posY -= projectileSpeed;
+    posY -= projectileSpeed * float(millis() - ticksLastMovement) * 0.001;
+    ticksLastMovement = millis();
   }
 
   int getDirection() {

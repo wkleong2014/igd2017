@@ -29,22 +29,22 @@ class Player {
     switch(playerClass) { //set hp & mana
     case 0:
       hp = 500;
-      projectileSpeed = 7;
+      projectileSpeed = 300;
       projectileDamage = 1;
       break;
     case 1:
       hp = 500;
-      projectileSpeed = 3;
+      projectileSpeed = 250;
       projectileDamage = 2;
       break;
     case 2:
       hp = 500;
-      projectileSpeed = 7;
+      projectileSpeed = 300;
       projectileDamage = 1;
       break;
     case 3:
       hp = 500;
-      projectileSpeed = 7;
+      projectileSpeed = 300;
       projectileDamage = 1;
       break;
     }
