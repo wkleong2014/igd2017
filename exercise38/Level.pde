@@ -755,6 +755,11 @@ class Level {
       16, 15, 
       17, 15
       });
+
+    gateList.put(10, new int[]{
+      9,14,
+      9,15
+      });
   }
 
   // Type, X, Y (In Terms of 2D Array)
@@ -791,6 +796,10 @@ class Level {
 
     itemList.put(9, new int[]{
       0, 11, 9
+      });
+      
+    itemList.put(10, new int[]{
+      0, 18, 10
       });
   }
 

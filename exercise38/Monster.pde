@@ -18,21 +18,21 @@ class Monster {
     this.type = type;
     this.position = position;
   }
-  
-  int getCollisionDamage(){
+
+  int getCollisionDamage() {
     return collisionDamage;
   }
-  
-  int getDiameter(){
-   return diameter; 
+
+  int getDiameter() {
+    return diameter;
   }
-  
-  float getPosX(){
-   return position.x; 
+
+  float getPosX() {
+    return position.x;
   }
-  
-  float getPosY(){
-   return position.y; 
+
+  float getPosY() {
+    return position.y;
   }
 
   void drawObj() {
@@ -43,12 +43,19 @@ class Monster {
     imageMode(CENTER);   
     PImage sprite = spriteSheet.get((direction * 32) + (frame * 256), 0 + (type * 32), 32, 32);
     image(sprite, position.x, position.y);
+    if (millis() - ticksLastAnimation >= ANIMATION_DURATION) {
+      frame++;
+      if (frame >= frameMax) { 
+        frame = 0;
+      }     
+      ticksLastAnimation += millis() - ticksLastAnimation;
+    }
   }
 
   void getHit(int damage) {
     hp -= damage;
   }
-  
+
   void shootProjectile() {
     int offset = 20;
     Projectile proj;
@@ -82,7 +89,7 @@ class Monster {
     }
     level.projList.add(proj);
   }
-  
+
   void incPosX() {
     position.x += 1;
   }
@@ -98,13 +105,13 @@ class Monster {
   void decPosY() {
     position.y -= 1;
   }
- 
-  
-  void setDirection(int direction){
+
+
+  void setDirection(int direction) {
     this.direction = direction;
   }
-  
-  int getHP(){
-   return hp; 
+
+  int getHP() {
+    return hp;
   }
 }
