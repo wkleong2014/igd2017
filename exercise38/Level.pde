@@ -465,17 +465,26 @@ class Level {
   }
 
   void initialiseMonsterList() {
-    monsterList.put(1, new int[]{7, 17, 8});
     monsterList.put(2, new int[]{4, 17, 8, 4, 17, 9, 4, 17, 10, 4, 17, 11});
+    monsterList.put(3, new int[]{
+      4, 8, 1, 4, 9, 1, 4, 10, 1, 4, 11, 1, 
+      4, 8, 2, 4, 9, 2, 4, 10, 2, 4, 11, 2, 
+      4, 8, 3, 4, 9, 3, 4, 10, 3, 4, 11, 3, 
+      4, 8, 4, 4, 9, 4, 4, 10, 4, 4, 11, 4, 
+      4, 8, 5, 4, 9, 5, 4, 10, 5, 4, 11, 5, 
+      4, 8, 6, 4, 9, 6, 4, 10, 6, 4, 11, 6});
+    //monsterList.put(4, new int[]{7, 17, 8}); monster that shoot projectile
   }
 
   void initialiseGateList() {
     gateList.put(2, new int[]{14, 8, 14, 9, 14, 10, 14, 11});
+    gateList.put(3, new int[]{8, 7, 9, 7, 10, 7, 11, 7});
   }
 
   void initialiseItemList() {
     itemList.put(2, new int[]{0, 11, 9});
-    itemList.put(3, new int[]{1, 11, 9});
+    itemList.put(3, new int[]{0, 11, 18});
+    //itemList.put(4, new int[]{1, 11, 9}); potion type
   }
 
   void generateItem() {
@@ -555,21 +564,21 @@ class Level {
           if ((proj.getPosX() + tileSize) >= (monster.getPosX()) && (proj.getPosX()) <= (monster.getPosX() + tileSize) && (proj.getPosY() + tileSize) >= (monster.getPosY()) && (proj.getPosY()) <= (monster.getPosY() + tileSize)) {
             projList.remove(proj);
             monster.getHit(proj.getProjectileDamage());
-            if(monster.getHP() <= 0){
+            if (monster.getHP() <= 0) {
               monsters.remove(monster);
-              switch(proj.getFromPlayerID()){
-                case 1:
-                  player1.addScore(10);
-                  break;
-                case 2:
-                  player2.addScore(10);
-                  break;
-                case 3:
-                  player3.addScore(10);
-                  break;
-                case 4:
-                  player4.addScore(10);
-                  break;
+              switch(proj.getFromPlayerID()) {
+              case 1:
+                player1.addScore(10);
+                break;
+              case 2:
+                player2.addScore(10);
+                break;
+              case 3:
+                player3.addScore(10);
+                break;
+              case 4:
+                player4.addScore(10);
+                break;
               }
             }
             break;
@@ -980,8 +989,8 @@ class Level {
     }
     gates.clear();
   }
-  
-  void addProjectile(Projectile proj){
+
+  void addProjectile(Projectile proj) {
     projList.add(proj);
   }
 
@@ -1005,5 +1014,11 @@ class Level {
   int getLevelNo()
   {
     return currentLevel;
+  }
+  
+  void restart() 
+  { 
+    currentLevel = 1; 
+    endGame = false;     
   }
 }
