@@ -22,30 +22,32 @@ class Player {
   int projectileSpeed;
   int projectileDamage;
   int score;
+  boolean isDead;
 
   Player(int playerClass, int id) {
+    isDead = false;
     this.playerClass = playerClass;
     this.id = id;
     score = 0;
     position = level.getSpawnLocation();
     switch(playerClass) { //set hp & mana
     case 0:
-      hp = 500;
+      hp = 10;
       projectileSpeed = 300;
       projectileDamage = 1;
       break;
     case 1:
-      hp = 500;
+      hp = 10;
       projectileSpeed = 250;
       projectileDamage = 2;
       break;
     case 2:
-      hp = 500;
+      hp = 10;
       projectileSpeed = 300;
       projectileDamage = 1;
       break;
     case 3:
-      hp = 500;
+      hp = 10;
       projectileSpeed = 300;
       projectileDamage = 1;
       break;
@@ -59,25 +61,34 @@ class Player {
   void updateMovement() {
     rectMode(CENTER);
     ellipseMode(CENTER);
-    velocity.x = walkSpeed * (moveLeft + moveRight) * float(millis() - ticksLastUpdate) * 0.001;
-    velocity.y = walkSpeed * (moveUp + moveDown) * float(millis() - ticksLastUpdate) * 0.001;
-    PVector nextPosition = new PVector(position.x, position.y);
-    nextPosition.add(velocity);
-    int[][] currentLayout = level.getCurrentTileLayout();
-    float offset = 32 + playerWidth/2;
-    if (currentLayout != null) {
-      if (!(currentLayout[int((nextPosition.y)/32)][int((nextPosition.x+1-playerWidth/2)/32)] <= 15) && !(currentLayout[int((nextPosition.y)/32)][int((nextPosition.x-1+playerWidth/2)/32)] <= 15) && 
-        !(currentLayout[int((nextPosition.y+1-playerWidth/2)/32)][int((nextPosition.x)/32)] <= 15) && !(currentLayout[int((nextPosition.y-1+playerWidth/2)/32)][int((nextPosition.x)/32)] <= 15) && 
-        !(currentLayout[int((nextPosition.y+1-playerWidth/2)/32)][int((nextPosition.x+1-playerWidth/2)/32)] <= 15) && !(currentLayout[int((nextPosition.y+1-playerWidth/2)/32)][int((nextPosition.x-1+playerWidth/2)/32)] <= 15) && 
-        !(currentLayout[int((nextPosition.y-1+playerWidth/2)/32)][int((nextPosition.x+1-playerWidth/2)/32)] <= 15) && !(currentLayout[int((nextPosition.y-1+playerWidth/2)/32)][int((nextPosition.x-1+playerWidth/2)/32)] <= 15)) {
-        if (nextPosition.x > offset && nextPosition.x < (width - offset)) position.x = nextPosition.x;
-        if (nextPosition.y > offset && nextPosition.y < (height - offset)) position.y = nextPosition.y;
+    if (hp > 0) { 
+      // Alive
+      velocity.x = walkSpeed * (moveLeft + moveRight) * float(millis() - ticksLastUpdate) * 0.001;
+      velocity.y = walkSpeed * (moveUp + moveDown) * float(millis() - ticksLastUpdate) * 0.001;
+      PVector nextPosition = new PVector(position.x, position.y);
+      nextPosition.add(velocity);
+      int[][] currentLayout = level.getCurrentTileLayout();
+      float offset = 32 + playerWidth/2;
+      if (currentLayout != null) {
+        if (!(currentLayout[int((nextPosition.y)/32)][int((nextPosition.x+1-playerWidth/2)/32)] <= 15) && !(currentLayout[int((nextPosition.y)/32)][int((nextPosition.x-1+playerWidth/2)/32)] <= 15) && 
+          !(currentLayout[int((nextPosition.y+1-playerWidth/2)/32)][int((nextPosition.x)/32)] <= 15) && !(currentLayout[int((nextPosition.y-1+playerWidth/2)/32)][int((nextPosition.x)/32)] <= 15) && 
+          !(currentLayout[int((nextPosition.y+1-playerWidth/2)/32)][int((nextPosition.x+1-playerWidth/2)/32)] <= 15) && !(currentLayout[int((nextPosition.y+1-playerWidth/2)/32)][int((nextPosition.x-1+playerWidth/2)/32)] <= 15) && 
+          !(currentLayout[int((nextPosition.y-1+playerWidth/2)/32)][int((nextPosition.x+1-playerWidth/2)/32)] <= 15) && !(currentLayout[int((nextPosition.y-1+playerWidth/2)/32)][int((nextPosition.x-1+playerWidth/2)/32)] <= 15)) {
+          if (nextPosition.x > offset && nextPosition.x < (width - offset)) position.x = nextPosition.x;
+          if (nextPosition.y > offset && nextPosition.y < (height - offset)) position.y = nextPosition.y;
+        }
       }
+      imageMode(CENTER);  
+      image(spriteSheet.get((direction * 32) + (frame * 256), 0 + (playerClass * 32), 32, 32), position.x, position.y);
+    } else
+    {    
+      // Dead
+      isDead = true;
+      velocity.x = 0;
+      velocity.y = 0;
+      imageMode(CENTER);  
+      image(spriteSheet.get(1024, 0, 32, 32), position.x, position.y);
     }
-    imageMode(CENTER);   
-    PImage sprite = spriteSheet.get((direction * 32) + (frame * 256), 0 + (playerClass * 32), 32, 32);
-    image(sprite, position.x, position.y);
-
     if (millis() - ticksLastAnimation >= ANIMATION_DURATION && (velocity.x != 0 || velocity.y != 0)) {
       frame++;
       if (frame >= frameMax) { 
@@ -125,70 +136,78 @@ class Player {
   }
 
   void shootProjectile() {
-    int offset = 20;
-    Projectile proj;
-    switch(direction) {
-    default:
-      proj = new Projectile(position.x, position.y, direction, projectileSpeed, playerClass, projectileDamage, id);
-    case 0:
-      proj = new Projectile(position.x, position.y - offset, direction, projectileSpeed, playerClass, projectileDamage, id);
-      break;
-    case 1:
-      proj = new Projectile(position.x + offset, position.y - offset, direction, projectileSpeed, playerClass, projectileDamage, id);
-      break;
-    case 2:
-      proj = new Projectile(position.x + offset, position.y, direction, projectileSpeed, playerClass, projectileDamage, id);
-      break;
-    case 3:
-      proj = new Projectile(position.x + offset, position.y + offset, direction, projectileSpeed, playerClass, projectileDamage, id);
-      break;
-    case 4:
-      proj = new Projectile(position.x, position.y + offset, direction, projectileSpeed, playerClass, projectileDamage, id);
-      break;
-    case 5:
-      proj = new Projectile(position.x - offset, position.y + offset, direction, projectileSpeed, playerClass, projectileDamage, id);
-      break;
-    case 6:
-      proj = new Projectile(position.x - offset, position.y, direction, projectileSpeed, playerClass, projectileDamage, id);
-      break;
-    case 7:
-      proj = new Projectile(position.x - offset, position.y - offset, direction, projectileSpeed, playerClass, projectileDamage, id);
-      break;
+    if (!isDead)
+    {
+      int offset = 20;
+      Projectile proj;
+      switch(direction) {
+      default:
+        proj = new Projectile(position.x, position.y, direction, projectileSpeed, playerClass, projectileDamage, id);
+      case 0:
+        proj = new Projectile(position.x, position.y - offset, direction, projectileSpeed, playerClass, projectileDamage, id);
+        break;
+      case 1:
+        proj = new Projectile(position.x + offset, position.y - offset, direction, projectileSpeed, playerClass, projectileDamage, id);
+        break;
+      case 2:
+        proj = new Projectile(position.x + offset, position.y, direction, projectileSpeed, playerClass, projectileDamage, id);
+        break;
+      case 3:
+        proj = new Projectile(position.x + offset, position.y + offset, direction, projectileSpeed, playerClass, projectileDamage, id);
+        break;
+      case 4:
+        proj = new Projectile(position.x, position.y + offset, direction, projectileSpeed, playerClass, projectileDamage, id);
+        break;
+      case 5:
+        proj = new Projectile(position.x - offset, position.y + offset, direction, projectileSpeed, playerClass, projectileDamage, id);
+        break;
+      case 6:
+        proj = new Projectile(position.x - offset, position.y, direction, projectileSpeed, playerClass, projectileDamage, id);
+        break;
+      case 7:
+        proj = new Projectile(position.x - offset, position.y - offset, direction, projectileSpeed, playerClass, projectileDamage, id);
+        break;
+      }
+      level.addProjectile(proj);
     }
-    level.addProjectile(proj);
   }
-  
+
   int getHP()
   {
     return hp;
   }
-  
-  int getScore(){
-   return score; 
+
+  int getScore() {
+    return score;
   }
-  
-  void pickUpItem(int itemType){
-    switch(itemType){
-     case 1:
-       hp += 50;
-       break;
+
+  void pickUpItem(int itemType) {
+    switch(itemType) {
+    case 1:
+      hp += 50;
+      break;
     }
   }
-  
-  void addScore(int number){
+
+  void addScore(int number) {
     score += number;
   }
-  
-  void getHit(int projectileDamage){
+
+  void getHit(int projectileDamage) {
     hp -= projectileDamage;
     if (hp < 0 ) hp = 0;
   }
-  
-  float getPosX(){
-   return position.x; 
+
+  float getPosX() {
+    return position.x;
+  }
+
+  float getPosY() {
+    return position.y;
   }
   
-  float getPosY(){
-   return position.y; 
+  boolean getIsDead()
+  {
+    return isDead;
   }
 }

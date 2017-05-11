@@ -53,8 +53,9 @@ boolean hasPlayer2Joined = false;
 boolean hasPlayer3Joined = false;
 boolean hasPlayer4Joined = false;
 boolean hasStartScreen = true;
-boolean gameOver = false;
+boolean gameOver = false; 
 PImage gateSprite;
+boolean allDead = false;
 
 void setup() {  
   size(1000, 640);
@@ -85,7 +86,23 @@ void draw() {
     text("PLAYERS, GATHER NOW!", 320, height-130);
   }
 
-  if (level.hasEnded()) {
+  try
+  {
+    if (level.getLevelNo() > 1
+      && (!hasPlayer1Joined || player1.getIsDead())
+      && (!hasPlayer2Joined || player2.getIsDead()) 
+      && (!hasPlayer3Joined || player3.getIsDead()) 
+      && (!hasPlayer4Joined || player4.getIsDead()))
+    {
+      allDead = true;
+    }     
+  } 
+  catch (NullPointerException e)
+  {
+    println("NullPointerException due to Player not being initialized.");
+  }
+
+  if (allDead || level.hasEnded()) {
     rectMode(CORNERS);
     fill(0);
     rect(0, 0, 640, 640);
@@ -107,7 +124,7 @@ void keyPressed() {
     gui.removeStartScreen();
   }
 
-  if (level.hasEnded())
+  if (allDead || level.hasEnded())
   {
     player1 = null;
     player2 = null;
@@ -118,6 +135,7 @@ void keyPressed() {
     hasPlayer3Joined = false;
     hasPlayer4Joined = false;
     level.restart();
+    allDead = false;
     gameOver = false;
   }
 
@@ -493,8 +511,8 @@ void mouseClicked()
   {
     gui.removeStartScreen();
   }
-  
-    if (level.hasEnded())
+
+  if (allDead || level.hasEnded())
   {
     player1 = null;
     player2 = null;
@@ -505,6 +523,7 @@ void mouseClicked()
     hasPlayer3Joined = false;
     hasPlayer4Joined = false;
     level.restart();
+    allDead = false;
     gameOver = false;
   }
 }
