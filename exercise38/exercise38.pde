@@ -137,6 +137,8 @@ void keyPressed() {
     level.restart();
     allDead = false;
     gameOver = false;
+    level.nextLevel();
+    level.currentLevel = 1;
   }
 
   //nextStage
@@ -525,5 +527,7 @@ void mouseClicked()
     level.restart();
     allDead = false;
     gameOver = false;
+    level.nextLevel();
+    level.currentLevel = 1;
   }
 }
