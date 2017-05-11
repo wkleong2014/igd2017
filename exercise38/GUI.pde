@@ -117,7 +117,7 @@ class GUI
       }
 
       fill(0, 255, 255);  
-      if (level.getLevelNo() > 1 && !hasPlayer3Joined) 
+      if (level.getLevelNo() > 1 && !hasPlayer4Joined) 
       {        
         rectMode(CENTER);
         stroke(0, 255, 255);
