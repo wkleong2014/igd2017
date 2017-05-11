@@ -83,25 +83,22 @@ class Monster {
     level.projList.add(proj);
   }
   
-  void incPosX(int moveSpeed) {
-    position.x += moveSpeed * float(millis() - ticksLastMovement) * 0.001;
+  void incPosX() {
+    position.x += 1;
   }
 
-  void decPosX(int moveSpeed) {
-    position.x -= moveSpeed * float(millis() - ticksLastMovement) * 0.001;
+  void decPosX() {
+    position.x -= 1;
   }
 
-  void incPosY(int moveSpeed) {
-    position.y += moveSpeed * float(millis() - ticksLastMovement) * 0.001;
+  void incPosY() {
+    position.y += 1;
   }
 
-  void decPosY(int moveSpeed) {
-    position.y -= moveSpeed * float(millis() - ticksLastMovement) * 0.001;
+  void decPosY() {
+    position.y -= 1;
   }
-  
-  void setLastMovementTicks(){
-   ticksLastMovement = millis(); 
-  }
+ 
   
   void setDirection(int direction){
     this.direction = direction;
