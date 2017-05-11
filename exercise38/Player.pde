@@ -1,4 +1,5 @@
 class Player {
+  int id;
   final int ANIMATION_DURATION = 300; //in milliseconds
   int frame = 0;
   int frameMax = 2;
@@ -22,8 +23,9 @@ class Player {
   int projectileDamage;
   int score;
 
-  Player(int playerClass) {
+  Player(int playerClass, int id) {
     this.playerClass = playerClass;
+    this.id = id;
     score = 0;
     position = level.getSpawnLocation();
     switch(playerClass) { //set hp & mana
@@ -127,30 +129,30 @@ class Player {
     Projectile proj;
     switch(direction) {
     default:
-      proj = new Projectile(position.x, position.y, direction, projectileSpeed, playerClass, projectileDamage);
+      proj = new Projectile(position.x, position.y, direction, projectileSpeed, playerClass, projectileDamage, id);
     case 0:
-      proj = new Projectile(position.x, position.y - offset, direction, projectileSpeed, playerClass, projectileDamage);
+      proj = new Projectile(position.x, position.y - offset, direction, projectileSpeed, playerClass, projectileDamage, id);
       break;
     case 1:
-      proj = new Projectile(position.x + offset, position.y - offset, direction, projectileSpeed, playerClass, projectileDamage);
+      proj = new Projectile(position.x + offset, position.y - offset, direction, projectileSpeed, playerClass, projectileDamage, id);
       break;
     case 2:
-      proj = new Projectile(position.x + offset, position.y, direction, projectileSpeed, playerClass, projectileDamage);
+      proj = new Projectile(position.x + offset, position.y, direction, projectileSpeed, playerClass, projectileDamage, id);
       break;
     case 3:
-      proj = new Projectile(position.x + offset, position.y + offset, direction, projectileSpeed, playerClass, projectileDamage);
+      proj = new Projectile(position.x + offset, position.y + offset, direction, projectileSpeed, playerClass, projectileDamage, id);
       break;
     case 4:
-      proj = new Projectile(position.x, position.y + offset, direction, projectileSpeed, playerClass, projectileDamage);
+      proj = new Projectile(position.x, position.y + offset, direction, projectileSpeed, playerClass, projectileDamage, id);
       break;
     case 5:
-      proj = new Projectile(position.x - offset, position.y + offset, direction, projectileSpeed, playerClass, projectileDamage);
+      proj = new Projectile(position.x - offset, position.y + offset, direction, projectileSpeed, playerClass, projectileDamage, id);
       break;
     case 6:
-      proj = new Projectile(position.x - offset, position.y, direction, projectileSpeed, playerClass, projectileDamage);
+      proj = new Projectile(position.x - offset, position.y, direction, projectileSpeed, playerClass, projectileDamage, id);
       break;
     case 7:
-      proj = new Projectile(position.x - offset, position.y - offset, direction, projectileSpeed, playerClass, projectileDamage);
+      proj = new Projectile(position.x - offset, position.y - offset, direction, projectileSpeed, playerClass, projectileDamage, id);
       break;
     }
     level.addProjectile(proj);
@@ -171,6 +173,10 @@ class Player {
        hp += 50;
        break;
     }
+  }
+  
+  void addScore(int number){
+    score += number;
   }
   
   void getHit(int projectileDamage){

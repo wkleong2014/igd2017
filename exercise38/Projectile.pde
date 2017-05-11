@@ -7,13 +7,14 @@ class Projectile {
   int projectileType;
   int projectileDamage;
   int ticksLastMovement;
-  
+  int fromPlayerID;
+
   final int ANIMATION_DURATION = 300; //in milliseconds
   int frame = 0;
   int frameMax = 7;  
   int ticksLastAnimation = 0;
 
-  Projectile(float posX, float posY, int direction, int projectileSpeed, int projectileType, int projectileDamage) {
+  Projectile(float posX, float posY, int direction, int projectileSpeed, int projectileType, int projectileDamage, int fromPlayerID) {
     this.posX = posX;
     this.direction = direction;
     diameter = 16;
@@ -21,28 +22,33 @@ class Projectile {
     this.projectileSpeed = projectileSpeed;
     this.projectileType = projectileType;
     this.projectileDamage = projectileDamage;
+    this.fromPlayerID = fromPlayerID;
     ticksLastMovement = millis();
     updateOb();
   }
-  
-  int getProjectileType(){
-   return projectileType; 
+
+  int getFromPlayerID() {
+    return  fromPlayerID;
+  }
+
+  int getProjectileType() {
+    return projectileType;
   }
 
   int getProjectileSpeed() {
     return projectileSpeed;
   }
-  
-  int getProjectileDiameter(){
-   return diameter; 
+
+  int getProjectileDiameter() {
+    return diameter;
   }
-  
-  float getPosX(){
-   return posX; 
+
+  float getPosX() {
+    return posX;
   }
-  
-  float getPosY(){
-   return posY; 
+
+  float getPosY() {
+    return posY;
   }
 
   void updateOb() {
@@ -55,7 +61,7 @@ class Projectile {
         frame = 0;
       }     
       ticksLastAnimation += millis() - ticksLastAnimation;
-    }    
+    }
   }
 
   void incPosX(int projectileSpeed) {
@@ -81,8 +87,8 @@ class Projectile {
   int getDirection() {
     return direction;
   }
-  
-  int getProjectileDamage(){
+
+  int getProjectileDamage() {
     return projectileDamage;
   }
 }

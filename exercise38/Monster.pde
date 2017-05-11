@@ -54,30 +54,30 @@ class Monster {
     Projectile proj;
     switch(direction) {
     default:
-      proj = new Projectile(position.x, position.y, direction, projectileSpeed, type, projectileDamage);
+      proj = new Projectile(position.x, position.y, direction, projectileSpeed, type, projectileDamage, 0);
     case 0:
-      proj = new Projectile(position.x, position.y - offset, direction, projectileSpeed, type, projectileDamage);
+      proj = new Projectile(position.x, position.y - offset, direction, projectileSpeed, type, projectileDamage, 0);
       break;
     case 1:
-      proj = new Projectile(position.x + offset, position.y - offset, direction, projectileSpeed, type, projectileDamage);
+      proj = new Projectile(position.x + offset, position.y - offset, direction, projectileSpeed, type, projectileDamage, 0);
       break;
     case 2:
-      proj = new Projectile(position.x + offset, position.y, direction, projectileSpeed, type, projectileDamage);
+      proj = new Projectile(position.x + offset, position.y, direction, projectileSpeed, type, projectileDamage, 0);
       break;
     case 3:
-      proj = new Projectile(position.x + offset, position.y + offset, direction, projectileSpeed, type, projectileDamage);
+      proj = new Projectile(position.x + offset, position.y + offset, direction, projectileSpeed, type, projectileDamage, 0);
       break;
     case 4:
-      proj = new Projectile(position.x, position.y + offset, direction, projectileSpeed, type, projectileDamage);
+      proj = new Projectile(position.x, position.y + offset, direction, projectileSpeed, type, projectileDamage, 0);
       break;
     case 5:
-      proj = new Projectile(position.x - offset, position.y + offset, direction, projectileSpeed, type, projectileDamage);
+      proj = new Projectile(position.x - offset, position.y + offset, direction, projectileSpeed, type, projectileDamage, 0);
       break;
     case 6:
-      proj = new Projectile(position.x - offset, position.y, direction, projectileSpeed, type, projectileDamage);
+      proj = new Projectile(position.x - offset, position.y, direction, projectileSpeed, type, projectileDamage, 0);
       break;
     case 7:
-      proj = new Projectile(position.x - offset, position.y - offset, direction, projectileSpeed, type, projectileDamage);
+      proj = new Projectile(position.x - offset, position.y - offset, direction, projectileSpeed, type, projectileDamage, 0);
       break;
     }
     level.projList.add(proj);
@@ -105,5 +105,9 @@ class Monster {
   
   void setDirection(int direction){
     this.direction = direction;
+  }
+  
+  int getHP(){
+   return hp; 
   }
 }

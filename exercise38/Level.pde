@@ -512,8 +512,7 @@ class Level {
   void drawObjects() {
     for (int i=monsters.size()-1; i>=0; i--) {
       Monster monster = monsters.get(i);
-      if (monster.hp <= 0) monsters.remove(monster);
-      else monster.drawObj();
+      monster.drawObj();
     }
 
     for (int i=items.size()-1; i>=0; i--) {
@@ -556,6 +555,23 @@ class Level {
           if ((proj.getPosX() + tileSize) >= (monster.getPosX()) && (proj.getPosX()) <= (monster.getPosX() + tileSize) && (proj.getPosY() + tileSize) >= (monster.getPosY()) && (proj.getPosY()) <= (monster.getPosY() + tileSize)) {
             projList.remove(proj);
             monster.getHit(proj.getProjectileDamage());
+            if(monster.getHP() <= 0){
+              monsters.remove(monster);
+              switch(proj.getFromPlayerID()){
+                case 1:
+                  player1.addScore(10);
+                  break;
+                case 2:
+                  player2.addScore(10);
+                  break;
+                case 3:
+                  player3.addScore(10);
+                  break;
+                case 4:
+                  player4.addScore(10);
+                  break;
+              }
+            }
             break;
           }
         }
