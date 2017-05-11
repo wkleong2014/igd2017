@@ -17,7 +17,7 @@ class Projectile {
   Projectile(float posX, float posY, int direction, int projectileSpeed, int projectileType, int projectileDamage, int fromPlayerID) {
     this.posX = posX;
     this.direction = direction;
-    diameter = 16;
+    diameter = 12;
     this.posY = posY;
     this.projectileSpeed = projectileSpeed;
     this.projectileType = projectileType;

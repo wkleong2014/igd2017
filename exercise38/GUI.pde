@@ -41,12 +41,12 @@ class GUI
       text("HIGHSCORE: " + highscore, 820, 220);           
 
       fill(255, 0, 0);
-      if (level.getLevelNo() > 1 && !hasPlayer1Joined) 
+      if (level.getLevelNo() > 1 && !hasPlayer1Classed) 
       {        
         rectMode(CENTER);
         stroke(255, 0, 0);
         rect(820, 285, 230, 30);
-        fill(255);
+        fill(0);
         text("JOIN THE NEXT GAME!", 820, 285);
       } else
       {         
@@ -67,12 +67,12 @@ class GUI
       }
 
       fill(0, 255, 0);
-      if (level.getLevelNo() > 1 && !hasPlayer2Joined) 
+      if (level.getLevelNo() > 1 && !hasPlayer2Classed) 
       {        
         rectMode(CENTER);
         stroke(0, 255, 0);
         rect(820, 375, 230, 30);
-        fill(255);
+        fill(0);
         text("JOIN THE NEXT GAME!", 820, 375);
       } else
       {   
@@ -92,12 +92,12 @@ class GUI
       }
 
       fill(0, 0, 255);
-      if (level.getLevelNo() > 1 && !hasPlayer3Joined) 
+      if (level.getLevelNo() > 1 && !hasPlayer3Classed) 
       {        
         rectMode(CENTER);
         stroke(0, 0, 255);
         rect(820, 465, 230, 30);
-        fill(255);
+        fill(0);
         text("JOIN THE NEXT GAME!", 820, 465);
       } else
       {   
@@ -117,7 +117,7 @@ class GUI
       }
 
       fill(0, 255, 255);  
-      if (level.getLevelNo() > 1 && !hasPlayer4Joined) 
+      if (level.getLevelNo() > 1 && !hasPlayer4Classed) 
       {        
         rectMode(CENTER);
         stroke(0, 255, 255);
@@ -141,6 +141,7 @@ class GUI
           text("PLAYER 4 (" + classes[classCounter4] +")\nHP: " + player4.getHP() + " SCORE: " + player4.getScore(), 820, 580);
         }
       }
+      noStroke();
     }
   }
 
