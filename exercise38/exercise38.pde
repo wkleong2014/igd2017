@@ -29,7 +29,6 @@ int classCounter2 = 0;
 int classCounter3 = 0;
 int classCounter4 = 0;
 Level level;
-int levelNo;
 GUI gui;
 final int tileSize = 32;
 int highscore = 999999999; // TO BE DEFINED LATER
@@ -75,6 +74,15 @@ void draw() {
   if (!gui.getHasStartScreen()) {
     hasStartScreen = false;
     level.update();
+  }
+  
+  if (!gui.getHasStartScreen() && level.getLevelNo() == 1) 
+  {
+    fill(255);
+    textAlign(CENTER, CENTER);
+    textFont(guiFont);
+    textSize(40);
+    text("PLAYERS, GATHER NOW!", 320, height-130);
   }
 
   if (level.hasEnded()) {
@@ -270,10 +278,10 @@ void keyReleased() {
         classCounter1++;
       }
     }
-    if (char(keyCode) == 'X' && !hasPlayer1Joined) {      
+    if (char(keyCode) == 'X' && !hasPlayer1Joined && level.getLevelNo() == 1) {      
       hasPlayer1Joined = true;
     } else if (char(keyCode) == 'X' && hasPlayer1Joined) { 
-      player1 = new Player(classCounter1);
+      player1 = new Player(classCounter1, 1);
     } 
   }
     
@@ -331,10 +339,10 @@ void keyReleased() {
         classCounter2++;
       }
     }
-    if (char(keyCode) == ' ' && !hasPlayer2Joined) {      
+    if (char(keyCode) == ' ' && !hasPlayer2Joined && level.getLevelNo() == 1) {      
       hasPlayer2Joined = true;
     } else if (char(keyCode) == ' ' && hasPlayer2Joined) { 
-      player2 = new Player(classCounter2);
+      player2 = new Player(classCounter2, 2);
     } 
   }
   
@@ -392,10 +400,10 @@ void keyReleased() {
         classCounter3++;
       }
     }
-    if (char(keyCode) == 'M' && !hasPlayer3Joined) {      
+    if (char(keyCode) == 'M' && !hasPlayer3Joined && level.getLevelNo() == 1) {      
       hasPlayer3Joined = true;
     } else if (char(keyCode) == 'M' && hasPlayer3Joined) { 
-      player3 = new Player(classCounter3);
+      player3 = new Player(classCounter3, 3);
     } 
   }
 
@@ -456,8 +464,8 @@ void keyReleased() {
     }
     if (key == ENTER && !hasPlayer4Joined) {      
       hasPlayer4Joined = true;
-    } else if (key == ENTER && hasPlayer4Joined) { 
-      player4 = new Player(classCounter4);
+    } else if (key == ENTER && hasPlayer4Joined && level.getLevelNo() == 1) { 
+      player4 = new Player(classCounter4, 4);
     }
   }
 }
