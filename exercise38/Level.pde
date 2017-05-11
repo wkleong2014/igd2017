@@ -466,7 +466,7 @@ class Level {
 
   void initialiseMonsterList() {
     monsterList.put(2, new int[]{4, 17, 8, 4, 17, 9, 4, 17, 10, 4, 17, 11});
-    monsterList.put(3, new int[]{
+    monsterList.put(3, new int[]{ //type, x coord (tile), y coord (tile) type 4 ghost, type 7 is shooter
       4, 8, 1, 4, 9, 1, 4, 10, 1, 4, 11, 1, 
       4, 8, 2, 4, 9, 2, 4, 10, 2, 4, 11, 2, 
       4, 8, 3, 4, 9, 3, 4, 10, 3, 4, 11, 3, 
@@ -477,13 +477,13 @@ class Level {
   }
 
   void initialiseGateList() {
-    gateList.put(2, new int[]{14, 8, 14, 9, 14, 10, 14, 11});
+    gateList.put(2, new int[]{14, 8, 14, 9, 14, 10, 14, 11}); //x coord (tile), y coord (tile)
     gateList.put(3, new int[]{8, 7, 9, 7, 10, 7, 11, 7});
   }
 
   void initialiseItemList() {
-    itemList.put(2, new int[]{0, 11, 9});
-    itemList.put(3, new int[]{0, 11, 18});
+    itemList.put(2, new int[]{0, 11, 9}); //type, x coord (tile), y coord (tile) -> type 0 is key, type 1 is potion
+    itemList.put(3, new int[]{0, 11, 18}); 
     //itemList.put(4, new int[]{1, 11, 9}); potion type
   }
 

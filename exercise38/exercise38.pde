@@ -493,4 +493,18 @@ void mouseClicked()
   {
     gui.removeStartScreen();
   }
+  
+    if (level.hasEnded())
+  {
+    player1 = null;
+    player2 = null;
+    player3 = null;
+    player4 = null;
+    hasPlayer1Joined = false;
+    hasPlayer2Joined = false;
+    hasPlayer3Joined = false;
+    hasPlayer4Joined = false;
+    level.restart();
+    gameOver = false;
+  }
 }
