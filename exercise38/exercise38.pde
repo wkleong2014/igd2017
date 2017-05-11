@@ -75,7 +75,7 @@ void draw() {
     hasStartScreen = false;
     level.update();
   }
-  
+
   if (!gui.getHasStartScreen() && level.getLevelNo() == 1) 
   {
     fill(255);
@@ -94,7 +94,9 @@ void draw() {
     textFont(guiFont);
     textSize(50);
     gameOver = true;
-    text("GAME OVER", 320, 320);
+    text("GAME OVER", 320, 300);
+    textSize(30);
+    text("PRESS ANY KEY TO START AGAIN", 320, 370);
   }
 }
 
@@ -103,6 +105,20 @@ void keyPressed() {
   if (hasStartScreen) 
   {
     gui.removeStartScreen();
+  }
+
+  if (level.hasEnded())
+  {
+    player1 = null;
+    player2 = null;
+    player3 = null;
+    player4 = null;
+    hasPlayer1Joined = false;
+    hasPlayer2Joined = false;
+    hasPlayer3Joined = false;
+    hasPlayer4Joined = false;
+    level.restart();
+    gameOver = false;
   }
 
   //nextStage
@@ -137,7 +153,7 @@ void keyPressed() {
     if (char(keyCode) == 'A' && isSPressed || char(keyCode) == 'S' && isAPressed) player1.setDirection(5);
     if (char(keyCode) == 'D' && isSPressed || char(keyCode) == 'S' && isDPressed) player1.setDirection(3);
   }
-  
+
   //Player 2
   if (player2 != null) {
     if (char(keyCode) == 'G') {
@@ -165,7 +181,7 @@ void keyPressed() {
     if (char(keyCode) == 'V' && isBPressed || char(keyCode) == 'B' && isVPressed) player2.setDirection(5);
     if (char(keyCode) == 'N' && isBPressed || char(keyCode) == 'B' && isNPressed) player2.setDirection(3);
   }
-  
+
   //Player 3
   if (player3 != null) {
     if (char(keyCode) == 'I') {
@@ -282,9 +298,9 @@ void keyReleased() {
       hasPlayer1Joined = true;
     } else if (char(keyCode) == 'X' && hasPlayer1Joined) { 
       player1 = new Player(classCounter1, 1);
-    } 
+    }
   }
-    
+
   //Player 2
   if (player2 != null) {
     if (char(keyCode) == 'G') {
@@ -343,9 +359,9 @@ void keyReleased() {
       hasPlayer2Joined = true;
     } else if (char(keyCode) == ' ' && hasPlayer2Joined) { 
       player2 = new Player(classCounter2, 2);
-    } 
+    }
   }
-  
+
   //Player 3
   if (player3 != null) {
     if (char(keyCode) == 'I') {
@@ -404,7 +420,7 @@ void keyReleased() {
       hasPlayer3Joined = true;
     } else if (char(keyCode) == 'M' && hasPlayer3Joined) { 
       player3 = new Player(classCounter3, 3);
-    } 
+    }
   }
 
   //Player4
