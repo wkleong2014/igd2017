@@ -619,21 +619,25 @@ class Level {
     for (Monster monster : monsters) {
       if (player1 != null && (monster.getPosX() + monster.getDiameter()) >= (player1.getPosX()) && (monster.getPosX()) <= (player1.getPosX() + tileSize) && (monster.getPosY() + monster.getDiameter()) >= (player1.getPosY()) && (monster.getPosY()) <= (player1.getPosY() + tileSize)) {
         player1.getHit(monster.getCollisionDamage());
+        player1.addScore(10);
         monsters.remove(monster);
         break;
       }
       if (player2 != null && (monster.getPosX() + monster.getDiameter()) >= (player2.getPosX()) && (monster.getPosX()) <= (player2.getPosX() + tileSize) && (monster.getPosY() + monster.getDiameter()) >= (player2.getPosY()) && (monster.getPosY()) <= (player2.getPosY() + tileSize)) {
         player2.getHit(monster.getCollisionDamage());
+        player2.addScore(10);
         monsters.remove(monster);
         break;
       }
       if (player3 != null && (monster.getPosX() + monster.getDiameter()) >= (player3.getPosX()) && (monster.getPosX()) <= (player3.getPosX() + tileSize) && (monster.getPosY() + monster.getDiameter()) >= (player3.getPosY()) && (monster.getPosY()) <= (player3.getPosY() + tileSize)) {
         player3.getHit(monster.getCollisionDamage());
+        player3.addScore(10);
         monsters.remove(monster);
         break;
       }
       if (player4 != null && (monster.getPosX() + monster.getDiameter()) >= (player4.getPosX()) && (monster.getPosX()) <= (player4.getPosX() + tileSize) && (monster.getPosY() + monster.getDiameter()) >= (player4.getPosY()) && (monster.getPosY()) <= (player4.getPosY() + tileSize)) {
         player4.getHit(monster.getCollisionDamage());
+        player4.addScore(10);
         monsters.remove(monster);
         break;
       }
