@@ -168,7 +168,7 @@ class Player {
   void pickUpItem(int itemType){
     switch(itemType){
      case 1:
-       println("PICK UP POTION WOO");
+       hp += 50;
        break;
     }
   }

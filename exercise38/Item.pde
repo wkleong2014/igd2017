@@ -13,7 +13,15 @@ class Item {
 
   void drawObj() {
     imageMode(CORNER);
-    image(loadImage("switch.png"), posX, posY);
+    switch(type){
+      case 0:
+        image(loadImage("switch.png"), posX, posY);
+        break;
+      case 1:
+        image(loadImage("potion.png"), posX, posY);
+        break;
+    }
+    
   }
 
   int getPosX() {

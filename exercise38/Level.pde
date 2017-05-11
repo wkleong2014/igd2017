@@ -475,6 +475,7 @@ class Level {
 
   void initialiseItemList() {
     itemList.put(2, new int[]{0, 11, 9});
+    itemList.put(3, new int[]{1, 11, 9});
   }
 
   void generateItem() {
