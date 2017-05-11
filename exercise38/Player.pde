@@ -32,22 +32,22 @@ class Player {
     position = level.getSpawnLocation();
     switch(playerClass) { //set hp & mana
     case 0:
-      hp = 10;
+      hp = 500;
       projectileSpeed = 300;
       projectileDamage = 1;
       break;
     case 1:
-      hp = 10;
+      hp = 500;
       projectileSpeed = 250;
       projectileDamage = 2;
       break;
     case 2:
-      hp = 10;
+      hp = 500;
       projectileSpeed = 300;
       projectileDamage = 1;
       break;
     case 3:
-      hp = 10;
+      hp = 500;
       projectileSpeed = 300;
       projectileDamage = 1;
       break;
