@@ -10,7 +10,7 @@ class Player {
   int playerHeight = 32;
   PVector position;
   PVector velocity = new PVector(0, 0);
-  float walkSpeed = 200;
+  float walkSpeed;
   int direction = 4;
   int moveLeft;
   int moveRight;
@@ -23,6 +23,7 @@ class Player {
   int projectileDamage;
   int score;
   boolean isDead;
+  int lastProjectileShot;
 
   Player(int playerClass, int id) {
     isDead = false;
@@ -32,24 +33,28 @@ class Player {
     position = level.getSpawnLocation();
     switch(playerClass) { //set hp & mana
     case 0:
-      hp = 500;
-      projectileSpeed = 300;
+      hp = 600;
+      projectileSpeed = 200;
       projectileDamage = 1;
+      walkSpeed = 150;
       break;
     case 1:
       hp = 500;
       projectileSpeed = 250;
-      projectileDamage = 2;
+      projectileDamage = 1;
+      walkSpeed = 160;
       break;
     case 2:
-      hp = 500;
-      projectileSpeed = 300;
-      projectileDamage = 1;
+      hp = 300;
+      projectileSpeed = 250;
+      projectileDamage = 2;
+      walkSpeed = 170;
       break;
     case 3:
-      hp = 500;
+      hp = 400;
       projectileSpeed = 300;
       projectileDamage = 1;
+      walkSpeed = 180;
       break;
     }
   }
@@ -136,7 +141,7 @@ class Player {
   }
 
   void shootProjectile() {
-    if (!isDead)
+    if (!isDead && millis() - lastProjectileShot >= 300)
     {
       int offset = 20;
       Projectile proj;
@@ -169,6 +174,7 @@ class Player {
         break;
       }
       level.addProjectile(proj);
+      lastProjectileShot = millis();
     }
   }
 
