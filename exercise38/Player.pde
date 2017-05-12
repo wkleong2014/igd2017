@@ -210,4 +210,9 @@ class Player {
   {
     return isDead;
   }
+  
+  void die()
+  {
+    isDead = true;
+  }
 }

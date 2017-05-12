@@ -31,7 +31,7 @@ int classCounter4 = 0;
 Level level;
 GUI gui;
 final int tileSize = 32;
-int highscore = 999999999; // TO BE DEFINED LATER
+int highscore; // TO BE DEFINED LATER
 boolean isWPressed = false;
 boolean isSPressed = false;
 boolean isAPressed = false;
@@ -61,6 +61,13 @@ boolean gameOver = false;
 PImage gateSprite;
 boolean allDead = false;
 
+int totalScore;
+HighScore highscores;
+boolean newHighScore = false;
+boolean enteredHighScore = false;
+String name="";
+int state = 0; 
+
 void setup() {  
   size(1000, 640);
   spriteSheet = loadImage("sprites.png"); 
@@ -69,6 +76,8 @@ void setup() {
   guiFont = createFont("Minecraft.ttf", 32);  
   level = new Level();
   gui = new GUI();
+  highscores = new HighScore();
+  highscore = highscores.getHighScore();
 }
 
 void draw() {
@@ -88,6 +97,23 @@ void draw() {
     textFont(guiFont);
     textSize(40);
     text("PLAYERS, GATHER NOW!", 320, height-130);
+    textSize(20);
+    text("Ensure all players have joined before entering the dungeon!\nRemember that the statues will unlock the gates.", 320, height-80);
+  }
+
+  // CLears players who joined and did not lock in a class
+  if (level.getLevelNo() > 1) 
+  {
+    try 
+    {
+      if (hasPlayer1Joined && !hasPlayer1Classed) player1.die();
+      if (hasPlayer2Joined && !hasPlayer2Classed) player2.die();
+      if (hasPlayer3Joined && !hasPlayer3Classed) player3.die();
+      if (hasPlayer4Joined && !hasPlayer4Classed) player4.die();
+    }
+    catch (Exception e)
+    {
+    }
   }
 
   try
@@ -99,11 +125,10 @@ void draw() {
       && (!hasPlayer4Joined || player4.getIsDead()))
     {
       allDead = true;
-    }     
+    }
   } 
-  catch (NullPointerException e)
+  catch (Exception e)
   {
-     
   }
 
   if (allDead || level.hasEnded()) {
@@ -115,9 +140,40 @@ void draw() {
     textFont(guiFont);
     textSize(50);
     gameOver = true;
-    text("GAME OVER", 320, 300);
+    text("GAME OVER", 320, 100);
     textSize(30);
-    text("PRESS ANY KEY TO START AGAIN", 320, 370);
+
+    totalScore = 0;
+    if (player1 != null) totalScore += player1.score;
+    if (player2 != null) totalScore += player2.score;
+    if (player3 != null) totalScore += player3.score;
+    if (player4 != null) totalScore += player4.score;
+
+    // Check if player has a new high score (Must be > than the current high score)
+    newHighScore = highscores.checkHighScore(totalScore);
+
+    if (!newHighScore) 
+    {
+      enteredHighScore = true;
+    }
+
+    // Waits for player to enter his name
+    if (newHighScore && !enteredHighScore)
+    {
+      switch (state) {
+      case 0:
+        fill(255);
+        textAlign(CENTER, CENTER);
+        text ("New High Score!\nEnter your team name and hit enter:\n"+name, 320, 260); 
+        break;
+      }
+    } else
+    {        
+      textAlign(CENTER, CENTER);
+      text("PRESS ANY KEY TO START A NEW GAME", 320, height-100);
+      textSize(23);
+      text(highscores.toString(), 320, 340);
+    }
   }
 }
 
@@ -126,22 +182,6 @@ void keyPressed() {
   if (hasStartScreen) 
   {
     gui.removeStartScreen();
-  }
-
-  if (allDead || level.hasEnded())
-  {
-    player1 = null;
-    player2 = null;
-    player3 = null;
-    player4 = null;
-    hasPlayer1Joined = false;
-    hasPlayer2Joined = false;
-    hasPlayer3Joined = false;
-    hasPlayer4Joined = false;
-    level.restart();
-    allDead = false;
-    gameOver = false;
-    level = new Level();
   }
 
   //nextStage
@@ -259,6 +299,33 @@ void keyPressed() {
     if (char(keyCode) == RIGHT && isUpPressed || char(keyCode) == UP && isRightPressed) player4.setDirection(1);
     if (char(keyCode) == LEFT && isDownPressed || char(keyCode) == DOWN && isLeftPressed) player4.setDirection(5);
     if (char(keyCode) == RIGHT && isDownPressed || char(keyCode) == DOWN && isRightPressed) player4.setDirection(3);
+  }
+  if (enteredHighScore && gameOver) 
+  {     
+    newGame();
+  }
+
+  if (gameOver && newHighScore) 
+  {
+    if (enteredHighScore == false)
+    {
+      // Confirmation for entered name for high score by hitting enter
+      if (key==ENTER||key==RETURN || keyCode==10)      
+      {       
+        highscores.overWrite(name, totalScore);
+        enteredHighScore = true;
+      } else
+      {
+        // Backspace to clear the last character in the entered name
+        if (keyCode == 8 && name.length() > 0)
+        {        
+          name = name.substring (0, max(0, name.length()-1));
+        } else if ((key >= 'A' && key <= 'z') && name.length() <= 10) // Typing of name for high score
+        {
+          name+=key;
+        }
+      }
+    }
   }
 }
 
@@ -521,19 +588,28 @@ void mouseClicked()
     gui.removeStartScreen();
   }
 
-  if (allDead || level.hasEnded())
-  {
-    player1 = null;
-    player2 = null;
-    player3 = null;
-    player4 = null;
-    hasPlayer1Joined = false;
-    hasPlayer2Joined = false;
-    hasPlayer3Joined = false;
-    hasPlayer4Joined = false;
-    level.restart();
-    allDead = false;
-    gameOver = false;
-    level = new Level();
+  if (enteredHighScore && gameOver) 
+  { 
+    newGame();
   }
+}
+
+void newGame()
+{ 
+  gameOver = false;
+  highscores = new HighScore();
+  enteredHighScore = false;
+  name = "";
+  player1 = null;
+  player2 = null;
+  player3 = null;
+  player4 = null;
+  hasPlayer1Joined = false;
+  hasPlayer2Joined = false;
+  hasPlayer3Joined = false;
+  hasPlayer4Joined = false;
+  level.restart();
+  allDead = false; 
+  level = new Level();
+  highscore = highscores.getHighScore();
 }
