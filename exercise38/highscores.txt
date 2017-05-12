@@ -1,3 +1,4 @@
+TeamSC,410
 TeamSG,100
 TeamJP,90
 TeamJP,80
@@ -7,4 +8,3 @@ TeamFR,60
 TeamRU,50
 TeamMY,40
 TeamUK,40
-TeamCN,30

@@ -101,28 +101,14 @@ void draw() {
     text("Ensure all players have joined before entering the dungeon!\nRemember that the statues will unlock the gates.", 320, height-80);
   }
 
-  // CLears players who joined and did not lock in a class
-  if (level.getLevelNo() > 1) 
-  {
-    try 
-    {
-      if (hasPlayer1Joined && !hasPlayer1Classed) player1.die();
-      if (hasPlayer2Joined && !hasPlayer2Classed) player2.die();
-      if (hasPlayer3Joined && !hasPlayer3Classed) player3.die();
-      if (hasPlayer4Joined && !hasPlayer4Classed) player4.die();
-    }
-    catch (Exception e)
-    {
-    }
-  }
-
+  // At level 2, clear players who have not joined or has not selected a class
   try
   {
     if (level.getLevelNo() > 1
-      && (!hasPlayer1Joined || player1.getIsDead())
-      && (!hasPlayer2Joined || player2.getIsDead()) 
-      && (!hasPlayer3Joined || player3.getIsDead()) 
-      && (!hasPlayer4Joined || player4.getIsDead()))
+      && (!hasPlayer1Joined || player1 == null || player1.getIsDead())
+      && (!hasPlayer2Joined || player2 == null  || player2.getIsDead()) 
+      && (!hasPlayer3Joined || player3 == null  || player3.getIsDead()) 
+      && (!hasPlayer4Joined || player4 == null  || player4.getIsDead()))
     {
       allDead = true;
     }
