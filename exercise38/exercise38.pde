@@ -5,12 +5,16 @@
  strengths, and use projectile weapons (not e.g. lasers) as distance weapons. Use one (or several) sprite sheet(s) for the graphics. 
  Save and load a hiscore list with ten entries. As stated above, use the time fix, and use classes and objects. Work in two-person teams
  
- Program Title: 
- Program Description: 
+ Program Title: Dungeon Fungeon
+ Program Description:  
  
  Author: Leong Wei Kong & Nicholas Tan Joo Sin
- Reference: XXX
- Developer Notes: XXX
+ Developer Notes: We spent 
+ Control: 
+ Player 1 - W A S D + X
+ Player 2 - G V B N + SPACE
+ Player 3 - I J K L + M
+ Player 4 - ^ v < > + ENTER
  
  Credits:
  Title Font - Louisanne - http://www.dafont.com/louisianne.font
@@ -32,8 +36,9 @@ int classCounter3 = 0;
 int classCounter4 = 0;
 Level level;
 GUI gui;
-final int tileSize = 32;
-int highscore; // TO BE DEFINED LATER
+
+final int TILE_SIZE = 32;
+
 boolean isWPressed = false;
 boolean isSPressed = false;
 boolean isAPressed = false;
@@ -63,7 +68,9 @@ boolean gameOver = false;
 PImage gateSprite;
 boolean allDead = false;
 
+// Variables to facilitate highscore feature
 int totalScore;
+int highscore;
 HighScore highscores;
 boolean newHighScore = false;
 boolean enteredHighScore = false;

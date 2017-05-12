@@ -1,12 +1,12 @@
 class Exit {
   int posX;
   int posY;
-  int exitWidth = tileSize;
-  int exitHeight = tileSize;
+  int exitWidth = TILE_SIZE;
+  int exitHeight = TILE_SIZE;
 
   Exit(int x, int y, int type) {
-    posX = x * tileSize;
-    posY = y * tileSize;
+    posX = x * TILE_SIZE;
+    posY = y * TILE_SIZE;
     if (type == 30) image(loadImage("30.png"), posX, posY);
     if (type == 31) image(loadImage("31.png"), posX, posY);
   }

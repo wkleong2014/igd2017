@@ -1,7 +1,7 @@
 class Monster {
   int hp = 2;
   PVector position;
-  int diameter = tileSize;
+  int diameter = TILE_SIZE;
   int direction = 4;
   int type;
   final int ANIMATION_DURATION = 300; //in milliseconds

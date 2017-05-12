@@ -1373,7 +1373,7 @@ class Level {
     int[] coordsOfItem = itemList.get(currentLevel);
     if (coordsOfItem != null) {
       for (int i=0; i<coordsOfItem.length; i+=3) {
-        items.add(new Item(coordsOfItem[i], coordsOfItem[i+1] * tileSize, coordsOfItem[i+2] * tileSize));
+        items.add(new Item(coordsOfItem[i], coordsOfItem[i+1] * TILE_SIZE, coordsOfItem[i+2] * TILE_SIZE));
       }
     }
   }
@@ -1383,7 +1383,7 @@ class Level {
     if (coordsOfGate != null) {
       int[][] tiles = tilesLayouts.get(currentLevel);
       for (int i=0; i<coordsOfGate.length; i+=2) {
-        gates.add(new Gate(coordsOfGate[i] * tileSize, coordsOfGate[i+1] * tileSize));
+        gates.add(new Gate(coordsOfGate[i] * TILE_SIZE, coordsOfGate[i+1] * TILE_SIZE));
         clearTiles = tiles[coordsOfGate[i+1]][coordsOfGate[i]];
         tiles[coordsOfGate[i+1]][coordsOfGate[i]] = currentLevel-1;
       }
@@ -1395,7 +1395,7 @@ class Level {
     int[] coordsOfMonster = monsterList.get(currentLevel);
     if (coordsOfMonster != null) {
       for (int i=0; i<coordsOfMonster.length; i+=3) {
-        monsters.add(new Monster(coordsOfMonster[i], new PVector(coordsOfMonster[i+1] * tileSize + tileSize/2, coordsOfMonster[i+2] * tileSize + tileSize/2)));
+        monsters.add(new Monster(coordsOfMonster[i], new PVector(coordsOfMonster[i+1] * TILE_SIZE + TILE_SIZE/2, coordsOfMonster[i+2] * TILE_SIZE + TILE_SIZE/2)));
       }
     }
   }
@@ -1424,26 +1424,26 @@ class Level {
       if (tilesLayouts.get(currentLevel)[(int)proj.getPosY()/32][(int)proj.getPosX()/32] <= 15) {
         projList.remove(proj);
       } else if (proj.getProjectileType() == 7) {
-        if (player1 != null && player1.getHP() > 0 && (proj.getPosX() + proj.getProjectileDiameter()) >= (player1.getPosX()) && (proj.getPosX()) <= (player1.getPosX() + tileSize) && (proj.getPosY() + proj.getProjectileDiameter()) >= (player1.getPosY()) && (proj.getPosY()) <= (player1.getPosY() + tileSize)) {
+        if (player1 != null && player1.getHP() > 0 && (proj.getPosX() + proj.getProjectileDiameter()) >= (player1.getPosX()) && (proj.getPosX()) <= (player1.getPosX() + TILE_SIZE) && (proj.getPosY() + proj.getProjectileDiameter()) >= (player1.getPosY()) && (proj.getPosY()) <= (player1.getPosY() + TILE_SIZE)) {
           player1.getHit(proj.getProjectileDamage());
           projList.remove(proj);
         }
-        if (player2 != null && player2.getHP() > 0 &&(proj.getPosX() + proj.getProjectileDiameter()) >= (player2.getPosX()) && (proj.getPosX()) <= (player2.getPosX() + tileSize) && (proj.getPosY() + proj.getProjectileDiameter()) >= (player2.getPosY()) && (proj.getPosY()) <= (player2.getPosY() + tileSize)) {
+        if (player2 != null && player2.getHP() > 0 &&(proj.getPosX() + proj.getProjectileDiameter()) >= (player2.getPosX()) && (proj.getPosX()) <= (player2.getPosX() + TILE_SIZE) && (proj.getPosY() + proj.getProjectileDiameter()) >= (player2.getPosY()) && (proj.getPosY()) <= (player2.getPosY() + TILE_SIZE)) {
           player2.getHit(proj.getProjectileDamage());
           projList.remove(proj);
         }
-        if (player3 != null && player3.getHP() > 0 &&(proj.getPosX() + proj.getProjectileDiameter()) >= (player3.getPosX()) && (proj.getPosX()) <= (player3.getPosX() + tileSize) && (proj.getPosY() + proj.getProjectileDiameter()) >= (player3.getPosY()) && (proj.getPosY()) <= (player3.getPosY() + tileSize)) {
+        if (player3 != null && player3.getHP() > 0 &&(proj.getPosX() + proj.getProjectileDiameter()) >= (player3.getPosX()) && (proj.getPosX()) <= (player3.getPosX() + TILE_SIZE) && (proj.getPosY() + proj.getProjectileDiameter()) >= (player3.getPosY()) && (proj.getPosY()) <= (player3.getPosY() + TILE_SIZE)) {
           player3.getHit(proj.getProjectileDamage());
           projList.remove(proj);
         }
-        if (player4 != null && player4.getHP() > 0 &&(proj.getPosX() + proj.getProjectileDiameter()) >= (player4.getPosX()) && (proj.getPosX()) <= (player4.getPosX() + tileSize) && (proj.getPosY() + proj.getProjectileDiameter()) >= (player4.getPosY()) && (proj.getPosY()) <= (player4.getPosY() + tileSize)) {
+        if (player4 != null && player4.getHP() > 0 &&(proj.getPosX() + proj.getProjectileDiameter()) >= (player4.getPosX()) && (proj.getPosX()) <= (player4.getPosX() + TILE_SIZE) && (proj.getPosY() + proj.getProjectileDiameter()) >= (player4.getPosY()) && (proj.getPosY()) <= (player4.getPosY() + TILE_SIZE)) {
           player4.getHit(proj.getProjectileDamage());
           projList.remove(proj);
         }
       } else if (monsters.size() != 0) { 
         for (int j=monsters.size()-1; j>=0; j--) {
           Monster monster = monsters.get(j);
-          if ((proj.getPosX() + tileSize) >= (monster.getPosX()) && (proj.getPosX()) <= (monster.getPosX() + tileSize) && (proj.getPosY() + tileSize) >= (monster.getPosY()) && (proj.getPosY()) <= (monster.getPosY() + tileSize)) {
+          if ((proj.getPosX() + TILE_SIZE) >= (monster.getPosX()) && (proj.getPosX()) <= (monster.getPosX() + TILE_SIZE) && (proj.getPosY() + TILE_SIZE) >= (monster.getPosY()) && (proj.getPosY()) <= (monster.getPosY() + TILE_SIZE)) {
             projList.remove(proj);
             monster.getHit(proj.getProjectileDamage());
             if (monster.getHP() <= 0) {
@@ -1509,25 +1509,25 @@ class Level {
     int currentLowestPlayer = 1;
     boolean[][] isOccupied = new boolean[20][20];
     for (Monster monster : monsters) {
-      if (player1 != null && player1.getHP() > 0 && (monster.getPosX() + monster.getDiameter()) >= (player1.getPosX()) && (monster.getPosX()) <= (player1.getPosX() + tileSize) && (monster.getPosY() + monster.getDiameter()) >= (player1.getPosY()) && (monster.getPosY()) <= (player1.getPosY() + tileSize)) {
+      if (player1 != null && player1.getHP() > 0 && (monster.getPosX() + monster.getDiameter()) >= (player1.getPosX()) && (monster.getPosX()) <= (player1.getPosX() + TILE_SIZE) && (monster.getPosY() + monster.getDiameter()) >= (player1.getPosY()) && (monster.getPosY()) <= (player1.getPosY() + TILE_SIZE)) {
         player1.getHit(monster.getCollisionDamage());
         player1.addScore(10);
         monsters.remove(monster);
         break;
       }
-      if (player2 != null && player2.getHP() > 0 && (monster.getPosX() + monster.getDiameter()) >= (player2.getPosX()) && (monster.getPosX()) <= (player2.getPosX() + tileSize) && (monster.getPosY() + monster.getDiameter()) >= (player2.getPosY()) && (monster.getPosY()) <= (player2.getPosY() + tileSize)) {
+      if (player2 != null && player2.getHP() > 0 && (monster.getPosX() + monster.getDiameter()) >= (player2.getPosX()) && (monster.getPosX()) <= (player2.getPosX() + TILE_SIZE) && (monster.getPosY() + monster.getDiameter()) >= (player2.getPosY()) && (monster.getPosY()) <= (player2.getPosY() + TILE_SIZE)) {
         player2.getHit(monster.getCollisionDamage());
         player2.addScore(10);
         monsters.remove(monster);
         break;
       }
-      if (player3 != null && player3.getHP() > 0 && (monster.getPosX() + monster.getDiameter()) >= (player3.getPosX()) && (monster.getPosX()) <= (player3.getPosX() + tileSize) && (monster.getPosY() + monster.getDiameter()) >= (player3.getPosY()) && (monster.getPosY()) <= (player3.getPosY() + tileSize)) {
+      if (player3 != null && player3.getHP() > 0 && (monster.getPosX() + monster.getDiameter()) >= (player3.getPosX()) && (monster.getPosX()) <= (player3.getPosX() + TILE_SIZE) && (monster.getPosY() + monster.getDiameter()) >= (player3.getPosY()) && (monster.getPosY()) <= (player3.getPosY() + TILE_SIZE)) {
         player3.getHit(monster.getCollisionDamage());
         player3.addScore(10);
         monsters.remove(monster);
         break;
       }
-      if (player4 != null && player4.getHP() > 0 && (monster.getPosX() + monster.getDiameter()) >= (player4.getPosX()) && (monster.getPosX()) <= (player4.getPosX() + tileSize) && (monster.getPosY() + monster.getDiameter()) >= (player4.getPosY()) && (monster.getPosY()) <= (player4.getPosY() + tileSize)) {
+      if (player4 != null && player4.getHP() > 0 && (monster.getPosX() + monster.getDiameter()) >= (player4.getPosX()) && (monster.getPosX()) <= (player4.getPosX() + TILE_SIZE) && (monster.getPosY() + monster.getDiameter()) >= (player4.getPosY()) && (monster.getPosY()) <= (player4.getPosY() + TILE_SIZE)) {
         player4.getHit(monster.getCollisionDamage());
         player4.addScore(10);
         monsters.remove(monster);
@@ -1562,228 +1562,228 @@ class Level {
       switch(currentLowestPlayer) {
       case 1:
         if (player1 != null && player1.getHP() > 0 ) {
-          if ( ((int)player1.getPosX() > monster.getPosX() && !(tilesLayouts.get(currentLevel)[(int)monster.getPosY()/tileSize][(int)(monster.getPosX()+16)/tileSize] <= 15)) && ((int)player1.getPosY() < monster.getPosY() && !(tilesLayouts.get(currentLevel)[(int)(monster.getPosY()-16)/tileSize][(int)monster.getPosX()/tileSize] <= 15)) && !isOccupied[(int)monster.getPosY()/tileSize][(int)(monster.getPosX())/tileSize]) {
+          if ( ((int)player1.getPosX() > monster.getPosX() && !(tilesLayouts.get(currentLevel)[(int)monster.getPosY()/TILE_SIZE][(int)(monster.getPosX()+16)/TILE_SIZE] <= 15)) && ((int)player1.getPosY() < monster.getPosY() && !(tilesLayouts.get(currentLevel)[(int)(monster.getPosY()-16)/TILE_SIZE][(int)monster.getPosX()/TILE_SIZE] <= 15)) && !isOccupied[(int)monster.getPosY()/TILE_SIZE][(int)(monster.getPosX())/TILE_SIZE]) {
             //if monster is on the bottom left of player and has to go top right!
             monster.incPosX();
             monster.decPosY();
             monster.setDirection(1);
-            isOccupied[(int)monster.getPosY()/tileSize][(int)(monster.getPosX())/tileSize] = true;
+            isOccupied[(int)monster.getPosY()/TILE_SIZE][(int)(monster.getPosX())/TILE_SIZE] = true;
             break;
-          } else if ( ((int)player1.getPosX() > monster.getPosX() && !(tilesLayouts.get(currentLevel)[(int)monster.getPosY()/tileSize][(int)(monster.getPosX()+16)/tileSize] <= 15)) && ((int)player1.getPosY() > monster.getPosY() && !(tilesLayouts.get(currentLevel)[(int)(monster.getPosY()+16)/tileSize][(int)monster.getPosX()/tileSize] <= 15)) && !isOccupied[(int)monster.getPosY()/tileSize][(int)(monster.getPosX())/tileSize]) {
+          } else if ( ((int)player1.getPosX() > monster.getPosX() && !(tilesLayouts.get(currentLevel)[(int)monster.getPosY()/TILE_SIZE][(int)(monster.getPosX()+16)/TILE_SIZE] <= 15)) && ((int)player1.getPosY() > monster.getPosY() && !(tilesLayouts.get(currentLevel)[(int)(monster.getPosY()+16)/TILE_SIZE][(int)monster.getPosX()/TILE_SIZE] <= 15)) && !isOccupied[(int)monster.getPosY()/TILE_SIZE][(int)(monster.getPosX())/TILE_SIZE]) {
             //if monster is on the top left of player and has to go bottom right!
             monster.incPosX();
             monster.incPosY();
             monster.setDirection(3);
-            isOccupied[(int)monster.getPosY()/tileSize][(int)(monster.getPosX())/tileSize] = true;
+            isOccupied[(int)monster.getPosY()/TILE_SIZE][(int)(monster.getPosX())/TILE_SIZE] = true;
             break;
-          } else if ( ((int)player1.getPosX() < monster.getPosX() && !(tilesLayouts.get(currentLevel)[(int)monster.getPosY()/tileSize][(int)(monster.getPosX()-16)/tileSize] <= 15)) && ((int)player1.getPosY() > monster.getPosY() && !(tilesLayouts.get(currentLevel)[(int)(monster.getPosY()+16)/tileSize][(int)monster.getPosX()/tileSize] <= 15)) && !isOccupied[(int)monster.getPosY()/tileSize][(int)(monster.getPosX())/tileSize] ) {
+          } else if ( ((int)player1.getPosX() < monster.getPosX() && !(tilesLayouts.get(currentLevel)[(int)monster.getPosY()/TILE_SIZE][(int)(monster.getPosX()-16)/TILE_SIZE] <= 15)) && ((int)player1.getPosY() > monster.getPosY() && !(tilesLayouts.get(currentLevel)[(int)(monster.getPosY()+16)/TILE_SIZE][(int)monster.getPosX()/TILE_SIZE] <= 15)) && !isOccupied[(int)monster.getPosY()/TILE_SIZE][(int)(monster.getPosX())/TILE_SIZE] ) {
             //if mosnster is top right of player and has to go bottom left
             monster.setDirection(5);
             monster.decPosX();
             monster.incPosY();
-            isOccupied[(int)monster.getPosY()/tileSize][(int)(monster.getPosX())/tileSize] = true;
+            isOccupied[(int)monster.getPosY()/TILE_SIZE][(int)(monster.getPosX())/TILE_SIZE] = true;
             break;
-          } else if ( ((int)player1.getPosX() < monster.getPosX() && !(tilesLayouts.get(currentLevel)[(int)monster.getPosY()/tileSize][(int)(monster.getPosX()-16)/tileSize] <= 15)) && ((int)player1.getPosY() < monster.getPosY() && !(tilesLayouts.get(currentLevel)[(int)(monster.getPosY()-16)/tileSize][(int)monster.getPosX()/tileSize] <= 15)) && !isOccupied[(int)monster.getPosY()/tileSize][(int)(monster.getPosX())/tileSize]) {
+          } else if ( ((int)player1.getPosX() < monster.getPosX() && !(tilesLayouts.get(currentLevel)[(int)monster.getPosY()/TILE_SIZE][(int)(monster.getPosX()-16)/TILE_SIZE] <= 15)) && ((int)player1.getPosY() < monster.getPosY() && !(tilesLayouts.get(currentLevel)[(int)(monster.getPosY()-16)/TILE_SIZE][(int)monster.getPosX()/TILE_SIZE] <= 15)) && !isOccupied[(int)monster.getPosY()/TILE_SIZE][(int)(monster.getPosX())/TILE_SIZE]) {
             //if monster is bottom right of player has to go top left
             monster.setDirection(7);
             monster.decPosX();
             monster.decPosY();
-            isOccupied[(int)monster.getPosY()/tileSize][(int)(monster.getPosX())/tileSize] = true;
+            isOccupied[(int)monster.getPosY()/TILE_SIZE][(int)(monster.getPosX())/TILE_SIZE] = true;
             break;
-          } else if ((int)player1.getPosX() < monster.getPosX() && !(tilesLayouts.get(currentLevel)[(int)monster.getPosY()/tileSize][(int)(monster.getPosX()-16)/tileSize] <= 15) && !isOccupied[(int)monster.getPosY()/tileSize][(int)(monster.getPosX())/tileSize]) {
+          } else if ((int)player1.getPosX() < monster.getPosX() && !(tilesLayouts.get(currentLevel)[(int)monster.getPosY()/TILE_SIZE][(int)(monster.getPosX()-16)/TILE_SIZE] <= 15) && !isOccupied[(int)monster.getPosY()/TILE_SIZE][(int)(monster.getPosX())/TILE_SIZE]) {
             //move left
             monster.decPosX();
             monster.setDirection(6);
-            isOccupied[(int)monster.getPosY()/tileSize][(int)(monster.getPosX())/tileSize] = true;
+            isOccupied[(int)monster.getPosY()/TILE_SIZE][(int)(monster.getPosX())/TILE_SIZE] = true;
             break;
-          } else if ((int)player1.getPosX() > monster.getPosX() && !(tilesLayouts.get(currentLevel)[(int)monster.getPosY()/tileSize][(int)(monster.getPosX()+16)/tileSize] <= 15) && !isOccupied[(int)monster.getPosY()/tileSize][(int)(monster.getPosX())/tileSize]) {
+          } else if ((int)player1.getPosX() > monster.getPosX() && !(tilesLayouts.get(currentLevel)[(int)monster.getPosY()/TILE_SIZE][(int)(monster.getPosX()+16)/TILE_SIZE] <= 15) && !isOccupied[(int)monster.getPosY()/TILE_SIZE][(int)(monster.getPosX())/TILE_SIZE]) {
             //move right
             monster.incPosX();
             monster.setDirection(2);
-            isOccupied[(int)monster.getPosY()/tileSize][(int)(monster.getPosX())/tileSize] = true;
+            isOccupied[(int)monster.getPosY()/TILE_SIZE][(int)(monster.getPosX())/TILE_SIZE] = true;
             break;
-          } else if ((int)player1.getPosY() < monster.getPosY() && !(tilesLayouts.get(currentLevel)[(int)(monster.getPosY()-16)/tileSize][(int)monster.getPosX()/tileSize] <= 15) && !isOccupied[(int)monster.getPosY()/tileSize][(int)(monster.getPosX())/tileSize]) {
+          } else if ((int)player1.getPosY() < monster.getPosY() && !(tilesLayouts.get(currentLevel)[(int)(monster.getPosY()-16)/TILE_SIZE][(int)monster.getPosX()/TILE_SIZE] <= 15) && !isOccupied[(int)monster.getPosY()/TILE_SIZE][(int)(monster.getPosX())/TILE_SIZE]) {
             //move up
             monster.decPosY();
             monster.setDirection(0);
-            isOccupied[(int)monster.getPosY()/tileSize][(int)(monster.getPosX())/tileSize] = true;
+            isOccupied[(int)monster.getPosY()/TILE_SIZE][(int)(monster.getPosX())/TILE_SIZE] = true;
             break;
-          } else if ((int)player1.getPosY() > monster.getPosY() && !(tilesLayouts.get(currentLevel)[(int)(monster.getPosY()+16)/tileSize][(int)monster.getPosX()/tileSize] <= 15) && !isOccupied[(int)monster.getPosY()/tileSize][(int)(monster.getPosX())/tileSize]) {
+          } else if ((int)player1.getPosY() > monster.getPosY() && !(tilesLayouts.get(currentLevel)[(int)(monster.getPosY()+16)/TILE_SIZE][(int)monster.getPosX()/TILE_SIZE] <= 15) && !isOccupied[(int)monster.getPosY()/TILE_SIZE][(int)(monster.getPosX())/TILE_SIZE]) {
             //move down
             monster.incPosY();
             monster.setDirection(4);
-            isOccupied[(int)monster.getPosY()/tileSize][(int)(monster.getPosX())/tileSize] = true;
+            isOccupied[(int)monster.getPosY()/TILE_SIZE][(int)(monster.getPosX())/TILE_SIZE] = true;
             break;
           }
         }
         break;
       case 2:
         if (player2 != null && player2.getHP() > 0 ) {
-          if ( ((int)player2.getPosX() > monster.getPosX() && !(tilesLayouts.get(currentLevel)[(int)monster.getPosY()/tileSize][(int)(monster.getPosX()+16)/tileSize] <= 15)) && ((int)player2.getPosY() < monster.getPosY() && !(tilesLayouts.get(currentLevel)[(int)(monster.getPosY()-16)/tileSize][(int)monster.getPosX()/tileSize] <= 15)) && !isOccupied[(int)monster.getPosY()/tileSize][(int)(monster.getPosX())/tileSize]) {
+          if ( ((int)player2.getPosX() > monster.getPosX() && !(tilesLayouts.get(currentLevel)[(int)monster.getPosY()/TILE_SIZE][(int)(monster.getPosX()+16)/TILE_SIZE] <= 15)) && ((int)player2.getPosY() < monster.getPosY() && !(tilesLayouts.get(currentLevel)[(int)(monster.getPosY()-16)/TILE_SIZE][(int)monster.getPosX()/TILE_SIZE] <= 15)) && !isOccupied[(int)monster.getPosY()/TILE_SIZE][(int)(monster.getPosX())/TILE_SIZE]) {
             //if monster is on the bottom left of player and has to go top right!
             monster.incPosX();
             monster.decPosY();
             monster.setDirection(1);
-            isOccupied[(int)monster.getPosY()/tileSize][(int)(monster.getPosX())/tileSize] = true;
+            isOccupied[(int)monster.getPosY()/TILE_SIZE][(int)(monster.getPosX())/TILE_SIZE] = true;
             break;
-          } else if ( ((int)player2.getPosX() > monster.getPosX() && !(tilesLayouts.get(currentLevel)[(int)monster.getPosY()/tileSize][(int)(monster.getPosX()+16)/tileSize] <= 15)) && ((int)player2.getPosY() > monster.getPosY() && !(tilesLayouts.get(currentLevel)[(int)(monster.getPosY()+16)/tileSize][(int)monster.getPosX()/tileSize] <= 15)) && !isOccupied[(int)monster.getPosY()/tileSize][(int)(monster.getPosX())/tileSize]) {
+          } else if ( ((int)player2.getPosX() > monster.getPosX() && !(tilesLayouts.get(currentLevel)[(int)monster.getPosY()/TILE_SIZE][(int)(monster.getPosX()+16)/TILE_SIZE] <= 15)) && ((int)player2.getPosY() > monster.getPosY() && !(tilesLayouts.get(currentLevel)[(int)(monster.getPosY()+16)/TILE_SIZE][(int)monster.getPosX()/TILE_SIZE] <= 15)) && !isOccupied[(int)monster.getPosY()/TILE_SIZE][(int)(monster.getPosX())/TILE_SIZE]) {
             //if monster is on the top left of player and has to go bottom right!
             monster.incPosX();
             monster.incPosY();
             monster.setDirection(3);
-            isOccupied[(int)monster.getPosY()/tileSize][(int)(monster.getPosX())/tileSize] = true;
+            isOccupied[(int)monster.getPosY()/TILE_SIZE][(int)(monster.getPosX())/TILE_SIZE] = true;
             break;
-          } else if ( ((int)player2.getPosX() < monster.getPosX() && !(tilesLayouts.get(currentLevel)[(int)monster.getPosY()/tileSize][(int)(monster.getPosX()-16)/tileSize] <= 15)) && ((int)player2.getPosY() > monster.getPosY() && !(tilesLayouts.get(currentLevel)[(int)(monster.getPosY()+16)/tileSize][(int)monster.getPosX()/tileSize] <= 15)) && !isOccupied[(int)monster.getPosY()/tileSize][(int)(monster.getPosX())/tileSize] ) {
+          } else if ( ((int)player2.getPosX() < monster.getPosX() && !(tilesLayouts.get(currentLevel)[(int)monster.getPosY()/TILE_SIZE][(int)(monster.getPosX()-16)/TILE_SIZE] <= 15)) && ((int)player2.getPosY() > monster.getPosY() && !(tilesLayouts.get(currentLevel)[(int)(monster.getPosY()+16)/TILE_SIZE][(int)monster.getPosX()/TILE_SIZE] <= 15)) && !isOccupied[(int)monster.getPosY()/TILE_SIZE][(int)(monster.getPosX())/TILE_SIZE] ) {
             //if mosnster is top right of player and has to go bottom left
             monster.setDirection(5);
             monster.decPosX();
             monster.incPosY();
-            isOccupied[(int)monster.getPosY()/tileSize][(int)(monster.getPosX())/tileSize] = true;
+            isOccupied[(int)monster.getPosY()/TILE_SIZE][(int)(monster.getPosX())/TILE_SIZE] = true;
             break;
-          } else if ( ((int)player2.getPosX() < monster.getPosX() && !(tilesLayouts.get(currentLevel)[(int)monster.getPosY()/tileSize][(int)(monster.getPosX()-16)/tileSize] <= 15)) && ((int)player2.getPosY() < monster.getPosY() && !(tilesLayouts.get(currentLevel)[(int)(monster.getPosY()-16)/tileSize][(int)monster.getPosX()/tileSize] <= 15)) && !isOccupied[(int)monster.getPosY()/tileSize][(int)(monster.getPosX())/tileSize]) {
+          } else if ( ((int)player2.getPosX() < monster.getPosX() && !(tilesLayouts.get(currentLevel)[(int)monster.getPosY()/TILE_SIZE][(int)(monster.getPosX()-16)/TILE_SIZE] <= 15)) && ((int)player2.getPosY() < monster.getPosY() && !(tilesLayouts.get(currentLevel)[(int)(monster.getPosY()-16)/TILE_SIZE][(int)monster.getPosX()/TILE_SIZE] <= 15)) && !isOccupied[(int)monster.getPosY()/TILE_SIZE][(int)(monster.getPosX())/TILE_SIZE]) {
             //if monster is bottom right of player has to go top left
             monster.setDirection(7);
             monster.decPosX();
             monster.decPosY();
-            isOccupied[(int)monster.getPosY()/tileSize][(int)(monster.getPosX())/tileSize] = true;
+            isOccupied[(int)monster.getPosY()/TILE_SIZE][(int)(monster.getPosX())/TILE_SIZE] = true;
             break;
-          } else if ((int)player2.getPosX() < monster.getPosX() && !(tilesLayouts.get(currentLevel)[(int)monster.getPosY()/tileSize][(int)(monster.getPosX()-16)/tileSize] <= 15) && !isOccupied[(int)monster.getPosY()/tileSize][(int)(monster.getPosX())/tileSize]) {
+          } else if ((int)player2.getPosX() < monster.getPosX() && !(tilesLayouts.get(currentLevel)[(int)monster.getPosY()/TILE_SIZE][(int)(monster.getPosX()-16)/TILE_SIZE] <= 15) && !isOccupied[(int)monster.getPosY()/TILE_SIZE][(int)(monster.getPosX())/TILE_SIZE]) {
             //move left
             monster.decPosX();
             monster.setDirection(6);
-            isOccupied[(int)monster.getPosY()/tileSize][(int)(monster.getPosX())/tileSize] = true;
+            isOccupied[(int)monster.getPosY()/TILE_SIZE][(int)(monster.getPosX())/TILE_SIZE] = true;
             break;
-          } else if ((int)player2.getPosX() > monster.getPosX() && !(tilesLayouts.get(currentLevel)[(int)monster.getPosY()/tileSize][(int)(monster.getPosX()+16)/tileSize] <= 15) && !isOccupied[(int)monster.getPosY()/tileSize][(int)(monster.getPosX())/tileSize]) {
+          } else if ((int)player2.getPosX() > monster.getPosX() && !(tilesLayouts.get(currentLevel)[(int)monster.getPosY()/TILE_SIZE][(int)(monster.getPosX()+16)/TILE_SIZE] <= 15) && !isOccupied[(int)monster.getPosY()/TILE_SIZE][(int)(monster.getPosX())/TILE_SIZE]) {
             //move right
             monster.incPosX();
             monster.setDirection(2);
-            isOccupied[(int)monster.getPosY()/tileSize][(int)(monster.getPosX())/tileSize] = true;
+            isOccupied[(int)monster.getPosY()/TILE_SIZE][(int)(monster.getPosX())/TILE_SIZE] = true;
             break;
-          } else if ((int)player2.getPosY() < monster.getPosY() && !(tilesLayouts.get(currentLevel)[(int)(monster.getPosY()-16)/tileSize][(int)monster.getPosX()/tileSize] <= 15) && !isOccupied[(int)monster.getPosY()/tileSize][(int)(monster.getPosX())/tileSize]) {
+          } else if ((int)player2.getPosY() < monster.getPosY() && !(tilesLayouts.get(currentLevel)[(int)(monster.getPosY()-16)/TILE_SIZE][(int)monster.getPosX()/TILE_SIZE] <= 15) && !isOccupied[(int)monster.getPosY()/TILE_SIZE][(int)(monster.getPosX())/TILE_SIZE]) {
             //move up
             monster.decPosY();
             monster.setDirection(0);
-            isOccupied[(int)monster.getPosY()/tileSize][(int)(monster.getPosX())/tileSize] = true;
+            isOccupied[(int)monster.getPosY()/TILE_SIZE][(int)(monster.getPosX())/TILE_SIZE] = true;
             break;
-          } else if ((int)player2.getPosY() > monster.getPosY() && !(tilesLayouts.get(currentLevel)[(int)(monster.getPosY()+16)/tileSize][(int)monster.getPosX()/tileSize] <= 15) && !isOccupied[(int)monster.getPosY()/tileSize][(int)(monster.getPosX())/tileSize]) {
+          } else if ((int)player2.getPosY() > monster.getPosY() && !(tilesLayouts.get(currentLevel)[(int)(monster.getPosY()+16)/TILE_SIZE][(int)monster.getPosX()/TILE_SIZE] <= 15) && !isOccupied[(int)monster.getPosY()/TILE_SIZE][(int)(monster.getPosX())/TILE_SIZE]) {
             //move down
             monster.incPosY();
             monster.setDirection(4);
-            isOccupied[(int)monster.getPosY()/tileSize][(int)(monster.getPosX())/tileSize] = true;
+            isOccupied[(int)monster.getPosY()/TILE_SIZE][(int)(monster.getPosX())/TILE_SIZE] = true;
             break;
           }
         }
         break;
       case 3:
         if (player3 != null && player3.getHP() > 0 ) {
-          if ( ((int)player3.getPosX() > monster.getPosX() && !(tilesLayouts.get(currentLevel)[(int)monster.getPosY()/tileSize][(int)(monster.getPosX()+16)/tileSize] <= 15)) && ((int)player3.getPosY() < monster.getPosY() && !(tilesLayouts.get(currentLevel)[(int)(monster.getPosY()-16)/tileSize][(int)monster.getPosX()/tileSize] <= 15)) && !isOccupied[(int)monster.getPosY()/tileSize][(int)(monster.getPosX())/tileSize]) {
+          if ( ((int)player3.getPosX() > monster.getPosX() && !(tilesLayouts.get(currentLevel)[(int)monster.getPosY()/TILE_SIZE][(int)(monster.getPosX()+16)/TILE_SIZE] <= 15)) && ((int)player3.getPosY() < monster.getPosY() && !(tilesLayouts.get(currentLevel)[(int)(monster.getPosY()-16)/TILE_SIZE][(int)monster.getPosX()/TILE_SIZE] <= 15)) && !isOccupied[(int)monster.getPosY()/TILE_SIZE][(int)(monster.getPosX())/TILE_SIZE]) {
             //if monster is on the bottom left of player and has to go top right!
             monster.incPosX();
             monster.decPosY();
             monster.setDirection(1);
-            isOccupied[(int)monster.getPosY()/tileSize][(int)(monster.getPosX())/tileSize] = true;
+            isOccupied[(int)monster.getPosY()/TILE_SIZE][(int)(monster.getPosX())/TILE_SIZE] = true;
             break;
-          } else if ( ((int)player3.getPosX() > monster.getPosX() && !(tilesLayouts.get(currentLevel)[(int)monster.getPosY()/tileSize][(int)(monster.getPosX()+16)/tileSize] <= 15)) && ((int)player3.getPosY() > monster.getPosY() && !(tilesLayouts.get(currentLevel)[(int)(monster.getPosY()+16)/tileSize][(int)monster.getPosX()/tileSize] <= 15)) && !isOccupied[(int)monster.getPosY()/tileSize][(int)(monster.getPosX())/tileSize]) {
+          } else if ( ((int)player3.getPosX() > monster.getPosX() && !(tilesLayouts.get(currentLevel)[(int)monster.getPosY()/TILE_SIZE][(int)(monster.getPosX()+16)/TILE_SIZE] <= 15)) && ((int)player3.getPosY() > monster.getPosY() && !(tilesLayouts.get(currentLevel)[(int)(monster.getPosY()+16)/TILE_SIZE][(int)monster.getPosX()/TILE_SIZE] <= 15)) && !isOccupied[(int)monster.getPosY()/TILE_SIZE][(int)(monster.getPosX())/TILE_SIZE]) {
             //if monster is on the top left of player and has to go bottom right!
             monster.incPosX();
             monster.incPosY();
             monster.setDirection(3);
-            isOccupied[(int)monster.getPosY()/tileSize][(int)(monster.getPosX())/tileSize] = true;
+            isOccupied[(int)monster.getPosY()/TILE_SIZE][(int)(monster.getPosX())/TILE_SIZE] = true;
             break;
-          } else if ( ((int)player3.getPosX() < monster.getPosX() && !(tilesLayouts.get(currentLevel)[(int)monster.getPosY()/tileSize][(int)(monster.getPosX()-16)/tileSize] <= 15)) && ((int)player3.getPosY() > monster.getPosY() && !(tilesLayouts.get(currentLevel)[(int)(monster.getPosY()+16)/tileSize][(int)monster.getPosX()/tileSize] <= 15)) && !isOccupied[(int)monster.getPosY()/tileSize][(int)(monster.getPosX())/tileSize] ) {
+          } else if ( ((int)player3.getPosX() < monster.getPosX() && !(tilesLayouts.get(currentLevel)[(int)monster.getPosY()/TILE_SIZE][(int)(monster.getPosX()-16)/TILE_SIZE] <= 15)) && ((int)player3.getPosY() > monster.getPosY() && !(tilesLayouts.get(currentLevel)[(int)(monster.getPosY()+16)/TILE_SIZE][(int)monster.getPosX()/TILE_SIZE] <= 15)) && !isOccupied[(int)monster.getPosY()/TILE_SIZE][(int)(monster.getPosX())/TILE_SIZE] ) {
             //if mosnster is top right of player and has to go bottom left
             monster.setDirection(5);
             monster.decPosX();
             monster.incPosY();
-            isOccupied[(int)monster.getPosY()/tileSize][(int)(monster.getPosX())/tileSize] = true;
+            isOccupied[(int)monster.getPosY()/TILE_SIZE][(int)(monster.getPosX())/TILE_SIZE] = true;
             break;
-          } else if ( ((int)player3.getPosX() < monster.getPosX() && !(tilesLayouts.get(currentLevel)[(int)monster.getPosY()/tileSize][(int)(monster.getPosX()-16)/tileSize] <= 15)) && ((int)player3.getPosY() < monster.getPosY() && !(tilesLayouts.get(currentLevel)[(int)(monster.getPosY()-16)/tileSize][(int)monster.getPosX()/tileSize] <= 15)) && !isOccupied[(int)monster.getPosY()/tileSize][(int)(monster.getPosX())/tileSize]) {
+          } else if ( ((int)player3.getPosX() < monster.getPosX() && !(tilesLayouts.get(currentLevel)[(int)monster.getPosY()/TILE_SIZE][(int)(monster.getPosX()-16)/TILE_SIZE] <= 15)) && ((int)player3.getPosY() < monster.getPosY() && !(tilesLayouts.get(currentLevel)[(int)(monster.getPosY()-16)/TILE_SIZE][(int)monster.getPosX()/TILE_SIZE] <= 15)) && !isOccupied[(int)monster.getPosY()/TILE_SIZE][(int)(monster.getPosX())/TILE_SIZE]) {
             //if monster is bottom right of player has to go top left
             monster.setDirection(7);
             monster.decPosX();
             monster.decPosY();
-            isOccupied[(int)monster.getPosY()/tileSize][(int)(monster.getPosX())/tileSize] = true;
+            isOccupied[(int)monster.getPosY()/TILE_SIZE][(int)(monster.getPosX())/TILE_SIZE] = true;
             break;
-          } else if ((int)player3.getPosX() < monster.getPosX() && !(tilesLayouts.get(currentLevel)[(int)monster.getPosY()/tileSize][(int)(monster.getPosX()-16)/tileSize] <= 15) && !isOccupied[(int)monster.getPosY()/tileSize][(int)(monster.getPosX())/tileSize]) {
+          } else if ((int)player3.getPosX() < monster.getPosX() && !(tilesLayouts.get(currentLevel)[(int)monster.getPosY()/TILE_SIZE][(int)(monster.getPosX()-16)/TILE_SIZE] <= 15) && !isOccupied[(int)monster.getPosY()/TILE_SIZE][(int)(monster.getPosX())/TILE_SIZE]) {
             //move left
             monster.decPosX();
             monster.setDirection(6);
-            isOccupied[(int)monster.getPosY()/tileSize][(int)(monster.getPosX())/tileSize] = true;
+            isOccupied[(int)monster.getPosY()/TILE_SIZE][(int)(monster.getPosX())/TILE_SIZE] = true;
             break;
-          } else if ((int)player3.getPosX() > monster.getPosX() && !(tilesLayouts.get(currentLevel)[(int)monster.getPosY()/tileSize][(int)(monster.getPosX()+16)/tileSize] <= 15) && !isOccupied[(int)monster.getPosY()/tileSize][(int)(monster.getPosX())/tileSize]) {
+          } else if ((int)player3.getPosX() > monster.getPosX() && !(tilesLayouts.get(currentLevel)[(int)monster.getPosY()/TILE_SIZE][(int)(monster.getPosX()+16)/TILE_SIZE] <= 15) && !isOccupied[(int)monster.getPosY()/TILE_SIZE][(int)(monster.getPosX())/TILE_SIZE]) {
             //move right
             monster.incPosX();
             monster.setDirection(2);
-            isOccupied[(int)monster.getPosY()/tileSize][(int)(monster.getPosX())/tileSize] = true;
+            isOccupied[(int)monster.getPosY()/TILE_SIZE][(int)(monster.getPosX())/TILE_SIZE] = true;
             break;
-          } else if ((int)player3.getPosY() < monster.getPosY() && !(tilesLayouts.get(currentLevel)[(int)(monster.getPosY()-16)/tileSize][(int)monster.getPosX()/tileSize] <= 15) && !isOccupied[(int)monster.getPosY()/tileSize][(int)(monster.getPosX())/tileSize]) {
+          } else if ((int)player3.getPosY() < monster.getPosY() && !(tilesLayouts.get(currentLevel)[(int)(monster.getPosY()-16)/TILE_SIZE][(int)monster.getPosX()/TILE_SIZE] <= 15) && !isOccupied[(int)monster.getPosY()/TILE_SIZE][(int)(monster.getPosX())/TILE_SIZE]) {
             //move up
             monster.decPosY();
             monster.setDirection(0);
-            isOccupied[(int)monster.getPosY()/tileSize][(int)(monster.getPosX())/tileSize] = true;
+            isOccupied[(int)monster.getPosY()/TILE_SIZE][(int)(monster.getPosX())/TILE_SIZE] = true;
             break;
-          } else if ((int)player3.getPosY() > monster.getPosY() && !(tilesLayouts.get(currentLevel)[(int)(monster.getPosY()+16)/tileSize][(int)monster.getPosX()/tileSize] <= 15) && !isOccupied[(int)monster.getPosY()/tileSize][(int)(monster.getPosX())/tileSize]) {
+          } else if ((int)player3.getPosY() > monster.getPosY() && !(tilesLayouts.get(currentLevel)[(int)(monster.getPosY()+16)/TILE_SIZE][(int)monster.getPosX()/TILE_SIZE] <= 15) && !isOccupied[(int)monster.getPosY()/TILE_SIZE][(int)(monster.getPosX())/TILE_SIZE]) {
             //move down
             monster.incPosY();
             monster.setDirection(4);
-            isOccupied[(int)monster.getPosY()/tileSize][(int)(monster.getPosX())/tileSize] = true;
+            isOccupied[(int)monster.getPosY()/TILE_SIZE][(int)(monster.getPosX())/TILE_SIZE] = true;
             break;
           }
         }
         break;
       case 4:
         if (player4 != null && player4.getHP() > 0 ) {
-          if ( ((int)player4.getPosX() > monster.getPosX() && !(tilesLayouts.get(currentLevel)[(int)monster.getPosY()/tileSize][(int)(monster.getPosX()+16)/tileSize] <= 15)) && ((int)player4.getPosY() < monster.getPosY() && !(tilesLayouts.get(currentLevel)[(int)(monster.getPosY()-16)/tileSize][(int)monster.getPosX()/tileSize] <= 15)) && !isOccupied[(int)monster.getPosY()/tileSize][(int)(monster.getPosX())/tileSize]) {
+          if ( ((int)player4.getPosX() > monster.getPosX() && !(tilesLayouts.get(currentLevel)[(int)monster.getPosY()/TILE_SIZE][(int)(monster.getPosX()+16)/TILE_SIZE] <= 15)) && ((int)player4.getPosY() < monster.getPosY() && !(tilesLayouts.get(currentLevel)[(int)(monster.getPosY()-16)/TILE_SIZE][(int)monster.getPosX()/TILE_SIZE] <= 15)) && !isOccupied[(int)monster.getPosY()/TILE_SIZE][(int)(monster.getPosX())/TILE_SIZE]) {
             //if monster is on the bottom left of player and has to go top right!
             monster.incPosX();
             monster.decPosY();
             monster.setDirection(1);
-            isOccupied[(int)monster.getPosY()/tileSize][(int)(monster.getPosX())/tileSize] = true;
+            isOccupied[(int)monster.getPosY()/TILE_SIZE][(int)(monster.getPosX())/TILE_SIZE] = true;
             break;
-          } else if ( ((int)player4.getPosX() > monster.getPosX() && !(tilesLayouts.get(currentLevel)[(int)monster.getPosY()/tileSize][(int)(monster.getPosX()+16)/tileSize] <= 15)) && ((int)player4.getPosY() > monster.getPosY() && !(tilesLayouts.get(currentLevel)[(int)(monster.getPosY()+16)/tileSize][(int)monster.getPosX()/tileSize] <= 15)) && !isOccupied[(int)monster.getPosY()/tileSize][(int)(monster.getPosX())/tileSize]) {
+          } else if ( ((int)player4.getPosX() > monster.getPosX() && !(tilesLayouts.get(currentLevel)[(int)monster.getPosY()/TILE_SIZE][(int)(monster.getPosX()+16)/TILE_SIZE] <= 15)) && ((int)player4.getPosY() > monster.getPosY() && !(tilesLayouts.get(currentLevel)[(int)(monster.getPosY()+16)/TILE_SIZE][(int)monster.getPosX()/TILE_SIZE] <= 15)) && !isOccupied[(int)monster.getPosY()/TILE_SIZE][(int)(monster.getPosX())/TILE_SIZE]) {
             //if monster is on the top left of player and has to go bottom right!
             monster.incPosX();
             monster.incPosY();
             monster.setDirection(3);
-            isOccupied[(int)monster.getPosY()/tileSize][(int)(monster.getPosX())/tileSize] = true;
+            isOccupied[(int)monster.getPosY()/TILE_SIZE][(int)(monster.getPosX())/TILE_SIZE] = true;
             break;
-          } else if ( ((int)player4.getPosX() < monster.getPosX() && !(tilesLayouts.get(currentLevel)[(int)monster.getPosY()/tileSize][(int)(monster.getPosX()-16)/tileSize] <= 15)) && ((int)player4.getPosY() > monster.getPosY() && !(tilesLayouts.get(currentLevel)[(int)(monster.getPosY()+16)/tileSize][(int)monster.getPosX()/tileSize] <= 15)) && !isOccupied[(int)monster.getPosY()/tileSize][(int)(monster.getPosX())/tileSize] ) {
+          } else if ( ((int)player4.getPosX() < monster.getPosX() && !(tilesLayouts.get(currentLevel)[(int)monster.getPosY()/TILE_SIZE][(int)(monster.getPosX()-16)/TILE_SIZE] <= 15)) && ((int)player4.getPosY() > monster.getPosY() && !(tilesLayouts.get(currentLevel)[(int)(monster.getPosY()+16)/TILE_SIZE][(int)monster.getPosX()/TILE_SIZE] <= 15)) && !isOccupied[(int)monster.getPosY()/TILE_SIZE][(int)(monster.getPosX())/TILE_SIZE] ) {
             //if mosnster is top right of player and has to go bottom left
             monster.setDirection(5);
             monster.decPosX();
             monster.incPosY();
-            isOccupied[(int)monster.getPosY()/tileSize][(int)(monster.getPosX())/tileSize] = true;
+            isOccupied[(int)monster.getPosY()/TILE_SIZE][(int)(monster.getPosX())/TILE_SIZE] = true;
             break;
-          } else if ( ((int)player4.getPosX() < monster.getPosX() && !(tilesLayouts.get(currentLevel)[(int)monster.getPosY()/tileSize][(int)(monster.getPosX()-16)/tileSize] <= 15)) && ((int)player4.getPosY() < monster.getPosY() && !(tilesLayouts.get(currentLevel)[(int)(monster.getPosY()-16)/tileSize][(int)monster.getPosX()/tileSize] <= 15)) && !isOccupied[(int)monster.getPosY()/tileSize][(int)(monster.getPosX())/tileSize]) {
+          } else if ( ((int)player4.getPosX() < monster.getPosX() && !(tilesLayouts.get(currentLevel)[(int)monster.getPosY()/TILE_SIZE][(int)(monster.getPosX()-16)/TILE_SIZE] <= 15)) && ((int)player4.getPosY() < monster.getPosY() && !(tilesLayouts.get(currentLevel)[(int)(monster.getPosY()-16)/TILE_SIZE][(int)monster.getPosX()/TILE_SIZE] <= 15)) && !isOccupied[(int)monster.getPosY()/TILE_SIZE][(int)(monster.getPosX())/TILE_SIZE]) {
             //if monster is bottom right of player has to go top left
             monster.setDirection(7);
             monster.decPosX();
             monster.decPosY();
-            isOccupied[(int)monster.getPosY()/tileSize][(int)(monster.getPosX())/tileSize] = true;
+            isOccupied[(int)monster.getPosY()/TILE_SIZE][(int)(monster.getPosX())/TILE_SIZE] = true;
             break;
-          } else if ((int)player4.getPosX() < monster.getPosX() && !(tilesLayouts.get(currentLevel)[(int)monster.getPosY()/tileSize][(int)(monster.getPosX()-16)/tileSize] <= 15) && !isOccupied[(int)monster.getPosY()/tileSize][(int)(monster.getPosX())/tileSize]) {
+          } else if ((int)player4.getPosX() < monster.getPosX() && !(tilesLayouts.get(currentLevel)[(int)monster.getPosY()/TILE_SIZE][(int)(monster.getPosX()-16)/TILE_SIZE] <= 15) && !isOccupied[(int)monster.getPosY()/TILE_SIZE][(int)(monster.getPosX())/TILE_SIZE]) {
             //move left
             monster.decPosX();
             monster.setDirection(6);
-            isOccupied[(int)monster.getPosY()/tileSize][(int)(monster.getPosX())/tileSize] = true;
+            isOccupied[(int)monster.getPosY()/TILE_SIZE][(int)(monster.getPosX())/TILE_SIZE] = true;
             break;
-          } else if ((int)player4.getPosX() > monster.getPosX() && !(tilesLayouts.get(currentLevel)[(int)monster.getPosY()/tileSize][(int)(monster.getPosX()+16)/tileSize] <= 15) && !isOccupied[(int)monster.getPosY()/tileSize][(int)(monster.getPosX())/tileSize]) {
+          } else if ((int)player4.getPosX() > monster.getPosX() && !(tilesLayouts.get(currentLevel)[(int)monster.getPosY()/TILE_SIZE][(int)(monster.getPosX()+16)/TILE_SIZE] <= 15) && !isOccupied[(int)monster.getPosY()/TILE_SIZE][(int)(monster.getPosX())/TILE_SIZE]) {
             //move right
             monster.incPosX();
             monster.setDirection(2);
-            isOccupied[(int)monster.getPosY()/tileSize][(int)(monster.getPosX())/tileSize] = true;
+            isOccupied[(int)monster.getPosY()/TILE_SIZE][(int)(monster.getPosX())/TILE_SIZE] = true;
             break;
-          } else if ((int)player4.getPosY() < monster.getPosY() && !(tilesLayouts.get(currentLevel)[(int)(monster.getPosY()-16)/tileSize][(int)monster.getPosX()/tileSize] <= 15) && !isOccupied[(int)monster.getPosY()/tileSize][(int)(monster.getPosX())/tileSize]) {
+          } else if ((int)player4.getPosY() < monster.getPosY() && !(tilesLayouts.get(currentLevel)[(int)(monster.getPosY()-16)/TILE_SIZE][(int)monster.getPosX()/TILE_SIZE] <= 15) && !isOccupied[(int)monster.getPosY()/TILE_SIZE][(int)(monster.getPosX())/TILE_SIZE]) {
             //move up
             monster.decPosY();
             monster.setDirection(0);
-            isOccupied[(int)monster.getPosY()/tileSize][(int)(monster.getPosX())/tileSize] = true;
+            isOccupied[(int)monster.getPosY()/TILE_SIZE][(int)(monster.getPosX())/TILE_SIZE] = true;
             break;
-          } else if ((int)player4.getPosY() > monster.getPosY() && !(tilesLayouts.get(currentLevel)[(int)(monster.getPosY()+16)/tileSize][(int)monster.getPosX()/tileSize] <= 15) && !isOccupied[(int)monster.getPosY()/tileSize][(int)(monster.getPosX())/tileSize]) {
+          } else if ((int)player4.getPosY() > monster.getPosY() && !(tilesLayouts.get(currentLevel)[(int)(monster.getPosY()+16)/TILE_SIZE][(int)monster.getPosX()/TILE_SIZE] <= 15) && !isOccupied[(int)monster.getPosY()/TILE_SIZE][(int)(monster.getPosX())/TILE_SIZE]) {
             //move down
             monster.incPosY();
             monster.setDirection(4);
-            isOccupied[(int)monster.getPosY()/tileSize][(int)(monster.getPosX())/tileSize] = true;
+            isOccupied[(int)monster.getPosY()/TILE_SIZE][(int)(monster.getPosX())/TILE_SIZE] = true;
             break;
           }
         }
@@ -1806,7 +1806,7 @@ class Level {
         for (int j=0; j<tileLayout[i].length; j++) { //x axis
           if (tileLayout[i][j] == 30 ) exit = new Exit(j, i, 30);
           else if (tileLayout[i][j] == 31) exit = new Exit(j, i, 31);
-          else image(images.get(tileLayout[i][j]), j * tileSize, i * tileSize);
+          else image(images.get(tileLayout[i][j]), j * TILE_SIZE, i * TILE_SIZE);
         }
       }
     }
@@ -1899,7 +1899,7 @@ class Level {
   }
 
   PVector getSpawnLocation() {
-    return new PVector(level.playerSpawnList.get(level.currentLevel)[0] * tileSize + tileSize/2, level.playerSpawnList.get(level.currentLevel)[1]*tileSize + tileSize/2);
+    return new PVector(level.playerSpawnList.get(level.currentLevel)[0] * TILE_SIZE + TILE_SIZE/2, level.playerSpawnList.get(level.currentLevel)[1]*TILE_SIZE + TILE_SIZE/2);
   }
 
   int getLevelNo()

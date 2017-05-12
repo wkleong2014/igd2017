@@ -2,8 +2,8 @@ class Item {
   int type;
   int posX;
   int posY;
-  int itemWidth = tileSize;
-  int itemHeight = tileSize;
+  int itemWidth = TILE_SIZE;
+  int itemHeight = TILE_SIZE;
   Item(int type, int posX, int posY) {
     this.type = type;
     this.posX = posX;
