@@ -6,36 +6,48 @@
  Save and load a hiscore list with ten entries. As stated above, use the time fix, and use classes and objects. Work in two-person teams
  
  Program Title: Dungeon Fungeon
- Program Description:  
+ Program Description:  Dungeon Fungeon has 16 levels. Get to the deepest dungeon to win!
  
  Author: Leong Wei Kong & Nicholas Tan Joo Sin
- Developer Notes: We spent 
- Control: 
+  
+ Classes:
+ Giant attacks with hammer. 
+ Knight attacks with sword.
+ Mage attacks with fireball.
+ Archer attacks with arrow.
+ 
+ Controls:
+ Up Left Down Right + Attack
  Player 1 - W A S D + X
  Player 2 - G V B N + SPACE
  Player 3 - I J K L + M
- Player 4 - ^ v < > + ENTER
+ Player 4 - ^ < v > + ENTER
  
  Credits:
  Title Font - Louisanne - http://www.dafont.com/louisianne.font
  GUI Font - Minecraft - http://www.dafont.com/minecraft.font
  Spritesheet - https://github.com/jakesgordon/javascript-gauntlet/blob/master/images/entities.png
  Tiles - https://opengameart.org/sites/default/files/crawl-tiles%20Oct-5-2010.zip
- */
+*/
 
-PImage spriteSheet;
-PFont titleFont;
-PFont guiFont;
+Level level;
+GUI gui;
+
 Player player1;
 Player player2;
 Player player3;
 Player player4;
+
+PImage spriteSheet;
+PImage gateSprite;
+
+PFont titleFont;
+PFont guiFont;
+
 int classCounter1 = 0;
 int classCounter2 = 0;
 int classCounter3 = 0;
 int classCounter4 = 0;
-Level level;
-GUI gui;
 
 final int TILE_SIZE = 32;
 
@@ -65,7 +77,6 @@ boolean hasPlayer3Classed = false;
 boolean hasPlayer4Classed = false;
 boolean hasStartScreen = true;
 boolean gameOver = false; 
-PImage gateSprite;
 boolean allDead = false;
 
 // Variables to facilitate highscore feature
@@ -93,12 +104,15 @@ void draw() {
   fill(100);
   rect(0, 0, 500, 500);
   noStroke();
-  gui.update();
+  gui.update(); // Draws GUI  
+  
+  // Start updating level when start screen is skipped
   if (!gui.getHasStartScreen()) {
     hasStartScreen = false;
     level.update();
   }
 
+  // Level 1 instructions
   if (!gui.getHasStartScreen() && level.getLevelNo() == 1) 
   {
     fill(255);
@@ -107,10 +121,11 @@ void draw() {
     textSize(40);
     text("PLAYERS, GATHER NOW!", 320, height-130);
     textSize(20);
-    text("Ensure all players have joined before entering the dungeon!\nRemember that the statues will unlock the gates.", 320, height-80);
+    text("Ensure all players have joined before entering the dungeon!\nRemember that the statues will unlock the gates\nand potions can save your lives!", 320, height-70);
   }
 
   // At level 2, clear players who have not joined or has not selected a class
+  // NullPointerException is expected and is caught
   try
   {
     if (level.getLevelNo() > 1
@@ -125,7 +140,8 @@ void draw() {
   catch (Exception e)
   {
   }
-
+  
+  // If all players are dead, game is over
   if (allDead || level.hasEnded()) {
     rectMode(CORNERS);
     fill(0);
@@ -137,7 +153,8 @@ void draw() {
     gameOver = true;
     text("GAME OVER", 320, 100);
     textSize(30);
-
+  
+    // Sum all players' scores
     totalScore = 0;
     if (player1 != null) totalScore += player1.score;
     if (player2 != null) totalScore += player2.score;
@@ -147,6 +164,7 @@ void draw() {
     // Check if player has a new high score (Must be > than the current high score)
     newHighScore = highscores.checkHighScore(totalScore);
 
+    // If no high score is achieved, assume high score has been entered
     if (!newHighScore) 
     {
       enteredHighScore = true;
@@ -179,12 +197,7 @@ void keyPressed() {
     gui.removeStartScreen();
   }
 
-  //nextStage
-  if (char(keyCode) == '0' && !gameOver) {
-    level.nextLevel();
-  }
-
-  //Player 1
+  //Player 1's movement controls
   if (player1 != null) {
     if (char(keyCode) == 'W') {
       player1.moveUp();
@@ -212,7 +225,7 @@ void keyPressed() {
     if (char(keyCode) == 'D' && isSPressed || char(keyCode) == 'S' && isDPressed) player1.setDirection(3);
   }
 
-  //Player 2
+  //Player 2's movement controls
   if (player2 != null) {
     if (char(keyCode) == 'G') {
       player2.moveUp();
@@ -240,7 +253,7 @@ void keyPressed() {
     if (char(keyCode) == 'N' && isBPressed || char(keyCode) == 'B' && isNPressed) player2.setDirection(3);
   }
 
-  //Player 3
+  //Player 3's movement controls
   if (player3 != null) {
     if (char(keyCode) == 'I') {
       player3.moveUp();
@@ -268,7 +281,7 @@ void keyPressed() {
     if (char(keyCode) == 'L' && isKPressed || char(keyCode) == 'K' && isLPressed) player3.setDirection(3);
   }
 
-  //Player4
+  //Player4's movement controls
   if (player4 != null) {
     if (char(keyCode) == UP) {
       player4.moveUp();
@@ -295,11 +308,14 @@ void keyPressed() {
     if (char(keyCode) == LEFT && isDownPressed || char(keyCode) == DOWN && isLeftPressed) player4.setDirection(5);
     if (char(keyCode) == RIGHT && isDownPressed || char(keyCode) == DOWN && isRightPressed) player4.setDirection(3);
   }
+  
+  // Start a new game
   if (enteredHighScore && gameOver) 
   {     
     newGame();
   }
-
+  
+  // If game is over and a new high score has been achieved
   if (gameOver && newHighScore) 
   {
     if (enteredHighScore == false)
@@ -325,10 +341,13 @@ void keyPressed() {
 }
 
 void keyReleased() {
-  //Player 1
-  if (player1 != null) {
+  // Player controls for movement
+  // Movement is fluid and keyReleased needs to be detected to enable the resetting of movement when a directional button is released
+  // Player 1
+  if (player1 != null) { // Player has been initialized, controls are used for movement and shooting projectiles
+    // Movement controls, 8 directional
     if (char(keyCode) == 'W') {
-      player1.resetUp();
+      player1.resetUp();  
       isWPressed = false;
       if (isSPressed) player1.setDirection(4);
       if (isAPressed) player1.setDirection(6);
@@ -358,7 +377,7 @@ void keyReleased() {
     if (char(keyCode) == 'X') {
       player1.shootProjectile();
     }
-  } else {
+  } else { // Player has not been initialized, hence controls are used to join game and toggle class selection
     if (char(keyCode) == 'A') 
     {
       if (classCounter1 == 0) 
@@ -379,16 +398,17 @@ void keyReleased() {
         classCounter1++;
       }
     }
-    if (char(keyCode) == 'X' && !hasPlayer1Joined && level.getLevelNo() == 1) {      
+    if (char(keyCode) == 'X' && !hasPlayer1Joined && level.getLevelNo() == 1) {  // Join game
       hasPlayer1Joined = true;
-    } else if (char(keyCode) == 'X' && hasPlayer1Joined && level.getLevelNo() == 1) { 
+    } else if (char(keyCode) == 'X' && hasPlayer1Joined && level.getLevelNo() == 1) {  // Select class
       player1 = new Player(classCounter1, 1);
       hasPlayer1Classed = true;
     }
   }
 
   //Player 2
-  if (player2 != null) {
+  if (player2 != null) {// Player has been initialized, controls are used for movement and shooting projectiles
+    // Movement controls, 8 directional
     if (char(keyCode) == 'G') {
       player2.resetUp();
       isGPressed = false;
@@ -420,7 +440,7 @@ void keyReleased() {
     if (char(keyCode) == ' ') {
       player2.shootProjectile();
     }
-  } else {
+  } else { // Player has not been initialized, hence controls are used to join game and toggle class selection
     if (char(keyCode) == 'V') 
     {
       if (classCounter2 == 0) 
@@ -441,16 +461,17 @@ void keyReleased() {
         classCounter2++;
       }
     }
-    if (char(keyCode) == ' ' && !hasPlayer2Joined && level.getLevelNo() == 1) {      
+    if (char(keyCode) == ' ' && !hasPlayer2Joined && level.getLevelNo() == 1) {  // Join game
       hasPlayer2Joined = true;
-    } else if (char(keyCode) == ' ' && hasPlayer2Joined  && level.getLevelNo() == 1) { 
+    } else if (char(keyCode) == ' ' && hasPlayer2Joined  && level.getLevelNo() == 1) { // Select class
       player2 = new Player(classCounter2, 2);
       hasPlayer2Classed = true;
     }
   }
 
   //Player 3
-  if (player3 != null) {
+  if (player3 != null) { // Player has been initialized, controls are used for movement and shooting projectiles
+    // Movement controls, 8 directional
     if (char(keyCode) == 'I') {
       player3.resetUp();
       isIPressed = false;
@@ -482,7 +503,7 @@ void keyReleased() {
     if (char(keyCode) == 'M') {
       player3.shootProjectile();
     }
-  } else {
+  } else { // Player has not been initialized, hence controls are used to join game and toggle class selection
     if (char(keyCode) == 'J') 
     {
       if (classCounter3 == 0) 
@@ -503,16 +524,17 @@ void keyReleased() {
         classCounter3++;
       }
     }
-    if (char(keyCode) == 'M' && !hasPlayer3Joined && level.getLevelNo() == 1) {      
+    if (char(keyCode) == 'M' && !hasPlayer3Joined && level.getLevelNo() == 1) {  // Join game
       hasPlayer3Joined = true;
-    } else if (char(keyCode) == 'M' && hasPlayer3Joined  && level.getLevelNo() == 1) { 
+    } else if (char(keyCode) == 'M' && hasPlayer3Joined  && level.getLevelNo() == 1) { // Select class
       player3 = new Player(classCounter3, 3);
       hasPlayer3Classed = true;
     }
   }
 
   //Player4
-  if (player4 != null) {
+  if (player4 != null) { // Player has been initialized, controls are used for movement and shooting projectiles
+    // Movement controls, 8 directional
     if (char(keyCode) == UP) {
       player4.resetUp();
       isUpPressed = false;
@@ -541,11 +563,10 @@ void keyReleased() {
       if (isUpPressed) player4.setDirection(0);
       if (isDownPressed) player4.setDirection(4);
     }
-
     if (key == ENTER) {
       player4.shootProjectile();
     }
-  } else {
+  } else { // Player has not been initialized, hence controls are used to join game and toggle class selection
     if (char(keyCode) == LEFT) 
     {
       if (classCounter4 == 0) 
@@ -566,9 +587,9 @@ void keyReleased() {
         classCounter4++;
       }
     }
-    if (key == ENTER && !hasPlayer4Joined && level.getLevelNo() == 1) {      
+    if (key == ENTER && !hasPlayer4Joined && level.getLevelNo() == 1) {  // Join game
       hasPlayer4Joined = true;
-    } else if (key == ENTER && hasPlayer4Joined && level.getLevelNo() == 1) { 
+    } else if (key == ENTER && hasPlayer4Joined && level.getLevelNo() == 1) { // Select class
       player4 = new Player(classCounter4, 4);
       hasPlayer4Classed = true;
     }
@@ -583,12 +604,14 @@ void mouseClicked()
     gui.removeStartScreen();
   }
 
+  // Start a new game
   if (enteredHighScore && gameOver) 
   { 
     newGame();
   }
 }
 
+// Resets the variables for a new game
 void newGame()
 { 
   gameOver = false;
