@@ -13,15 +13,14 @@ class Item {
 
   void drawObj() {
     imageMode(CORNER);
-    switch(type){
+    switch(type){ // Two types of items - Switch and Potion
       case 0:
-        image(loadImage("switch.png"), posX, posY);
+        image(loadImage("switch.png"), posX, posY); // A statue that unlocks gates
         break;
       case 1:
-        image(loadImage("potion.png"), posX, posY);
+        image(loadImage("potion.png"), posX, posY); // Potion that increases HP
         break;
-    }
-    
+    }    
   }
 
   int getPosX() {
