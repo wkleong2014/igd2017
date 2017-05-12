@@ -4,17 +4,12 @@ class Projectile {
   int direction;
   int diameter;
   int projectileSpeed;
-  int projectileType;
-  int projectileDamage;
-  int ticksLastMovement;
-  int fromPlayerID;
+  int projectileType;                 //Stores the type of projectile (0 to 3 is players' projectiles and 7 is enemy projectile)
+  int projectileDamage;               
+  int ticksLastMovement;              //Timefix variable for projectile movement
+  int fromPlayerID;                   //Stores the player who shot the projectile
 
-  final int ANIMATION_DURATION = 300; //every 300ms it will change animation frame
-  int frame = 0; //frame count
-  int frameMax = 7;  //maximum frame
-  int ticksLastAnimation = 0; //last tick animation
-
-  //constructor for projectile
+  //Constructor for projectile
   Projectile(float posX, float posY, int direction, int projectileSpeed, int projectileType, int projectileDamage, int fromPlayerID) {
     this.posX = posX;
     this.direction = direction;
@@ -28,7 +23,7 @@ class Projectile {
     updateOb();
   }
 
-  //getter methods
+  //Getter methods
   int getFromPlayerID() {
     return  fromPlayerID;
   }
@@ -61,41 +56,35 @@ class Projectile {
     return projectileDamage;
   }
 
-  //method to draw projectile
+  //Method to draw projectile
   void updateOb() {
     imageMode(CENTER);
-    PImage sprite = spriteSheet.get(800 + (frame * 32), 0 + (projectileType * 32), 32, 32); //get the sprite according to the projectile type and current frame
+    PImage sprite = spriteSheet.get(768 + (direction * 32), 0 + (projectileType * 32), 32, 32); //get the sprite according to the projectile type and current frame
     image(sprite, posX, posY);
-    if (millis() - ticksLastAnimation >= ANIMATION_DURATION) {
-      frame++;
-      if (frame >= frameMax) { 
-        frame = 0;
-      }     
-      ticksLastAnimation += millis() - ticksLastAnimation;
-    }
   }
 
-  //increase the x coordinate of projectile with time fix
+  //Increase the x coordinate of projectile with time fix
   void incPosX(int projectileSpeed) {
     posX += projectileSpeed * float(millis() - ticksLastMovement) * 0.001;
-    ticksLastMovement = millis();
   }
 
-  //decrease the x coordinate of projectile with time fix
+  //Decrease the x coordinate of projectile with time fix
   void decPosX(int projectileSpeed) {
     posX -= projectileSpeed * float(millis() - ticksLastMovement) * 0.001;
-    ticksLastMovement = millis();
   }
 
-  //increase the y coordinate of projectile with time fix
+  //Increase the y coordinate of projectile with time fix
   void incPosY(int projectileSpeed) {
     posY += projectileSpeed * float(millis() - ticksLastMovement) * 0.001;
-    ticksLastMovement = millis();
   }
 
-  //decrease the x coordinate of projectile with time fix
+  //Decrease the y coordinate of projectile with time fix
   void decPosY(int projectileSpeed) {
     posY -= projectileSpeed * float(millis() - ticksLastMovement) * 0.001;
-    ticksLastMovement = millis();
   }
+  
+  //Reset the timefix variable
+  void setTicksLastMovement(){
+    ticksLastMovement = millis();
+  }   
 }

@@ -1,13 +1,13 @@
 class Player {
   int id;
-  final int ANIMATION_DURATION = 300; //in milliseconds
+  final int ANIMATION_DURATION = 300; //300ms for each animation frame
   int frame = 0;
   int frameMax = 2;
   int ticksLastUpdate = millis();
   int ticksLastAnimation = 0;  
   int[] playerClassList = {0, 1, 2, 3};
-  int playerWidth = 32;
-  int playerHeight = 32;
+  int playerWidth = TILE_SIZE;
+  int playerHeight = TILE_SIZE;
   PVector position;
   PVector velocity = new PVector(0, 0);
   float walkSpeed;
@@ -23,15 +23,17 @@ class Player {
   int projectileDamage;
   int score;
   boolean isDead;
-  int lastProjectileShot;
+  int lastProjectileShot;                //Stores the time that the last projectile was shot
 
+  //Constructor for Player
   Player(int playerClass, int id) {
     isDead = false;
     this.playerClass = playerClass;
     this.id = id;
     score = 0;
     position = level.getSpawnLocation();
-    switch(playerClass) { //set hp & mana
+    switch(playerClass) { 
+    //Set player's stats according to their class [0 is giant, 1 is knight, 2 is mage, 3 is archer]
     case 0:
       hp = 600;
       projectileSpeed = 200;
@@ -59,22 +61,23 @@ class Player {
     }
   }
 
+  //Method to reset the position of player
   void resetPosition() {
     position = level.getSpawnLocation();
   }
 
+  //Draws the player after updating its movement
   void updateMovement() {
-    rectMode(CENTER);
-    ellipseMode(CENTER);
     if (hp > 0) { 
       // Alive
-      velocity.x = walkSpeed * (moveLeft + moveRight) * float(millis() - ticksLastUpdate) * 0.001;
-      velocity.y = walkSpeed * (moveUp + moveDown) * float(millis() - ticksLastUpdate) * 0.001;
-      PVector nextPosition = new PVector(position.x, position.y);
-      nextPosition.add(velocity);
-      int[][] currentLayout = level.getCurrentTileLayout();
-      float offset = 32 + playerWidth/2;
+      velocity.x = walkSpeed * (moveLeft + moveRight) * float(millis() - ticksLastUpdate) * 0.001; //Update x coordinate in velocity vector
+      velocity.y = walkSpeed * (moveUp + moveDown) * float(millis() - ticksLastUpdate) * 0.001; //Update y coordinate in velocity vector
+      PVector nextPosition = new PVector(position.x, position.y); //Initialise new PVector so original position is not immediately updated
+      nextPosition.add(velocity); //Update nextPosition with velocity
+      int[][] currentLayout = level.getCurrentTileLayout(); //Retrieve the 2d array of tiles
+      float offset = 32 + playerWidth/2; //Sets the maximum screen offset
       if (currentLayout != null) {
+        //Checks if 8 points (N,S,E,W,NE,NW,SE,SW) of the nextPosition is colliding into walls
         if (!(currentLayout[int((nextPosition.y)/32)][int((nextPosition.x+1-playerWidth/2)/32)] <= 15) && !(currentLayout[int((nextPosition.y)/32)][int((nextPosition.x-1+playerWidth/2)/32)] <= 15) && 
           !(currentLayout[int((nextPosition.y+1-playerWidth/2)/32)][int((nextPosition.x)/32)] <= 15) && !(currentLayout[int((nextPosition.y-1+playerWidth/2)/32)][int((nextPosition.x)/32)] <= 15) && 
           !(currentLayout[int((nextPosition.y+1-playerWidth/2)/32)][int((nextPosition.x+1-playerWidth/2)/32)] <= 15) && !(currentLayout[int((nextPosition.y+1-playerWidth/2)/32)][int((nextPosition.x-1+playerWidth/2)/32)] <= 15) && 
@@ -84,13 +87,13 @@ class Player {
         }
       }
       imageMode(CENTER);  
-      image(spriteSheet.get((direction * 32) + (frame * 256), 0 + (playerClass * 32), 32, 32), position.x, position.y);
+      image(spriteSheet.get((direction * 32) + (frame * 256), 0 + (playerClass * 32), 32, 32), position.x, position.y); //Retrieve the animation from the spritesheet
     } else
     {    
       // Dead
       isDead = true;
-      velocity.x = 0;
-      velocity.y = 0;
+      velocity.x = 0; //Ensures that dead body is not moving
+      velocity.y = 0; //Ensures that dead body is not moving
       imageMode(CENTER);  
       image(spriteSheet.get(1024, 0, 32, 32), position.x, position.y);
     }
@@ -104,10 +107,12 @@ class Player {
     ticksLastUpdate = millis();
   }
 
+  //Sets the direction of player
   void setDirection(int direction) {
     this.direction = direction;
   }
 
+  //Helper methods to ensure fluid movement of player
   void moveRight() {
     moveRight = 1;
   }
@@ -139,13 +144,14 @@ class Player {
   void resetDown() {
     moveDown = 0;
   }
-
+  
+  //Method when player is shooting projectile
   void shootProjectile() {
-    if (!isDead && millis() - lastProjectileShot >= 300)
+    if (!isDead && millis() - lastProjectileShot >= 300) //Checks if last projectile shot is more than 300ms and player is not dead
     {
       int offset = 20;
       Projectile proj;
-      switch(direction) {
+      switch(direction) { //Check the direction of player and create a new projectile according to player's current direction
       default:
         proj = new Projectile(position.x, position.y, direction, projectileSpeed, playerClass, projectileDamage, id);
       case 0:
@@ -178,6 +184,7 @@ class Player {
     }
   }
 
+  //Getter methods
   int getHP()
   {
     return hp;
@@ -185,23 +192,6 @@ class Player {
 
   int getScore() {
     return score;
-  }
-
-  void pickUpItem(int itemType) {
-    switch(itemType) {
-    case 1:
-      hp += 50;
-      break;
-    }
-  }
-
-  void addScore(int number) {
-    score += number;
-  }
-
-  void getHit(int projectileDamage) {
-    hp -= projectileDamage;
-    if (hp < 0 ) hp = 0;
   }
 
   float getPosX() {
@@ -217,6 +207,27 @@ class Player {
     return isDead;
   }
   
+  //Method to pick up item that changes player's stats
+  void pickUpItem(int itemType) {
+    switch(itemType) {
+    case 1:
+      hp += 50;
+      break;
+    }
+  }
+
+  //Method to add player's score
+  void addScore(int number) {
+    score += number;
+  }
+
+  //Method to reduce player's health when colliding with projectile
+  void getHit(int projectileDamage) {
+    hp -= projectileDamage;
+    if (hp < 0 ) hp = 0;
+  }
+  
+  //Method to set player's status to dead
   void die()
   {
     isDead = true;

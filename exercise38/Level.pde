@@ -1,20 +1,21 @@
 class Level {
-  int currentLevel = 1;
+  int currentLevel = 1; //Stores the current level that players are in
   boolean generateLevel = false;
-  HashMap<Integer, int[][]> tilesLayouts = new HashMap<Integer, int[][]>();
-  HashMap<Integer, PImage> images = new HashMap<Integer, PImage>();
-  HashMap<Integer, int[]> monsterList = new HashMap<Integer, int[]>();
-  HashMap<Integer, int[]> gateList = new HashMap<Integer, int[]>();
-  HashMap<Integer, int[]> itemList = new HashMap<Integer, int[]>();
-  HashMap<Integer, int[]> playerSpawnList = new HashMap<Integer, int[]>();
-  ArrayList<Monster> monsters = new ArrayList<Monster>();
-  ArrayList<Item> items = new ArrayList<Item>();
-  ArrayList<Gate> gates = new ArrayList<Gate>();
-  ArrayList<Projectile> projList = new ArrayList<Projectile>();
+  HashMap<Integer, int[][]> tilesLayouts = new HashMap<Integer, int[][]>(); //Stores the 2D tile layout for each level
+  HashMap<Integer, PImage> images = new HashMap<Integer, PImage>();         //Stores the images of each tile into a hashmap
+  HashMap<Integer, int[]> monsterList = new HashMap<Integer, int[]>();      //Stores the monster's information (type, x tile, y tile) in each level
+  HashMap<Integer, int[]> gateList = new HashMap<Integer, int[]>();         //Stores the gate's information ( x tile, y tile) in each level
+  HashMap<Integer, int[]> itemList = new HashMap<Integer, int[]>();         //Stores the item's information (type, x tile, y tile) in each level
+  HashMap<Integer, int[]> playerSpawnList = new HashMap<Integer, int[]>();  //Stores the player's spawn (x tile, y tile) in each level
+  ArrayList<Monster> monsters = new ArrayList<Monster>();                   //Stores the monsters in the current level
+  ArrayList<Item> items = new ArrayList<Item>();                            //Stores the items in the current level
+  ArrayList<Gate> gates = new ArrayList<Gate>();                            //Stores the gate in the current level
+  ArrayList<Projectile> projList = new ArrayList<Projectile>();             //Stores the projectiles in the current level
   boolean endGame = false;
   int clearTiles;
   Exit exit;
 
+  //Constructor for Level, will initialise all the HashMap used in the game
   Level() {
     tilesLayouts.put(1, new int[][]{
       {32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32}, 
@@ -386,6 +387,7 @@ class Level {
       {15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15}
       });
 
+    //initialise all the HashMap used in game
     initialiseImages();
     initialisePlayerSpawnList();
     initialiseMonsterList();
@@ -393,10 +395,11 @@ class Level {
     initialiseItemList();
   }
 
+  //Main method that updates everything in game
   void update() {
     if (!gameOver) {
       drawLevel();
-      if (!generateLevel) {
+      if (!generateLevel) { //Check if level has been generated
         generateMonster();
         generateGate();
         generateItem();
@@ -415,12 +418,13 @@ class Level {
 
   void initialiseImages() {
     //load all images
-    for (int i=0; i<=32; i++) { //total images - 1
+    for (int i=0; i<=32; i++) {
       String str = i + ".png";
       images.put(i, loadImage(str));
     }
   }
 
+  //Method to initialise players spawn in every level
   void initialisePlayerSpawnList() {
     playerSpawnList.put(1, new int[]{1, 11}); 
     playerSpawnList.put(2, new int[]{1, 11}); 
@@ -443,932 +447,63 @@ class Level {
 
   // Type 4: Normal, 7: Shooter
   // Type, X, Y (In Terms of 2D Array)
+  // Method to initialise all monsters in every level
   void initialiseMonsterList() {
-    monsterList.put(2, new int[]{
-      4, 15, 8, 
-      4, 16, 8, 
-      4, 17, 8, 
-      4, 15, 9, 
-      4, 16, 9, 
-      4, 17, 9, 
-      4, 15, 10, 
-      4, 16, 10, 
-      4, 17, 10, 
-      4, 15, 11, 
-      4, 16, 11, 
-      4, 17, 11
-      });
-
-    monsterList.put(3, new int[]{ 
-      4, 8, 1, 
-      4, 9, 1, 
-      4, 10, 1, 
-      4, 11, 1, 
-      4, 8, 2, 
-      4, 9, 2, 
-      4, 10, 2, 
-      4, 11, 2, 
-      4, 8, 3, 
-      4, 9, 3, 
-      4, 10, 3, 
-      4, 11, 3, 
-      4, 8, 4, 
-      4, 9, 4, 
-      4, 10, 4, 
-      4, 11, 4, 
-      4, 8, 5, 
-      4, 9, 5, 
-      4, 10, 5, 
-      4, 11, 5, 
-      4, 8, 6, 
-      4, 9, 6, 
-      4, 10, 6, 
-      4, 11, 6
-      });
-
-    monsterList.put(4, new int[]{
-      7, 1, 1, 
-      7, 7, 6, 
-      7, 9, 12, 
-      7, 11, 18, 
-      4, 13, 14, 
-      4, 14, 14, 
-      4, 15, 14, 
-      4, 16, 14, 
-      4, 17, 14, 
-      4, 13, 15, 
-      4, 14, 15, 
-      4, 15, 15, 
-      4, 16, 15, 
-      4, 17, 15, 
-      4, 13, 16, 
-      4, 14, 16, 
-      4, 15, 16, 
-      4, 16, 16, 
-      4, 17, 16, 
-      4, 13, 17, 
-      4, 14, 17, 
-      4, 15, 17, 
-      4, 16, 17, 
-      4, 17, 17, 
-      4, 13, 18, 
-      4, 14, 18, 
-      4, 15, 18, 
-      4, 16, 18, 
-      4, 17, 18      
-      });
-
-    monsterList.put(5, new int[]{
-      4, 4, 1, 
-      4, 5, 1, 
-      4, 6, 1, 
-      4, 4, 2, 
-      4, 5, 2, 
-      4, 6, 2, 
-      4, 8, 1, 
-      4, 9, 1, 
-      4, 10, 1, 
-      4, 8, 2, 
-      4, 9, 2, 
-      4, 10, 2, 
-      4, 12, 1, 
-      4, 13, 1, 
-      4, 14, 1, 
-      4, 12, 2, 
-      4, 13, 2, 
-      4, 14, 2, 
-      4, 16, 1, 
-      4, 17, 1, 
-      4, 18, 1, 
-      4, 16, 2, 
-      4, 17, 2, 
-      4, 18, 2, 
-      7, 1, 4, 
-      7, 18, 6, 
-      7, 1, 15, 
-      7, 18, 18
-      });
-
-    monsterList.put(6, new int[]{
-      7, 18, 18, 
-      7, 1, 15, 
-      7, 1, 9, 
-      7, 1, 2, 
-      7, 18, 5, 
-      7, 18, 11
-      });
-
-    monsterList.put(7, new int[]{
-      7, 18, 18, 
-      4, 14, 12, 
-      4, 14, 13, 
-      4, 14, 14, 
-      4, 16, 12, 
-      4, 17, 12, 
-      4, 18, 12, 
-      4, 16, 13, 
-      4, 17, 13, 
-      4, 18, 13, 
-      4, 16, 14, 
-      4, 17, 14, 
-      4, 18, 14, 
-      4, 1, 4, 
-      4, 1, 5, 
-      4, 1, 6, 
-      4, 2, 4, 
-      4, 2, 5, 
-      4, 2, 6, 
-      4, 3, 4, 
-      4, 3, 5, 
-      4, 3, 6, 
-      4, 4, 4, 
-      4, 4, 5, 
-      4, 4, 6, 
-      4, 5, 4, 
-      4, 5, 5, 
-      4, 5, 6, 
-      4, 6, 4, 
-      4, 6, 5, 
-      4, 6, 6, 
-      4, 8, 7, 
-      4, 9, 7, 
-      4, 10, 7, 
-      4, 8, 8, 
-      4, 9, 8, 
-      4, 10, 8, 
-      4, 8, 9, 
-      4, 9, 9, 
-      4, 10, 9, 
-      4, 8, 10, 
-      4, 9, 10, 
-      4, 10, 10, 
-      4, 8, 11, 
-      4, 9, 11, 
-      4, 10, 11, 
-      4, 8, 12, 
-      4, 9, 12, 
-      4, 10, 12, 
-      4, 8, 13, 
-      4, 9, 13, 
-      4, 10, 13, 
-      4, 8, 14, 
-      4, 9, 14, 
-      4, 10, 14, 
-      4, 11, 12, 
-      4, 12, 12, 
-      4, 13, 12, 
-      4, 11, 13, 
-      4, 12, 13, 
-      4, 13, 13, 
-      4, 11, 14, 
-      4, 12, 14, 
-      4, 13, 14, 
-      7, 18, 2
-      });
-
-    monsterList.put(8, new int[]{
-      7, 1, 11, 
-      4, 5, 6, 
-      4, 5, 7, 
-      4, 5, 8, 
-      4, 5, 9, 
-      7, 18, 18, 
-      4, 8, 11, 
-      4, 9, 11, 
-      4, 10, 11, 
-      4, 11, 11, 
-      4, 8, 12, 
-      4, 9, 12, 
-      4, 10, 12, 
-      4, 11, 12, 
-      4, 5, 5, 
-      4, 6, 5, 
-      4, 7, 5, 
-      4, 8, 5, 
-      4, 9, 5, 
-      4, 10, 5, 
-      4, 11, 5, 
-      4, 12, 5, 
-      4, 13, 5, 
-      4, 14, 5, 
-      4, 6, 6, 
-      4, 7, 6, 
-      4, 8, 6, 
-      4, 9, 6, 
-      4, 10, 6, 
-      4, 11, 6, 
-      4, 12, 6, 
-      4, 13, 6, 
-      4, 14, 6, 
-      4, 6, 7, 
-      4, 7, 7, 
-      4, 8, 7, 
-      4, 9, 7, 
-      4, 10, 7, 
-      4, 11, 7, 
-      4, 12, 7, 
-      4, 13, 7, 
-      4, 14, 7, 
-      4, 6, 8, 
-      4, 7, 8, 
-      4, 8, 8, 
-      4, 9, 8, 
-      4, 10, 8, 
-      4, 11, 8, 
-      4, 12, 8, 
-      4, 13, 8, 
-      4, 14, 8, 
-      4, 6, 9, 
-      4, 7, 9, 
-      4, 8, 9, 
-      4, 9, 9, 
-      4, 10, 9, 
-      4, 11, 9, 
-      4, 12, 9, 
-      4, 13, 9, 
-      4, 14, 9, 
-      });
-
-    monsterList.put(9, new int[]{
-      7, 17, 18, 
-      7, 1, 10, 
-      7, 1, 14, 
-      7, 1, 18, 
-      7, 16, 11, 
-      4, 7, 12, 
-      4, 8, 12, 
-      4, 9, 12, 
-      4, 10, 12, 
-      4, 11, 12, 
-      4, 7, 13, 
-      4, 8, 13, 
-      4, 9, 13, 
-      4, 10, 13, 
-      4, 11, 13, 
-      4, 7, 14, 
-      4, 8, 14, 
-      4, 9, 14, 
-      4, 10, 14, 
-      4, 11, 14, 
-      4, 7, 15, 
-      4, 8, 15, 
-      4, 9, 15, 
-      4, 10, 15, 
-      4, 11, 15, 
-      });
-
-    monsterList.put(10, new int[]{
-      7, 1, 1, 
-      7, 4, 18, 
-      7, 7, 1, 
-      7, 18, 1, 
-      4, 13, 5, 
-      4, 14, 5, 
-      4, 15, 5, 
-      4, 13, 6, 
-      4, 14, 6, 
-      4, 15, 6, 
-      4, 10, 14, 
-      4, 11, 14, 
-      4, 12, 14, 
-      4, 10, 17, 
-      4, 11, 17, 
-      4, 12, 17, 
-      4, 13, 17, 
-      4, 14, 17, 
-      4, 15, 17, 
-      4, 16, 17, 
-      4, 17, 17, 
-      4, 10, 18, 
-      4, 11, 18, 
-      4, 12, 18, 
-      4, 13, 18, 
-      4, 14, 18, 
-      4, 15, 18, 
-      4, 16, 18, 
-      4, 17, 18, 
-      4, 10, 8, 
-      4, 11, 8, 
-      4, 12, 8, 
-      4, 13, 8, 
-      4, 14, 8, 
-      4, 15, 8, 
-      4, 10, 9, 
-      4, 11, 9, 
-      4, 12, 9, 
-      4, 13, 9, 
-      4, 14, 9, 
-      4, 15, 9, 
-      4, 10, 15, 
-      4, 11, 15, 
-      4, 12, 15, 
-      4, 18, 18, 
-      4, 18, 17
-      });
-
-    monsterList.put(11, new int[]{
-      4, 1, 1, 
-      4, 2, 1, 
-      4, 3, 1, 
-      4, 4, 1, 
-      4, 1, 2, 
-      4, 2, 2, 
-      4, 3, 2, 
-      4, 4, 2, 
-      4, 1, 3, 
-      4, 2, 3, 
-      4, 3, 3, 
-      4, 4, 3, 
-      4, 1, 4, 
-      4, 2, 4, 
-      4, 3, 4, 
-      4, 4, 4, 
-      4, 1, 15, 
-      4, 2, 15, 
-      4, 3, 15, 
-      4, 4, 15, 
-      4, 1, 16, 
-      4, 2, 16, 
-      4, 3, 16, 
-      4, 4, 16, 
-      4, 1, 17, 
-      4, 2, 17, 
-      4, 3, 17, 
-      4, 4, 17, 
-      4, 1, 18, 
-      4, 2, 18, 
-      4, 3, 18, 
-      4, 4, 18, 
-      4, 15, 1, 
-      4, 15, 2, 
-      4, 16, 1, 
-      4, 16, 2, 
-      4, 15, 3, 
-      4, 15, 4, 
-      4, 16, 3, 
-      4, 16, 4, 
-      4, 17, 3, 
-      4, 17, 4, 
-      4, 18, 3, 
-      4, 18, 4, 
-      4, 15, 15, 
-      4, 15, 16, 
-      4, 15, 17, 
-      4, 15, 18, 
-      4, 16, 15, 
-      4, 16, 16, 
-      4, 16, 17, 
-      4, 16, 18, 
-      4, 17, 15, 
-      4, 17, 16, 
-      4, 17, 17, 
-      4, 17, 18, 
-      4, 18, 15, 
-      4, 18, 16, 
-      4, 18, 17, 
-      4, 18, 18, 
-      7, 1, 9, 
-      7, 2, 9, 
-      7, 1, 10, 
-      7, 2, 10, 
-      7, 17, 9, 
-      7, 18, 9, 
-      7, 17, 10, 
-      7, 18, 10, 
-      7, 9, 1, 
-      7, 9, 2, 
-      7, 10, 1, 
-      7, 10, 2, 
-      7, 9, 17, 
-      7, 9, 18, 
-      7, 10, 17, 
-      7, 10, 18 
-      });
-
-    monsterList.put(12, new int[]{
-      4, 1, 2, 
-      4, 2, 1, 
-      4, 2, 2, 
-      4, 1, 3, 
-      4, 2, 3, 
-      4, 1, 4, 
-      4, 2, 4, 
-      4, 1, 5, 
-      4, 2, 5, 
-      4, 1, 6, 
-      4, 2, 6, 
-      4, 1, 7, 
-      4, 2, 7, 
-      4, 1, 8, 
-      4, 2, 8, 
-      4, 1, 9, 
-      4, 2, 9, 
-      4, 4, 5, 
-      4, 5, 5, 
-      4, 4, 6, 
-      4, 5, 6, 
-      4, 11, 5, 
-      4, 12, 5, 
-      4, 11, 6, 
-      4, 12, 6, 
-      4, 11, 8, 
-      4, 12, 8, 
-      4, 11, 9, 
-      4, 12, 9, 
-      4, 11, 11, 
-      4, 12, 11, 
-      4, 11, 12, 
-      4, 12, 12, 
-      4, 11, 14, 
-      4, 12, 14, 
-      4, 11, 15, 
-      4, 12, 15, 
-      4, 11, 17, 
-      4, 12, 17, 
-      4, 11, 18, 
-      4, 12, 18, 
-      4, 1, 11, 
-      4, 2, 11, 
-      4, 1, 12, 
-      4, 2, 12, 
-      4, 1, 17, 
-      4, 2, 17, 
-      4, 1, 18, 
-      4, 2, 18, 
-      7, 7, 5, 
-      7, 8, 5, 
-      7, 7, 6, 
-      7, 8, 6, 
-      7, 4, 11, 
-      7, 4, 12, 
-      7, 5, 11, 
-      7, 5, 12, 
-      7, 16, 8, 
-      7, 16, 9, 
-      7, 17, 8, 
-      7, 17, 9, 
-      7, 16, 14, 
-      7, 16, 15, 
-      7, 17, 14, 
-      7, 17, 15, 
-      7, 16, 17, 
-      7, 16, 18, 
-      7, 17, 17, 
-      7, 17, 18, 
-      });
-
-    monsterList.put(13, new int[]{
-      7, 6, 10, 
-      7, 6, 7, 
-      7, 6, 4, 
-      7, 2, 18, 
-      7, 6, 18, 
-      7, 12, 18, 
-      4, 10, 6, 
-      4, 11, 6, 
-      4, 12, 6, 
-      4, 13, 6, 
-      4, 14, 6, 
-      4, 15, 6, 
-      4, 10, 7, 
-      4, 11, 7, 
-      4, 12, 7, 
-      4, 13, 7, 
-      4, 14, 7, 
-      4, 10, 8, 
-      4, 11, 8, 
-      4, 12, 8, 
-      4, 13, 8, 
-      4, 10, 9, 
-      4, 11, 9, 
-      4, 12, 9, 
-      4, 10, 10, 
-      4, 11, 10, 
-      4, 10, 11, 
-      4, 11, 12, 
-      4, 12, 12, 
-      4, 13, 12, 
-      4, 14, 12, 
-      4, 15, 12, 
-      4, 16, 12, 
-      4, 12, 11, 
-      4, 13, 11, 
-      4, 14, 11, 
-      4, 15, 11, 
-      4, 16, 11, 
-      4, 13, 10, 
-      4, 14, 10, 
-      4, 15, 10, 
-      4, 16, 10, 
-      4, 14, 9, 
-      4, 15, 9, 
-      4, 16, 9, 
-      4, 15, 8, 
-      4, 16, 8, 
-      4, 16, 7      
-      });
-
-    monsterList.put(14, new int[]{
-      4, 4, 4, 
-      4, 4, 5, 
-      4, 4, 6, 
-      4, 4, 7, 
-      4, 5, 4, 
-      4, 5, 5, 
-      4, 5, 6, 
-      4, 5, 7, 
-      4, 6, 4, 
-      4, 6, 5, 
-      4, 6, 6, 
-      4, 6, 7, 
-      4, 7, 4, 
-      4, 7, 5, 
-      4, 7, 6, 
-      4, 7, 7, 
-      4, 12, 4, 
-      4, 12, 5, 
-      4, 12, 6, 
-      4, 12, 7, 
-      4, 13, 4, 
-      4, 13, 5, 
-      4, 13, 6, 
-      4, 13, 7, 
-      4, 14, 4, 
-      4, 14, 5, 
-      4, 14, 6, 
-      4, 14, 7, 
-      4, 15, 4, 
-      4, 15, 5, 
-      4, 15, 6, 
-      4, 15, 7, 
-      4, 4, 12, 
-      4, 4, 13, 
-      4, 4, 14, 
-      4, 4, 15, 
-      4, 5, 12, 
-      4, 5, 13, 
-      4, 5, 14, 
-      4, 5, 15, 
-      4, 6, 12, 
-      4, 6, 13, 
-      4, 6, 14, 
-      4, 6, 15, 
-      4, 7, 12, 
-      4, 7, 13, 
-      4, 7, 14, 
-      4, 7, 15, 
-      4, 12, 12, 
-      4, 12, 13, 
-      4, 12, 14, 
-      4, 12, 15, 
-      4, 13, 12, 
-      4, 13, 13, 
-      4, 13, 14, 
-      4, 13, 15, 
-      4, 14, 12, 
-      4, 14, 13, 
-      4, 14, 14, 
-      4, 14, 15, 
-      4, 15, 13, 
-      4, 15, 14, 
-      4, 15, 15, 
-      4, 1, 9, 
-      4, 2, 9, 
-      4, 1, 10, 
-      4, 2, 10, 
-      7, 9, 1, 
-      7, 9, 2, 
-      7, 10, 1, 
-      7, 10, 2, 
-      7, 1, 17, 
-      7, 2, 17, 
-      7, 1, 18, 
-      7, 2, 18, 
-      7, 17, 17, 
-      7, 18, 17, 
-      7, 17, 18, 
-      7, 18, 18, 
-      });
-
-    monsterList.put(15, new int[]{
-      7, 2, 18, 
-      7, 3, 18, 
-      7, 4, 18, 
-      7, 5, 18, 
-      7, 6, 18, 
-      7, 3, 17, 
-      7, 4, 17, 
-      7, 5, 17, 
-      7, 6, 17, 
-      7, 4, 16, 
-      7, 5, 16, 
-      7, 6, 16, 
-      7, 1, 17, 
-      7, 1, 16, 
-      7, 2, 16, 
-      7, 1, 15, 
-      7, 2, 15, 
-      7, 1, 14, 
-      7, 2, 14, 
-      4, 4, 6, 
-      4, 5, 6, 
-      4, 4, 7, 
-      4, 5, 7, 
-      4, 4, 8, 
-      4, 5, 8, 
-      4, 4, 9, 
-      4, 5, 9, 
-      4, 4, 10, 
-      4, 5, 10, 
-      4, 4, 11, 
-      4, 5, 11, 
-      4, 4, 12, 
-      4, 5, 12, 
-      4, 4, 13, 
-      4, 5, 13, 
-      4, 4, 14, 
-      4, 14, 1, 
-      4, 14, 2, 
-      4, 14, 3, 
-      4, 14, 4, 
-      4, 15, 1, 
-      4, 15, 2, 
-      4, 15, 3, 
-      4, 15, 4, 
-      4, 16, 1, 
-      4, 16, 2, 
-      4, 16, 3, 
-      4, 16, 4, 
-      4, 17, 1, 
-      4, 17, 2, 
-      4, 17, 3, 
-      4, 17, 4, 
-      4, 18, 1, 
-      4, 18, 2, 
-      4, 18, 3, 
-      4, 18, 4, 
-      4, 10, 17, 
-      4, 10, 18, 
-      4, 11, 17, 
-      4, 11, 18, 
-      4, 12, 17, 
-      4, 12, 18, 
-      4, 13, 17, 
-      4, 13, 18, 
-      4, 14, 17, 
-      4, 14, 18, 
-      4, 15, 17, 
-      4, 15, 18, 
-      4, 16, 17, 
-      4, 16, 18, 
-      4, 17, 17, 
-      4, 17, 18, 
-      4, 18, 17, 
-      4, 18, 18, 
-      7, 7, 1, 
-      7, 8, 1, 
-      7, 9, 1, 
-      7, 10, 1, 
-      7, 11, 1, 
-      7, 12, 1, 
-      7, 8, 2, 
-      7, 9, 2, 
-      7, 10, 2, 
-      7, 11, 2, 
-      7, 12, 2, 
-      7, 9, 3, 
-      7, 10, 3, 
-      7, 11, 3, 
-      7, 12, 3, 
-      7, 10, 4, 
-      7, 11, 4, 
-      7, 12, 4, 
-      7, 11, 5, 
-      7, 12, 5
-      });
-
-    monsterList.put(16, new int[]{
-      4, 3, 17, 4, 3, 18, 4, 4, 17, 4, 4, 18, 
-      4, 5, 17, 4, 5, 18, 4, 6, 17, 4, 6, 18, 
-      4, 7, 17, 4, 7, 18, 4, 8, 17, 4, 8, 18, 
-      4, 9, 17, 4, 9, 18, 4, 10, 17, 4, 10, 18, 
-      4, 11, 17, 4, 11, 18, 4, 12, 17, 4, 12, 18, 
-      4, 13, 17, 4, 13, 18, 4, 14, 17, 4, 14, 18, 
-      4, 15, 17, 4, 15, 18, 4, 16, 17, 4, 16, 18, 
-      4, 17, 17, 4, 17, 18, 4, 18, 17, 4, 18, 18, 
-      4, 4, 2, 4, 4, 3, 4, 4, 4, 4, 4, 5, 
-      4, 4, 6, 4, 4, 7, 4, 4, 8, 4, 4, 9, 
-      4, 4, 10, 4, 4, 11, 4, 4, 12, 4, 4, 13, 
-      4, 4, 14, 4, 4, 15, 4, 5, 2, 4, 5, 3, 
-      4, 5, 4, 4, 5, 5, 4, 5, 6, 4, 5, 7, 
-      4, 5, 8, 4, 5, 9, 4, 5, 10, 4, 5, 11, 
-      4, 5, 12, 4, 5, 13, 4, 5, 14, 4, 5, 15, 
-      4, 7, 5, 4, 7, 6, 4, 8, 5, 4, 8, 6, 
-      4, 9, 5, 4, 9, 6, 4, 10, 5, 4, 10, 6, 
-      4, 11, 5, 4, 11, 6, 4, 12, 5, 4, 12, 6, 
-      4, 13, 5, 4, 13, 6, 4, 14, 5, 4, 14, 6, 
-      4, 15, 5, 4, 15, 6, 4, 6, 14, 4, 6, 15, 
-      4, 7, 14, 4, 7, 15, 4, 8, 14, 4, 8, 15, 
-      4, 9, 14, 4, 9, 15, 4, 10, 14, 4, 10, 15, 
-      4, 11, 14, 4, 11, 15, 4, 12, 14, 4, 12, 15, 
-      4, 13, 14, 4, 13, 15, 4, 14, 14, 4, 14, 15, 
-      4, 15, 14, 4, 15, 15, 4, 6, 2, 4, 6, 3, 
-      4, 7, 2, 4, 7, 3, 4, 8, 2, 4, 8, 3, 
-      4, 9, 2, 4, 9, 3, 4, 10, 2, 4, 10, 3, 
-      4, 11, 2, 4, 11, 3, 4, 12, 2, 4, 12, 3, 
-      4, 13, 2, 4, 13, 3, 4, 14, 2, 4, 14, 3, 
-      4, 15, 2, 4, 15, 3, 4, 16, 2, 4, 16, 3, 
-      4, 17, 2, 4, 17, 3, 4, 18, 2, 4, 18, 3, 
-      4, 17, 4, 4, 18, 4, 4, 17, 5, 4, 18, 5, 
-      4, 17, 6, 4, 18, 6, 4, 17, 7, 4, 18, 7, 
-      4, 17, 8, 4, 18, 8, 4, 17, 9, 4, 18, 9, 
-      4, 17, 10, 4, 18, 10, 4, 17, 11, 4, 18, 11, 
-      4, 17, 12, 4, 18, 12, 4, 17, 13, 4, 18, 13, 
-      4, 17, 14, 4, 18, 14, 4, 17, 15, 4, 18, 15, 
-      4, 17, 16, 4, 18, 16, 4, 7, 6, 4, 8, 6, 
-      4, 14, 13, 4, 15, 13, 7, 7, 7, 7, 8, 7, 
-      7, 7, 14, 7, 7, 15, 7, 7, 8, 
-      7, 8, 8, 7, 7, 9, 7, 8, 9, 7, 7, 10, 
-      7, 8, 10, 7, 7, 11, 7, 8, 11, 7, 7, 12, 
-      7, 8, 12, 7, 14, 7, 7, 15, 7, 7, 14, 8, 
-      7, 15, 8, 7, 14, 9, 7, 15, 9, 7, 14, 10, 
-      7, 15, 10, 7, 14, 11, 7, 15, 11, 7, 14, 12, 
-      7, 15, 12, 7, 10, 8, 7, 11, 8, 7, 12, 8, 
-      7, 11, 9, 7, 12, 9, 7, 11, 10, 7, 12, 10, 
-      7, 9, 11, 7, 10, 11, 7, 11, 11, 7, 12, 11, 
-      7, 9, 12, 7, 10, 12, 7, 11, 12, 7, 12, 12
-      });
+    monsterList.put(2, new int[]{4, 15, 8, 4, 16, 8, 4, 17, 8, 4, 15, 9, 4, 16, 9, 4, 17, 9, 4, 15, 10, 4, 16, 10, 4, 17, 10, 4, 15, 11, 4, 16, 11, 4, 17, 11});
+    monsterList.put(3, new int[]{4, 8, 1, 4, 9, 1, 4, 10, 1, 4, 11, 1, 4, 8, 2, 4, 9, 2, 4, 10, 2, 4, 11, 2, 4, 8, 3, 4, 9, 3, 4, 10, 3, 4, 11, 3, 4, 8, 4, 4, 9, 4, 4, 10, 4, 4, 11, 4, 4, 8, 5, 4, 9, 5, 4, 10, 5, 4, 11, 5, 4, 8, 6, 4, 9, 6, 4, 10, 6, 4, 11, 6});
+    monsterList.put(4, new int[]{7, 1, 1, 7, 7, 6, 7, 9, 12, 7, 11, 18, 4, 13, 14, 4, 14, 14, 4, 15, 14, 4, 16, 14, 4, 17, 14, 4, 13, 15, 4, 14, 15, 4, 15, 15, 4, 16, 15, 4, 17, 15, 4, 13, 16, 4, 14, 16, 4, 15, 16, 4, 16, 16, 4, 17, 16, 4, 13, 17, 4, 14, 17, 4, 15, 17, 4, 16, 17, 4, 17, 17, 4, 13, 18, 4, 14, 18, 4, 15, 18, 4, 16, 18, 4, 17, 18});
+    monsterList.put(5, new int[]{4, 4, 1, 4, 5, 1, 4, 6, 1, 4, 4, 2, 4, 5, 2, 4, 6, 2, 4, 8, 1, 4, 9, 1, 4, 10, 1, 4, 8, 2, 4, 9, 2, 4, 10, 2, 4, 12, 1, 4, 13, 1, 4, 14, 1, 4, 12, 2, 4, 13, 2, 4, 14, 2, 4, 16, 1, 4, 17, 1, 4, 18, 1, 4, 16, 2, 4, 17, 2, 4, 18, 2, 7, 1, 4, 7, 18, 6, 7, 1, 15, 7, 18, 18});
+    monsterList.put(6, new int[]{7, 18, 18, 7, 1, 15, 7, 1, 9, 7, 1, 2, 7, 18, 5, 7, 18, 11});
+    monsterList.put(7, new int[]{7, 18, 18, 4, 14, 12, 4, 14, 13, 4, 14, 14, 4, 16, 12, 4, 17, 12, 4, 18, 12, 4, 16, 13, 4, 17, 13, 4, 18, 13, 4, 16, 14, 4, 17, 14, 4, 18, 14, 4, 1, 4, 4, 1, 5, 4, 1, 6, 4, 2, 4, 4, 2, 5, 4, 2, 6, 4, 3, 4, 4, 3, 5, 4, 3, 6, 4, 4, 4, 4, 4, 5, 4, 4, 6, 4, 5, 4, 4, 5, 5, 4, 5, 6, 4, 6, 4, 4, 6, 5, 4, 6, 6, 4, 8, 7, 4, 9, 7, 4, 10, 7, 4, 8, 8, 4, 9, 8, 4, 10, 8, 4, 8, 9, 4, 9, 9, 4, 10, 9, 4, 8, 10, 4, 9, 10, 4, 10, 10, 4, 8, 11, 4, 9, 11, 4, 10, 11, 4, 8, 12, 4, 9, 12, 4, 10, 12, 4, 8, 13, 4, 9, 13, 4, 10, 13, 4, 8, 14, 4, 9, 14, 4, 10, 14, 4, 11, 12, 4, 12, 12, 4, 13, 12, 4, 11, 13, 4, 12, 13, 4, 13, 13, 4, 11, 14, 4, 12, 14, 4, 13, 14, 7, 18, 2});
+    monsterList.put(8, new int[]{7, 1, 11, 4, 5, 6, 4, 5, 7, 4, 5, 8, 4, 5, 9, 7, 18, 18, 4, 8, 11, 4, 9, 11, 4, 10, 11, 4, 11, 11, 4, 8, 12, 4, 9, 12, 4, 10, 12, 4, 11, 12, 4, 5, 5, 4, 6, 5, 4, 7, 5, 4, 8, 5, 4, 9, 5, 4, 10, 5, 4, 11, 5, 4, 12, 5, 4, 13, 5, 4, 14, 5, 4, 6, 6, 4, 7, 6, 4, 8, 6, 4, 9, 6, 4, 10, 6, 4, 11, 6, 4, 12, 6, 4, 13, 6, 4, 14, 6, 4, 6, 7, 4, 7, 7, 4, 8, 7, 4, 9, 7, 4, 10, 7, 4, 11, 7, 4, 12, 7, 4, 13, 7, 4, 14, 7, 4, 6, 8, 4, 7, 8, 4, 8, 8, 4, 9, 8, 4, 10, 8, 4, 11, 8, 4, 12, 8, 4, 13, 8, 4, 14, 8, 4, 6, 9, 4, 7, 9, 4, 8, 9, 4, 9, 9, 4, 10, 9, 4, 11, 9, 4, 12, 9, 4, 13, 9, 4, 14, 9, });
+    monsterList.put(9, new int[]{7, 17, 18, 7, 1, 10, 7, 1, 14, 7, 1, 18, 7, 16, 11, 4, 7, 12, 4, 8, 12, 4, 9, 12, 4, 10, 12, 4, 11, 12, 4, 7, 13, 4, 8, 13, 4, 9, 13, 4, 10, 13, 4, 11, 13, 4, 7, 14, 4, 8, 14, 4, 9, 14, 4, 10, 14, 4, 11, 14, 4, 7, 15, 4, 8, 15, 4, 9, 15, 4, 10, 15, 4, 11, 15, });
+    monsterList.put(10, new int[]{7, 1, 1, 7, 4, 18, 7, 7, 1, 7, 18, 1, 4, 13, 5, 4, 14, 5, 4, 15, 5, 4, 13, 6, 4, 14, 6, 4, 15, 6, 4, 10, 14, 4, 11, 14, 4, 12, 14, 4, 10, 17, 4, 11, 17, 4, 12, 17, 4, 13, 17, 4, 14, 17, 4, 15, 17, 4, 16, 17, 4, 17, 17, 4, 10, 18, 4, 11, 18, 4, 12, 18, 4, 13, 18, 4, 14, 18, 4, 15, 18, 4, 16, 18, 4, 17, 18, 4, 10, 8, 4, 11, 8, 4, 12, 8, 4, 13, 8, 4, 14, 8, 4, 15, 8, 4, 10, 9, 4, 11, 9, 4, 12, 9, 4, 13, 9, 4, 14, 9, 4, 15, 9, 4, 10, 15, 4, 11, 15, 4, 12, 15, 4, 18, 18, 4, 18, 17});
+    monsterList.put(11, new int[]{4, 1, 1, 4, 2, 1, 4, 3, 1, 4, 4, 1, 4, 1, 2, 4, 2, 2, 4, 3, 2, 4, 4, 2, 4, 1, 3, 4, 2, 3, 4, 3, 3, 4, 4, 3, 4, 1, 4, 4, 2, 4, 4, 3, 4, 4, 4, 4, 4, 1, 15, 4, 2, 15, 4, 3, 15, 4, 4, 15, 4, 1, 16, 4, 2, 16, 4, 3, 16, 4, 4, 16, 4, 1, 17, 4, 2, 17, 4, 3, 17, 4, 4, 17, 4, 1, 18, 4, 2, 18, 4, 3, 18, 4, 4, 18, 4, 15, 1, 4, 15, 2, 4, 16, 1, 4, 16, 2, 4, 15, 3, 4, 15, 4, 4, 16, 3, 4, 16, 4, 4, 17, 3, 4, 17, 4, 4, 18, 3, 4, 18, 4, 4, 15, 15, 4, 15, 16, 4, 15, 17, 4, 15, 18, 4, 16, 15, 4, 16, 16, 4, 16, 17, 4, 16, 18, 4, 17, 15, 4, 17, 16, 4, 17, 17, 4, 17, 18, 4, 18, 15, 4, 18, 16, 4, 18, 17, 4, 18, 18, 7, 1, 9, 7, 2, 9, 7, 1, 10, 7, 2, 10, 7, 17, 9, 7, 18, 9, 7, 17, 10, 7, 18, 10, 7, 9, 1, 7, 9, 2, 7, 10, 1, 7, 10, 2, 7, 9, 17, 7, 9, 18, 7, 10, 17, 7, 10, 18});
+    monsterList.put(12, new int[]{4, 1, 2, 4, 2, 1, 4, 2, 2, 4, 1, 3, 4, 2, 3, 4, 1, 4, 4, 2, 4, 4, 1, 5, 4, 2, 5, 4, 1, 6, 4, 2, 6, 4, 1, 7, 4, 2, 7, 4, 1, 8, 4, 2, 8, 4, 1, 9, 4, 2, 9, 4, 4, 5, 4, 5, 5, 4, 4, 6, 4, 5, 6, 4, 11, 5, 4, 12, 5, 4, 11, 6, 4, 12, 6, 4, 11, 8, 4, 12, 8, 4, 11, 9, 4, 12, 9, 4, 11, 11, 4, 12, 11, 4, 11, 12, 4, 12, 12, 4, 11, 14, 4, 12, 14, 4, 11, 15, 4, 12, 15, 4, 11, 17, 4, 12, 17, 4, 11, 18, 4, 12, 18, 4, 1, 11, 4, 2, 11, 4, 1, 12, 4, 2, 12, 4, 1, 17, 4, 2, 17, 4, 1, 18, 4, 2, 18, 7, 7, 5, 7, 8, 5, 7, 7, 6, 7, 8, 6, 7, 4, 11, 7, 4, 12, 7, 5, 11, 7, 5, 12, 7, 16, 8, 7, 16, 9, 7, 17, 8, 7, 17, 9, 7, 16, 14, 7, 16, 15, 7, 17, 14, 7, 17, 15, 7, 16, 17, 7, 16, 18, 7, 17, 17, 7, 17, 18, });
+    monsterList.put(13, new int[]{7, 6, 10, 7, 6, 7, 7, 6, 4, 7, 2, 18, 7, 6, 18, 7, 12, 18, 4, 10, 6, 4, 11, 6, 4, 12, 6, 4, 13, 6, 4, 14, 6, 4, 15, 6, 4, 10, 7, 4, 11, 7, 4, 12, 7, 4, 13, 7, 4, 14, 7, 4, 10, 8, 4, 11, 8, 4, 12, 8, 4, 13, 8, 4, 10, 9, 4, 11, 9, 4, 12, 9, 4, 10, 10, 4, 11, 10, 4, 10, 11, 4, 11, 12, 4, 12, 12, 4, 13, 12, 4, 14, 12, 4, 15, 12, 4, 16, 12, 4, 12, 11, 4, 13, 11, 4, 14, 11, 4, 15, 11, 4, 16, 11, 4, 13, 10, 4, 14, 10, 4, 15, 10, 4, 16, 10, 4, 14, 9, 4, 15, 9, 4, 16, 9, 4, 15, 8, 4, 16, 8, 4, 16, 7});
+    monsterList.put(14, new int[]{4, 4, 4, 4, 4, 5, 4, 4, 6, 4, 4, 7, 4, 5, 4, 4, 5, 5, 4, 5, 6, 4, 5, 7, 4, 6, 4, 4, 6, 5, 4, 6, 6, 4, 6, 7, 4, 7, 4, 4, 7, 5, 4, 7, 6, 4, 7, 7, 4, 12, 4, 4, 12, 5, 4, 12, 6, 4, 12, 7, 4, 13, 4, 4, 13, 5, 4, 13, 6, 4, 13, 7, 4, 14, 4, 4, 14, 5, 4, 14, 6, 4, 14, 7, 4, 15, 4, 4, 15, 5, 4, 15, 6, 4, 15, 7, 4, 4, 12, 4, 4, 13, 4, 4, 14, 4, 4, 15, 4, 5, 12, 4, 5, 13, 4, 5, 14, 4, 5, 15, 4, 6, 12, 4, 6, 13, 4, 6, 14, 4, 6, 15, 4, 7, 12, 4, 7, 13, 4, 7, 14, 4, 7, 15, 4, 12, 12, 4, 12, 13, 4, 12, 14, 4, 12, 15, 4, 13, 12, 4, 13, 13, 4, 13, 14, 4, 13, 15, 4, 14, 12, 4, 14, 13, 4, 14, 14, 4, 14, 15, 4, 15, 13, 4, 15, 14, 4, 15, 15, 4, 1, 9, 4, 2, 9, 4, 1, 10, 4, 2, 10, 7, 9, 1, 7, 9, 2, 7, 10, 1, 7, 10, 2, 7, 1, 17, 7, 2, 17, 7, 1, 18, 7, 2, 18, 7, 17, 17, 7, 18, 17, 7, 17, 18, 7, 18, 18, });
+    monsterList.put(15, new int[]{7, 2, 18, 7, 3, 18, 7, 4, 18, 7, 5, 18, 7, 6, 18, 7, 3, 17, 7, 4, 17, 7, 5, 17, 7, 6, 17, 7, 4, 16, 7, 5, 16, 7, 6, 16, 7, 1, 17, 7, 1, 16, 7, 2, 16, 7, 1, 15, 7, 2, 15, 7, 1, 14, 7, 2, 14, 4, 4, 6, 4, 5, 6, 4, 4, 7, 4, 5, 7, 4, 4, 8, 4, 5, 8, 4, 4, 9, 4, 5, 9, 4, 4, 10, 4, 5, 10, 4, 4, 11, 4, 5, 11, 4, 4, 12, 4, 5, 12, 4, 4, 13, 4, 5, 13, 4, 4, 14, 4, 14, 1, 4, 14, 2, 4, 14, 3, 4, 14, 4, 4, 15, 1, 4, 15, 2, 4, 15, 3, 4, 15, 4, 4, 16, 1, 4, 16, 2, 4, 16, 3, 4, 16, 4, 4, 17, 1, 4, 17, 2, 4, 17, 3, 4, 17, 4, 4, 18, 1, 4, 18, 2, 4, 18, 3, 4, 18, 4, 4, 10, 17, 4, 10, 18, 4, 11, 17, 4, 11, 18, 4, 12, 17, 4, 12, 18, 4, 13, 17, 4, 13, 18, 4, 14, 17, 4, 14, 18, 4, 15, 17, 4, 15, 18, 4, 16, 17, 4, 16, 18, 4, 17, 17, 4, 17, 18, 4, 18, 17, 4, 18, 18, 7, 7, 1, 7, 8, 1, 7, 9, 1, 7, 10, 1, 7, 11, 1, 7, 12, 1, 7, 8, 2, 7, 9, 2, 7, 10, 2, 7, 11, 2, 7, 12, 2, 7, 9, 3, 7, 10, 3, 7, 11, 3, 7, 12, 3, 7, 10, 4, 7, 11, 4, 7, 12, 4, 7, 11, 5, 7, 12, 5});
+    monsterList.put(16, new int[]{4, 3, 17, 4, 3, 18, 4, 4, 17, 4, 4, 18, 4, 5, 17, 4, 5, 18, 4, 6, 17, 4, 6, 18, 4, 7, 17, 4, 7, 18, 4, 8, 17, 4, 8, 18, 4, 9, 17, 4, 9, 18, 4, 10, 17, 4, 10, 18, 4, 11, 17, 4, 11, 18, 4, 12, 17, 4, 12, 18, 4, 13, 17, 4, 13, 18, 4, 14, 17, 4, 14, 18, 4, 15, 17, 4, 15, 18, 4, 16, 17, 4, 16, 18, 4, 17, 17, 4, 17, 18, 4, 18, 17, 4, 18, 18, 4, 4, 2, 4, 4, 3, 4, 4, 4, 4, 4, 5, 4, 4, 6, 4, 4, 7, 4, 4, 8, 4, 4, 9, 4, 4, 10, 4, 4, 11, 4, 4, 12, 4, 4, 13, 4, 4, 14, 4, 4, 15, 4, 5, 2, 4, 5, 3, 4, 5, 4, 4, 5, 5, 4, 5, 6, 4, 5, 7, 4, 5, 8, 4, 5, 9, 4, 5, 10, 4, 5, 11, 4, 5, 12, 4, 5, 13, 4, 5, 14, 4, 5, 15, 4, 7, 5, 4, 7, 6, 4, 8, 5, 4, 8, 6, 4, 9, 5, 4, 9, 6, 4, 10, 5, 4, 10, 6, 4, 11, 5, 4, 11, 6, 4, 12, 5, 4, 12, 6, 4, 13, 5, 4, 13, 6, 4, 14, 5, 4, 14, 6, 4, 15, 5, 4, 15, 6, 4, 6, 14, 4, 6, 15, 4, 7, 14, 4, 7, 15, 4, 8, 14, 4, 8, 15, 4, 9, 14, 4, 9, 15, 4, 10, 14, 4, 10, 15, 4, 11, 14, 4, 11, 15, 4, 12, 14, 4, 12, 15, 4, 13, 14, 4, 13, 15, 4, 14, 14, 4, 14, 15, 4, 15, 14, 4, 15, 15, 4, 6, 2, 4, 6, 3, 4, 7, 2, 4, 7, 3, 4, 8, 2, 4, 8, 3, 4, 9, 2, 4, 9, 3, 4, 10, 2, 4, 10, 3, 4, 11, 2, 4, 11, 3, 4, 12, 2, 4, 12, 3, 4, 13, 2, 4, 13, 3, 4, 14, 2, 4, 14, 3, 4, 15, 2, 4, 15, 3, 4, 16, 2, 4, 16, 3, 4, 17, 2, 4, 17, 3, 4, 18, 2, 4, 18, 3, 4, 17, 4, 4, 18, 4, 4, 17, 5, 4, 18, 5, 4, 17, 6, 4, 18, 6, 4, 17, 7, 4, 18, 7, 4, 17, 8, 4, 18, 8, 4, 17, 9, 4, 18, 9, 4, 17, 10, 4, 18, 10, 4, 17, 11, 4, 18, 11, 4, 17, 12, 4, 18, 12, 4, 17, 13, 4, 18, 13, 4, 17, 14, 4, 18, 14, 4, 17, 15, 4, 18, 15, 4, 17, 16, 4, 18, 16, 4, 7, 6, 4, 8, 6, 4, 14, 13, 4, 15, 13, 7, 7, 7, 7, 8, 7, 7, 7, 14, 7, 7, 15, 7, 7, 8, 7, 8, 8, 7, 7, 9, 7, 8, 9, 7, 7, 10, 7, 8, 10, 7, 7, 11, 7, 8, 11, 7, 7, 12, 7, 8, 12, 7, 14, 7, 7, 15, 7, 7, 14, 8, 7, 15, 8, 7, 14, 9, 7, 15, 9, 7, 14, 10, 7, 15, 10, 7, 14, 11, 7, 15, 11, 7, 14, 12, 7, 15, 12, 7, 10, 8, 7, 11, 8, 7, 12, 8, 7, 11, 9, 7, 12, 9, 7, 11, 10, 7, 12, 10, 7, 9, 11, 7, 10, 11, 7, 11, 11, 7, 12, 11, 7, 9, 12, 7, 10, 12, 7, 11, 12, 7, 12, 12});
   }
 
   // X, Y (In Terms of 2D Array)
+  // Method to initialise all gate in every level
   void initialiseGateList() { 
-    gateList.put(2, new int[]{
-      14, 8, 
-      14, 9, 
-      14, 10, 
-      14, 11
-      });
-    gateList.put(3, new int[]{
-      8, 7, 
-      9, 7, 
-      10, 7, 
-      11, 7, 
-      12, 8, 
-      12, 9, 
-      12, 10, 
-      12, 11
-      });
-    gateList.put(4, new int[]{
-      12, 14, 
-      12, 15, 
-      12, 16, 
-      12, 17, 
-      12, 18
-      });
+    gateList.put(2, new int[]{14, 8, 14, 9, 14, 10, 14, 11});
+    gateList.put(3, new int[]{8, 7, 9, 7, 10, 7, 11, 7, 12, 8, 12, 9, 12, 10, 12, 11});
+    gateList.put(4, new int[]{12, 14, 12, 15, 12, 16, 12, 17, 12, 18});
     gateList.put(5, new int[]{1, 3, 2, 3, 4, 3, 5, 3, 6, 3, 8, 3, 9, 3, 10, 3, 12, 3, 13, 3, 14, 3, 16, 3, 17, 3, 18, 3});
-    gateList.put(7, new int[]{
-      12, 15, 
-      13, 15, 
-      14, 15, 
-      16, 15, 
-      17, 15, 
-      18, 15
-      });
-    gateList.put(8, new int[]{
-      8, 13, 
-      9, 13, 
-      10, 13, 
-      11, 13
-      });
-    gateList.put(9, new int[]{
-      7, 11, 
-      8, 11, 
-      9, 11, 
-      10, 11, 
-      11, 11, 
-      16, 15, 
-      17, 15
-      });
-
-    gateList.put(10, new int[]{
-      9, 14, 
-      9, 15
-      });
-
-    gateList.put(11, new int[]{
-      17, 1, 
-      17, 2, 
-      18, 2
-      });
-
-    gateList.put(12, new int[]{
-      1, 10, 
-      2, 10, 
-      });
-
-    gateList.put(13, new int[]{
-      7, 1, 
-      7, 2, 
-      7, 4, 
-      7, 5, 
-      7, 7, 
-      7, 8, 
-      7, 10, 
-      7, 11      
-      });
-
-    gateList.put(14, new int[]{
-      4, 8, 
-      5, 8, 
-      6, 8, 
-      7, 8, 
-      12, 8, 
-      13, 8, 
-      14, 8, 
-      15, 8, 
-      4, 11, 
-      5, 11, 
-      6, 11, 
-      7, 11, 
-      12, 16, 
-      13, 16, 
-      14, 16, 
-      15, 16, 
-      });
-
-    gateList.put(15, new int[]{
-      14, 16, 15, 16
-      });
+    gateList.put(7, new int[]{12, 15, 13, 15, 14, 15, 16, 15, 17, 15, 18, 15});
+    gateList.put(8, new int[]{8, 13, 9, 13, 10, 13, 11, 13});
+    gateList.put(9, new int[]{7, 11, 8, 11, 9, 11, 10, 11, 11, 11, 16, 15, 17, 15});
+    gateList.put(10, new int[]{9, 14, 9, 15});
+    gateList.put(11, new int[]{17, 1, 17, 2, 18, 2});
+    gateList.put(12, new int[]{1, 10, 2, 10, });
+    gateList.put(13, new int[]{7, 1, 7, 2, 7, 4, 7, 5, 7, 7, 7, 8, 7, 10, 7, 11});
+    gateList.put(14, new int[]{4, 8, 5, 8, 6, 8, 7, 8, 12, 8, 13, 8, 14, 8, 15, 8, 4, 11, 5, 11, 6, 11, 7, 11, 12, 16, 13, 16, 14, 16, 15, 16, });
+    gateList.put(15, new int[]{14, 16, 15, 16});
   }
 
   // Type, X, Y (In Terms of 2D Array)
   // Type 0: Statue, 1: Potion 
+  // Method to initialise all items in every level
   void initialiseItemList() { 
-    itemList.put(2, new int[]{
-      0, 11, 9
-      }); 
-
-    itemList.put(3, new int[]{
-      0, 11, 18, 
-      1, 18, 9, 
-      1, 18, 10, 
-      1, 18, 11
-      });
-
-    itemList.put(4, new int[]{
-      0, 7, 18
-      });
-
-    itemList.put(5, new int[]{
-      0, 18, 6
-      });
-
-    itemList.put(7, new int[]{
-      1, 1, 8, 
-      1, 2, 8, 
-      0, 4, 18
-      });
-
-    itemList.put(8, new int[]{
-      0, 14, 10
-      });
-
-    itemList.put(9, new int[]{
-      0, 11, 9
-      });
-
-    itemList.put(10, new int[]{
-      0, 18, 10, 
-      1, 13, 5, 
-      1, 10, 17
-      });
-
-    itemList.put(11, new int[]{
-      0, 1, 18
-      });
-
-    itemList.put(12, new int[]{
-      0, 18, 18
-      });
-
-    itemList.put(13, new int[]{
-      0, 6, 11, 
-      1, 16, 5
-      });  
-
-    itemList.put(14, new int[]{
-      0, 18, 1
-      });
-
-    itemList.put(15, new int[]{
-      0, 18, 1, 
-      1, 8, 17, 
-      1, 9, 17, 
-      1, 8, 18, 
-      1, 9, 18
-      });
+    itemList.put(2, new int[]{0, 11, 9});
+    itemList.put(3, new int[]{0, 11, 18, 1, 18, 9, 1, 18, 10, 1, 18, 11});
+    itemList.put(4, new int[]{0, 7, 18});
+    itemList.put(5, new int[]{0, 18, 6});
+    itemList.put(7, new int[]{1, 1, 8, 1, 2, 8, 0, 4, 18});
+    itemList.put(8, new int[]{0, 14, 10});
+    itemList.put(9, new int[]{0, 11, 9});
+    itemList.put(10, new int[]{0, 18, 10, 1, 13, 5, 1, 10, 17});
+    itemList.put(11, new int[]{0, 1, 18});
+    itemList.put(12, new int[]{0, 18, 18});
+    itemList.put(13, new int[]{0, 6, 11, 1, 16, 5});
+    itemList.put(14, new int[]{0, 18, 1});
+    itemList.put(15, new int[]{0, 18, 1, 1, 8, 17, 1, 9, 17, 1, 8, 18, 1, 9, 18});
   }
 
+  //Adds item to the current level
   void generateItem() {
     int[] coordsOfItem = itemList.get(currentLevel);
     if (coordsOfItem != null) {
@@ -1378,19 +513,21 @@ class Level {
     }
   }
 
+  //Adds gate to the current level
   void generateGate() {
     int[] coordsOfGate = gateList.get(currentLevel);
     if (coordsOfGate != null) {
       int[][] tiles = tilesLayouts.get(currentLevel);
       for (int i=0; i<coordsOfGate.length; i+=2) {
         gates.add(new Gate(coordsOfGate[i] * TILE_SIZE, coordsOfGate[i+1] * TILE_SIZE));
-        clearTiles = tiles[coordsOfGate[i+1]][coordsOfGate[i]];
-        tiles[coordsOfGate[i+1]][coordsOfGate[i]] = currentLevel-1;
+        clearTiles = tiles[coordsOfGate[i+1]][coordsOfGate[i]]; //Stores the walkable tiles image to be used when clearing gate
+        tiles[coordsOfGate[i+1]][coordsOfGate[i]] = currentLevel-1; //replaces the walkable tiles image with current wall tile
       }
-      tilesLayouts.put(currentLevel, tiles);
+      tilesLayouts.put(currentLevel, tiles); //replace 2D array so that drawLevel can reflect new changes
     }
   }
 
+  ////Adds monster to the current level
   void generateMonster() {
     int[] coordsOfMonster = monsterList.get(currentLevel);
     if (coordsOfMonster != null) {
@@ -1400,6 +537,7 @@ class Level {
     }
   }
 
+  //Draw monsters/items/gate in game
   void drawObjects() {
     for (int i=monsters.size()-1; i>=0; i--) {
       Monster monster = monsters.get(i);
@@ -1423,7 +561,7 @@ class Level {
       int projectileSpeed = proj.getProjectileSpeed();
       if (tilesLayouts.get(currentLevel)[(int)proj.getPosY()/32][(int)proj.getPosX()/32] <= 15) {
         projList.remove(proj);
-      } else if (proj.getProjectileType() == 7) {
+      } else if (proj.getProjectileType() == 7) { //Check if projectile is from monster
         if (player1 != null && player1.getHP() > 0 && (proj.getPosX() + proj.getProjectileDiameter()) >= (player1.getPosX()) && (proj.getPosX()) <= (player1.getPosX() + TILE_SIZE) && (proj.getPosY() + proj.getProjectileDiameter()) >= (player1.getPosY()) && (proj.getPosY()) <= (player1.getPosY() + TILE_SIZE)) {
           player1.getHit(proj.getProjectileDamage());
           projList.remove(proj);
@@ -1440,7 +578,7 @@ class Level {
           player4.getHit(proj.getProjectileDamage());
           projList.remove(proj);
         }
-      } else if (monsters.size() != 0) { 
+      } else if (monsters.size() != 0) {  //If there is at least 1 monster
         for (int j=monsters.size()-1; j>=0; j--) {
           Monster monster = monsters.get(j);
           if ((proj.getPosX() + TILE_SIZE) >= (monster.getPosX()) && (proj.getPosX()) <= (monster.getPosX() + TILE_SIZE) && (proj.getPosY() + TILE_SIZE) >= (monster.getPosY()) && (proj.getPosY()) <= (monster.getPosY() + TILE_SIZE)) {
@@ -1448,7 +586,7 @@ class Level {
             monster.getHit(proj.getProjectileDamage());
             if (monster.getHP() <= 0) {
               monsters.remove(monster);
-              switch(proj.getFromPlayerID()) {
+              switch(proj.getFromPlayerID()) { //Adds score to respective player who killed the monster
               case 1:
                 player1.addScore(10);
                 break;
@@ -1467,6 +605,7 @@ class Level {
           }
         }
       } 
+      //Moves the projectile according to its current direction
       switch(proj.getDirection()) {
       case 0:
         proj.decPosY(projectileSpeed);
@@ -1497,18 +636,21 @@ class Level {
         proj.decPosY(projectileSpeed);
         break;
       }
+      proj.setTicksLastMovement();
       proj.updateOb();
     }
   }
 
+  //Method to handles the movement of monster
   void moveMonster() {
-    float currentLowest = Float.MAX_VALUE;
-    float p2Dist = Float.MAX_VALUE;
-    float p3Dist = Float.MAX_VALUE;
-    float p4Dist = Float.MAX_VALUE;
-    int currentLowestPlayer = 1;
-    boolean[][] isOccupied = new boolean[20][20];
+    float currentLowest = Float.MAX_VALUE;        //sets the distance from player1 to monster to maximum value
+    float p2Dist = Float.MAX_VALUE;               //sets the distance from player2 to monster to maximum value
+    float p3Dist = Float.MAX_VALUE;               //sets the distance from player3 to monster to maximum value
+    float p4Dist = Float.MAX_VALUE;               //sets the distance from player4 to monster to maximum value
+    int currentLowestPlayer = 1;                  //Stores the current player that is closest to monster
+    boolean[][] isOccupied = new boolean[20][20]; //2D array of monster occupying a particular tile
     for (Monster monster : monsters) {
+      //Check if each player collides with monster
       if (player1 != null && player1.getHP() > 0 && (monster.getPosX() + monster.getDiameter()) >= (player1.getPosX()) && (monster.getPosX()) <= (player1.getPosX() + TILE_SIZE) && (monster.getPosY() + monster.getDiameter()) >= (player1.getPosY()) && (monster.getPosY()) <= (player1.getPosY() + TILE_SIZE)) {
         player1.getHit(monster.getCollisionDamage());
         player1.addScore(10);
@@ -1534,6 +676,7 @@ class Level {
         break;
       }
 
+      //if player is active and alive, calculate its distance and store in the respective variable
       if (player1 != null && player1.getHP() > 0) {
         currentLowest = dist(player1.getPosX(), player1.getPosY(), monster.getPosX(), monster.getPosY());
       }
@@ -1547,6 +690,7 @@ class Level {
         p4Dist = dist(player4.getPosX(), player4.getPosY(), monster.getPosX(), monster.getPosY());
       }
 
+      //Compare which player is the closest to the monster
       if (p2Dist < currentLowest) {
         currentLowest = p2Dist;
         currentLowestPlayer = 2;
@@ -1559,6 +703,8 @@ class Level {
         currentLowest = p4Dist;
         currentLowestPlayer = 4;
       }
+
+      //Checks the collision for the closest player
       switch(currentLowestPlayer) {
       case 1:
         if (player1 != null && player1.getHP() > 0 ) {
@@ -1577,14 +723,14 @@ class Level {
             isOccupied[(int)monster.getPosY()/TILE_SIZE][(int)(monster.getPosX())/TILE_SIZE] = true;
             break;
           } else if ( ((int)player1.getPosX() < monster.getPosX() && !(tilesLayouts.get(currentLevel)[(int)monster.getPosY()/TILE_SIZE][(int)(monster.getPosX()-16)/TILE_SIZE] <= 15)) && ((int)player1.getPosY() > monster.getPosY() && !(tilesLayouts.get(currentLevel)[(int)(monster.getPosY()+16)/TILE_SIZE][(int)monster.getPosX()/TILE_SIZE] <= 15)) && !isOccupied[(int)monster.getPosY()/TILE_SIZE][(int)(monster.getPosX())/TILE_SIZE] ) {
-            //if mosnster is top right of player and has to go bottom left
+            //if mosnster is top right of player and has to go bottom left!
             monster.setDirection(5);
             monster.decPosX();
             monster.incPosY();
             isOccupied[(int)monster.getPosY()/TILE_SIZE][(int)(monster.getPosX())/TILE_SIZE] = true;
             break;
           } else if ( ((int)player1.getPosX() < monster.getPosX() && !(tilesLayouts.get(currentLevel)[(int)monster.getPosY()/TILE_SIZE][(int)(monster.getPosX()-16)/TILE_SIZE] <= 15)) && ((int)player1.getPosY() < monster.getPosY() && !(tilesLayouts.get(currentLevel)[(int)(monster.getPosY()-16)/TILE_SIZE][(int)monster.getPosX()/TILE_SIZE] <= 15)) && !isOccupied[(int)monster.getPosY()/TILE_SIZE][(int)(monster.getPosX())/TILE_SIZE]) {
-            //if monster is bottom right of player has to go top left
+            //if monster is bottom right of player has to go top left!
             monster.setDirection(7);
             monster.decPosX();
             monster.decPosY();
@@ -1796,6 +942,7 @@ class Level {
     return endGame;
   }
 
+  //Draws the current level tiles based on the 2D array
   void drawLevel() {
     imageMode(CORNER);
     int[][] tileLayout = tilesLayouts.get(currentLevel);
@@ -1812,6 +959,7 @@ class Level {
     }
   }
 
+  //Check if player collides with exit or statue
   void checkCollision() {
     if (exit != null) {
       if (player1 != null && player1.getPosX() >= exit.getPosX() && player1.getPosX() <= exit.getPosX() + exit.getExitWidth() && player1.getPosY() >= exit.getPosY() && player1.getPosY() <= exit.getPosY() + exit.getExitHeight()) {
@@ -1865,26 +1013,25 @@ class Level {
     }
   }
 
-  int[][] getCurrentTileLayout() {
-    return tilesLayouts.get(currentLevel);
-  }
-
+  //Replace gate with walkable tiles stored in clearTiles
   void unlockGate() {
     int[] coordsOfGate = gateList.get(currentLevel);
     if (coordsOfGate != null) {
       int[][] tiles = tilesLayouts.get(currentLevel);
       for (int i=0; i<coordsOfGate.length; i+=2) {
-        tiles[coordsOfGate[i+1]][coordsOfGate[i]] = clearTiles;
+        tiles[coordsOfGate[i+1]][coordsOfGate[i]] = clearTiles; //Replace gate with walkable tiles
       }
-      tilesLayouts.put(currentLevel, tiles);
+      tilesLayouts.put(currentLevel, tiles); //Replace 2D array that draws level with correct tiles
     }
     gates.clear();
   }
 
+  //Add newly created projectile
   void addProjectile(Projectile proj) {
     projList.add(proj);
   }
 
+  //Move to next level and clears all current level arrays
   void nextLevel() {
     monsters.clear();
     projList.clear();
@@ -1898,6 +1045,18 @@ class Level {
     if (player4 != null) player4.resetPosition();
   }
 
+  //Restart the Game
+  void restart() 
+  { 
+    currentLevel = 1; 
+    endGame = false;
+  }
+
+  //Getter methods
+  int[][] getCurrentTileLayout() {
+    return tilesLayouts.get(currentLevel);
+  }
+
   PVector getSpawnLocation() {
     return new PVector(level.playerSpawnList.get(level.currentLevel)[0] * TILE_SIZE + TILE_SIZE/2, level.playerSpawnList.get(level.currentLevel)[1]*TILE_SIZE + TILE_SIZE/2);
   }
@@ -1905,11 +1064,5 @@ class Level {
   int getLevelNo()
   {
     return currentLevel;
-  }
-
-  void restart() 
-  { 
-    currentLevel = 1; 
-    endGame = false;
   }
 }
