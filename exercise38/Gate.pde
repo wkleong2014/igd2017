@@ -1,4 +1,4 @@
-class Gate {
+class Gate { // This class draws the gates that can be unlocked with statues
   int posX;
   int posY;
   Gate(int posX, int posY) {
