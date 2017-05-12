@@ -9,11 +9,12 @@ class Projectile {
   int ticksLastMovement;
   int fromPlayerID;
 
-  final int ANIMATION_DURATION = 300; //in milliseconds
-  int frame = 0;
-  int frameMax = 7;  
-  int ticksLastAnimation = 0;
+  final int ANIMATION_DURATION = 300; //every 300ms it will change animation frame
+  int frame = 0; //frame count
+  int frameMax = 7;  //maximum frame
+  int ticksLastAnimation = 0; //last tick animation
 
+  //constructor for projectile
   Projectile(float posX, float posY, int direction, int projectileSpeed, int projectileType, int projectileDamage, int fromPlayerID) {
     this.posX = posX;
     this.direction = direction;
@@ -27,6 +28,7 @@ class Projectile {
     updateOb();
   }
 
+  //getter methods
   int getFromPlayerID() {
     return  fromPlayerID;
   }
@@ -50,10 +52,19 @@ class Projectile {
   float getPosY() {
     return posY;
   }
+  
+  int getDirection() {
+    return direction;
+  }
 
+  int getProjectileDamage() {
+    return projectileDamage;
+  }
+
+  //method to draw projectile
   void updateOb() {
     imageMode(CENTER);
-    PImage sprite = spriteSheet.get(800 + (frame * 32), 0 + (projectileType * 32), 32, 32);
+    PImage sprite = spriteSheet.get(800 + (frame * 32), 0 + (projectileType * 32), 32, 32); //get the sprite according to the projectile type and current frame
     image(sprite, posX, posY);
     if (millis() - ticksLastAnimation >= ANIMATION_DURATION) {
       frame++;
@@ -64,31 +75,27 @@ class Projectile {
     }
   }
 
+  //increase the x coordinate of projectile with time fix
   void incPosX(int projectileSpeed) {
     posX += projectileSpeed * float(millis() - ticksLastMovement) * 0.001;
     ticksLastMovement = millis();
   }
 
+  //decrease the x coordinate of projectile with time fix
   void decPosX(int projectileSpeed) {
     posX -= projectileSpeed * float(millis() - ticksLastMovement) * 0.001;
     ticksLastMovement = millis();
   }
 
+  //increase the y coordinate of projectile with time fix
   void incPosY(int projectileSpeed) {
     posY += projectileSpeed * float(millis() - ticksLastMovement) * 0.001;
     ticksLastMovement = millis();
   }
 
+  //decrease the x coordinate of projectile with time fix
   void decPosY(int projectileSpeed) {
     posY -= projectileSpeed * float(millis() - ticksLastMovement) * 0.001;
     ticksLastMovement = millis();
-  }
-
-  int getDirection() {
-    return direction;
-  }
-
-  int getProjectileDamage() {
-    return projectileDamage;
   }
 }
