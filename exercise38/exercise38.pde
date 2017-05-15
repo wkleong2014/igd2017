@@ -28,6 +28,8 @@
  GUI Font - Minecraft - http://www.dafont.com/minecraft.font
  Spritesheet - https://github.com/jakesgordon/javascript-gauntlet/blob/master/images/entities.png
  Tiles - https://opengameart.org/sites/default/files/crawl-tiles%20Oct-5-2010.zip
+ 
+ Git: https://github.com/wkleong2014/pgd2017
 */
 
 Level level;
